@@ -1,0 +1,27 @@
+{
+  "name": "fullstack-ecommerce",
+  "version": "1.0.0",
+  "description": "full stack app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon -e js,graphql -x node --inspect ./index.js",
+    "client": "cd frontend && npm run dev",
+    "app": "concurrently \"npm run dev\" \"npm run client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "graphql-yoga": "^1.18.3",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.4",
+    "sql-template-strings": "^2.2.2"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0"
+  }
+}

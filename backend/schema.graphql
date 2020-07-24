@@ -1,0 +1,28 @@
+type Query {
+    users: [User]!
+    user: User
+  }
+
+type Mutation {
+    signUp(email: String!, firstName: String!, lastName: String!, password: String!, accountType: String!): User!
+    signIn(email: String!, password: String!): User!
+}
+
+type User {
+    ACCT_KEY: ID
+    FST_NAME: String!
+    LST_NAME: String!
+    EMAIL: String!
+    PASSWORD_NM: String!
+    ACCT_TYP_CD: String!
+}
+
+type Item {
+    ITEM_KEY: ID
+    ITEM_TITLE: String! 
+    ITEM_DESC: String!
+    IMG: String!
+    LG_IMG: String!
+    PRICE: Int!
+    CRTE_BY_ACCT_KEY: User!
+}
