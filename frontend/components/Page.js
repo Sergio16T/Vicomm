@@ -4,7 +4,7 @@ import Meta from './Meta';
 const theme = {
 	black: '#393939',
     grey: '#3A3A3A',
-    lightgray: '#E1E1E1',
+    lightgrey: '#E1E1E1',
     offWhite: '#EDEDED',
 	maxWidth: '1000px',
 	bs: '1px 1px 4px 1px rgba(51,51,51,.2)', //shorthand for box shadow 

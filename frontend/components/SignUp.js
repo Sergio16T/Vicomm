@@ -4,6 +4,7 @@ import Router from 'next/router';
 import Header from './Header'; 
 import { Body, Form} from './Styles/FormStyles'; 
 import { SignUpPage, SignUpMessage, SignUpFormWrapper } from './Styles/SignUpStyles'; 
+import GoogleLogin from './GoogleLogin'; 
 
 const SIGN_UP_MUTATION = gql`
     mutation SIGN_UP_MUTATION($email: String!, $firstName: String!, $lastName: String!, $password: String!) {
@@ -117,6 +118,12 @@ const SignUpForm = (props) => {
                 <div className="form-button-row">
                     <button type="submit">Sign Up</button>
                 </div>
+                <div className="OAuthLineBreak">
+                    <span className="OAuthProvider_lineBreak"></span>
+                    <span id="OAuth_or_text">or </span>
+                <span className="OAuthProvider_lineBreak"></span>
+                </div>
+                <GoogleLogin buttonText="Sign Up with Google"/>
             </Form>
         </SignUpFormWrapper>
     )

@@ -9,6 +9,7 @@ const StyledHeader = styled.div`
     top: 0; 
     display: flex; 
     align-items: center;  
+    z-index: 10; 
     img {
         margin: auto 0rem auto 4rem; 
         height: 50px;  

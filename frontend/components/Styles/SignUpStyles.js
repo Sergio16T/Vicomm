@@ -5,6 +5,20 @@ const SignUpPage = styled.div`
     height: 100%; 
     background: rgba(0, 0, 0, 0.02);
     padding: 100px 0; 
+    .OAuthLineBreak {
+        padding: 1rem 0; 
+        display: flex; 
+        align-items: center; 
+        .OAuthProvider_lineBreak {
+        flex-grow: 1; 
+        height: 2px; 
+        background-color: #eee; 
+        }
+        #OAuth_or_text {
+            font-size: 1.4rem; 
+            margin: 0 1rem; 
+        }
+    }
 `; 
 
 const SignUpFormWrapper = styled.div`
@@ -14,9 +28,14 @@ const SignUpFormWrapper = styled.div`
     border: 1px solid #f5f5f5; 
     display: flex; 
     justify-content: center; 
-    max-width: 800px; 
-    width: 90%; 
+    /* max-width: 800px; 
+    width: 90%;  */
     position: relative; 
+    width: 55%; 
+    margin: 0 auto; 
+    @media (max-width: 900px) {
+        width: 85%; 
+    }
 `; 
 
 const SignUpMessage = styled.div`
