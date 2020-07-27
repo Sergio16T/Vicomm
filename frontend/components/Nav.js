@@ -1,7 +1,7 @@
 import Link from 'next/link'; 
 import StyledNav from './Styles/NavStyles'; 
 
-const Nav = () => {
+const Nav = (props) => {
     return (
         <StyledNav>
             <Link href="/login">

@@ -16,17 +16,21 @@ const GlobalStyle = createGlobalStyle`
 	html {
 		box-sizing: border-box; 
 		font-size: 12px; 
+		height: 100%; 
 	}
 	body {
 		margin: 0; 
 		padding: 0; 
-		font-family: "Ubuntu"; 
+		font-family: "Lato"; 
+		/* height: 100%;  */
 	}
+	 div#__next {
+        height: 100%;
+      }
 	a {
 		text-decoration: none; 
 		color: black; 
 	}
-
 `; 
 
 function Page(props) {

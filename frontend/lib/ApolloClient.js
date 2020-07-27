@@ -1,14 +1,20 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import withApollo from 'next-with-apollo';
 import { ApolloProvider } from '@apollo/client';
-import { endPoint } from '../config'; 
+import { createHttpLink } from 'apollo-link-http'
+import { endPoint } from '../clientConfig'; 
+
+const link = createHttpLink({
+  uri: endPoint,
+  credentials: 'include'
+});
 
 
 export default withApollo(
     ({ initialState }) => {
       return new ApolloClient({
-        uri: endPoint,
-        cache: new InMemoryCache().restore(initialState || {})
+        link, 
+        cache: new InMemoryCache().restore(initialState || {}),
       });
     },
     {

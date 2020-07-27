@@ -34,7 +34,8 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <script src="https://kit.fontawesome.com/b0ebdd2ca1.js" SameSite="None" secure></script>
+          <script src="https://kit.fontawesome.com/b0ebdd2ca1.js"></script>
+          <script src="https://apis.google.com/js/platform.js" async defer></script>
         </body>
       </Html>
     )

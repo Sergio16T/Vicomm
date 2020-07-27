@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+const HomePage = styled.div`
+    height: calc(100% - 70px); 
+`; 
 const StyledBanner = styled.div`
     width: 100%; 
     background-position: top right;
@@ -24,7 +27,7 @@ const StyledBanner = styled.div`
         padding: 1rem;  
         h1 {
             color: white; 
-            font-size: 3.4rem; 
+            font-size: 3.6rem; 
             font-weight: 700; 
             margin-top: 0; 
         }
@@ -96,4 +99,4 @@ const Section = styled.div`
         grid-row-gap: 20px; 
     }
 `; 
-export { StyledBanner, Main, Section}; 
+export { HomePage, StyledBanner, Main, Section}; 

@@ -9,16 +9,16 @@ require('dotenv').config();
 server.express.use(cookieParser()); 
 
 server.express.use(async (req, res, next) => {
-    const { fs_token } = req.cookies; 
-    if(!fs_token) next()
-    if(fs_token) {
-        const { ACCT_KEY } = jwt.verify(fs_token, process.env.jwtsecret); 
+    const { token } = req.cookies; 
+    if(!token) next();
+    if(token) {
+        const { ACCT_KEY } = jwt.verify(token, process.env.jwtsecret); 
         let qString = SQL`
         SELECT 
             ACCT.ACCT_KEY,
             ACCT.EMAIL,
-            ACCT.FST_NM,
-            ACCT.LST_NM, 
+            ACCT.FST_NAME,
+            ACCT.LST_NAME, 
             ACCT.ACCT_TYP_CD
         FROM 
             ACCT
@@ -26,14 +26,15 @@ server.express.use(async (req, res, next) => {
             ACCT_KEY = ${ACCT_KEY}
             AND ACT_IND = 1
         `; 
-        const user = await db.query(qString).catch(err => { throw err }); 
+        const [user] = await db.query(qString).catch(err => { throw err }); 
         req.user = user; 
+        console.log('user set', req.user)
         next(); 
     }
 });
 server.start({
     cors: {
         credentials: true, // so not just anyone can crud data 
-        // origin: process.env.FRONTEND_URL, 
+        origin: process.env.FRONTEND_URL, 
     },
   },(details) => console.log(`GraphQL server is running on ${details.port}`));

@@ -1,10 +1,11 @@
 import React from 'react';
-import Login from '../components/Login'; 
+import WithApollo from '../lib/ApolloClient'; 
+import SignIn from '../components/SignIn'; 
 
 const login = (props) => {
     return (
-        <Login/>
+        <SignIn/>
     )
 }
 
-export default login;
+export default WithApollo(login);

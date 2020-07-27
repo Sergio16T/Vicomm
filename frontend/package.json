@@ -13,12 +13,15 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/client": "^3.0.2",
+    "apollo-link": "^1.2.14",
+    "apollo-link-http": "^1.5.17",
     "babel-plugin-styled-components": "^1.10.7",
     "graphql": "^15.3.0",
     "next": "^9.4.4",
     "next-with-apollo": "^5.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-google-login": "^5.1.21",
     "styled-components": "^5.1.1"
   },
   "devDependencies": {
@@ -36,7 +39,8 @@
             "styled-components",
             {
               "ssr": true,
-              "displayName": true
+              "displayName": true,
+              "preprocess": false
             }
           ]
         ]

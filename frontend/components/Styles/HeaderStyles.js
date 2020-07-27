@@ -16,6 +16,11 @@ const StyledHeader = styled.div`
             cursor: pointer;
         }
     }
+    @media (max-width: 480px) {
+        img {
+            margin: auto 0rem auto 1rem; 
+        }
+    }
 `; 
 
 export default StyledHeader; 

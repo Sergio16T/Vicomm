@@ -14,17 +14,19 @@ const Query = {
         return result; 
     },
     user: async(parent, args, context, info) => {
-        if(!context.user.ACCT_KEY) return null; 
+        console.log('request', context.request.user)
+        if(!context.request.user) return null; 
+        console.log('user check get', context.request.user.ACCT_KEY); 
         let qString = SQL`
         SELECT 
             *
         FROM 
             ACCT
         WHERE 
-            ACCT_KEY = ${context.user.ACCT_KEY}
+            ACCT_KEY = ${context.request.user.ACCT_KEY}
             AND ACT_IND = 1
         `; 
-        const user = await db.query(qString).catch(err => {
+        const [user] = await context.db.query(qString).catch(err => {
             throw new Error('Error:', err.message); 
         }); 
         return user; 

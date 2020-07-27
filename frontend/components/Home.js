@@ -1,6 +1,6 @@
 import { useQuery, gql } from '@apollo/client';
 import Header from '../components/Header'; 
-import { StyledBanner, Main, Section } from './Styles/HomePageStyles'; 
+import { HomePage, StyledBanner, Main, Section } from './Styles/HomePageStyles'; 
 
 const GET_USERS_QUERY = gql`
     query GET_USERS_QUERY {
@@ -15,9 +15,10 @@ const GET_USERS_QUERY = gql`
 const Home = (props) => {
     const { loading, error, data } = useQuery(GET_USERS_QUERY); 
     if(loading) return null
+    if(error) return <p>{error.message}</p>
     console.log('data', data); 
     return (
-        <div>
+        <HomePage>
             <Header/>
             <Main>
                 <StyledBanner>
@@ -47,8 +48,8 @@ const Home = (props) => {
                     <p>Grow your business</p>
                 </div>
             </Section>
-            <Section/>
-        </div>
+            {/* <Section/> */}
+        </HomePage>
     )
 }
 
