@@ -12,7 +12,8 @@ const StyledNav = styled.ul`
     font-size: 1.3rem; 
     font-family: 'Lato'; 
     list-style: none; 
-    color: rgba(0,0,0,.7); 
+    color: rgba(0, 0, 0, .6); 
+    font-weight: 600; 
         &:hover {
             cursor: pointer;
         }

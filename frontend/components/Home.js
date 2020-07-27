@@ -13,10 +13,6 @@ const GET_USERS_QUERY = gql`
 
 
 const Home = (props) => {
-    const { loading, error, data } = useQuery(GET_USERS_QUERY); 
-    if(loading) return null
-    if(error) return <p>{error.message}</p>
-    console.log('data', data); 
     return (
         <HomePage>
             <Header/>

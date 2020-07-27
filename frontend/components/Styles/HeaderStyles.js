@@ -5,7 +5,7 @@ const StyledHeader = styled.div`
     background-color: white; 
     box-shadow: ${props => props.theme.bs}; 
     width: 100%; 
-    height: 70px; 
+    height: 75px; 
     top: 0; 
     display: flex; 
     align-items: center;  
