@@ -7,6 +7,7 @@ type Mutation {
     signUp(email: String!, firstName: String!, lastName: String!, password: String!): User!
     signIn(email: String!, password: String!): User!
     googleSignIn(firstName: String!, lastName: String!, email: String!, accessToken: String!): User!
+    signOut: SuccessMessage!
 }
 
 type User {
@@ -26,4 +27,7 @@ type Item {
     LG_IMG: String!
     PRICE: Int!
     CRTE_BY_ACCT_KEY: User!
+}
+type SuccessMessage {
+    message: String!
 }

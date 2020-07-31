@@ -5,7 +5,7 @@ const StyledHeader = styled.div`
     background-color: white; 
     box-shadow: ${props => props.theme.bs}; 
     width: 100%; 
-    height: 75px; 
+    height: 80px; 
     top: 0; 
     display: flex; 
     align-items: center;  
@@ -19,7 +19,7 @@ const StyledHeader = styled.div`
     }
     @media (max-width: 480px) {
         img {
-            margin: auto 0rem auto 1rem; 
+            margin: auto 0rem auto 2rem; 
         }
     }
 `; 

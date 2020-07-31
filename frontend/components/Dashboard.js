@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client'; 
-import { AppHeader, SideBar }  from './AppSidebar'; 
+import SideBar  from './AppSidebar'; 
+import AppHeader from './AppHeader'; 
+import { BackDrop } from './Styles/PageStyles'; 
+import Router from 'next/router';
 
 const GET_USER_QUERY = gql`
     query GET_USER_QUERY {
@@ -12,13 +15,44 @@ const GET_USER_QUERY = gql`
 `;
 
 const DashBoard = () => {
+    const [isOpen, setIsOpen] = useState(false); 
     const { loading, error, data } = useQuery(GET_USER_QUERY); 
+    const backDrop = useRef(null); 
+    
+    useEffect(() => {
+        document.addEventListener('click', handleClick); 
+        return () => document.removeEventListener('click', handleClick); 
+    }, []); 
+
+    const handleClick = (e) => {
+        if(e.target.contains(backDrop.current)) {
+            setIsOpen(false); 
+            document.querySelector('body').style.overflow = ''; 
+        } 
+    }
+
+    const toggleSideBar = () => { 
+        if(!isOpen) document.querySelector('body').style.overflow = "hidden"; 
+        setIsOpen(!isOpen); 
+    }
+
     if (loading) return null; 
-    if (error) return null; 
-    if (data) return (
+    if(!data.user) {
+        Router.push({
+            pathname: "/login"
+        }); 
+        return null; 
+    }
+    if (data.user) return (
         <div>
-            <AppHeader/>
-            <SideBar user={data.user ? data.user : ''}/>
+            <BackDrop isOpen={isOpen} ref={backDrop}/>
+            <AppHeader 
+            user={data.user ? data.user : ''}
+            toggleSideBar={toggleSideBar}
+            />
+            <SideBar 
+            isOpen={isOpen}
+            user={data.user ? data.user : ''}/>
         </div>
     );
 };

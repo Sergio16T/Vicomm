@@ -13,7 +13,6 @@ const StyledNav = styled.ul`
     font-family: 'Lato'; 
     list-style: none; 
     color: rgba(0, 0, 0, .6); 
-    font-weight: 600; 
         &:hover {
             cursor: pointer;
         }
@@ -23,7 +22,7 @@ const StyledNav = styled.ul`
             animation-duration: 3s; 
             animation-timing-function: ease-in-out; 
             font-size: 1.4rem; 
-            padding: .65rem 2.5rem;
+            padding: .75rem 2.5rem;
             background-color: #3BD2A2;  
             border: none; 
             outline: none; 

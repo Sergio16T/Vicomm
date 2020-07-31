@@ -137,7 +137,12 @@ const mutation = {
         }); 
         console.log('googleLogIn', user); 
         return user; 
-    }
+    }, 
+    signOut(parent, args, context, info) {
+        console.log('signout'); 
+        context.response.clearCookie("token"); 
+        return { message: "GoodBye!"}
+    }, 
 }
 
 module.exports = mutation; 

@@ -69,6 +69,7 @@ const SignUpForm = (props) => {
                     name="firstName"
                     onChange={handleInputChange}
                     value={state.firstName}
+                    required
                     />
                 </div>
                 <div className="formRow">
@@ -80,6 +81,7 @@ const SignUpForm = (props) => {
                     name="lastName"
                     onChange={handleInputChange}
                     value={state.lastName}
+                    required
                     />
                 </div>
                 <div className="formRow">
@@ -91,6 +93,7 @@ const SignUpForm = (props) => {
                     name="email"
                     onChange={handleInputChange}
                     value={state.email}
+                    required
                     />
                 </div>
                 <div className="formRow">
@@ -102,6 +105,7 @@ const SignUpForm = (props) => {
                     name="password"
                     onChange={handleInputChange}
                     value={state.password}
+                    required
                     />
                 </div>
                 <div className="formRow">
@@ -113,6 +117,7 @@ const SignUpForm = (props) => {
                     name="confirmPassword"
                     onChange={handleInputChange}
                     value={state.confirmPassword}
+                    required
                     />
                 </div>
                 <div className="form-button-row">
