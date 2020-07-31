@@ -26,7 +26,9 @@ const AppHeader = (props) => {
             </div>
             <div className="nav-right">
                 <img id="uploadImageIcon" src="https://res.cloudinary.com/dddnhychw/image/upload/v1596157219/Full%20Stack%20App/untitled_6_saqq66.svg"/>
-                <VerticalDotMenu/>
+                <VerticalDotMenu 
+                client={props.client}
+                />
             </div>
         </StyledHeader>
     ); 
@@ -54,9 +56,9 @@ const VerticalDotMenu = (props) => {
     }
     const logOut = async (e) => {
         e.stopPropagation(); 
-        console.log('click'); 
         e.preventDefault(); 
         await signOut(); 
+        props.client.resetStore(); 
         Router.push({
             pathname: "/"
         }); 

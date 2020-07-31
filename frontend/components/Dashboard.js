@@ -16,7 +16,7 @@ const GET_USER_QUERY = gql`
 
 const DashBoard = () => {
     const [isOpen, setIsOpen] = useState(false); 
-    const { loading, error, data } = useQuery(GET_USER_QUERY); 
+    const { client, loading, data } = useQuery(GET_USER_QUERY, { fetchPolicy: "network-only" }); 
     const backDrop = useRef(null); 
     
     useEffect(() => {
@@ -43,12 +43,13 @@ const DashBoard = () => {
         }); 
         return null; 
     }
-    if (data.user) return (
+    return (
         <div>
             <BackDrop isOpen={isOpen} ref={backDrop}/>
             <AppHeader 
             user={data.user ? data.user : ''}
             toggleSideBar={toggleSideBar}
+            client={client}
             />
             <SideBar 
             isOpen={isOpen}
