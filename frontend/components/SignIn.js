@@ -33,6 +33,7 @@ const SignInForm = () => {
         email: '',
         password: ''
     }); 
+
     const handleInputChange = (e) => {
         const { name, value } = e.target; 
         setState({
@@ -42,16 +43,27 @@ const SignInForm = () => {
     }
     const submitForm = async (e) => {
         e.preventDefault(); 
-        await signIn({ variables: {...state}}); 
-        Router.push({
-            pathname: '/dashboard'
-        }); 
+        try {
+            await signIn({ variables: {...state}}).catch(err=> {
+                throw err; 
+            }); 
+            Router.push({
+                pathname: '/dashboard'
+            }); 
+        } catch(err) {
+            setState({...state, signInError: err.message }); 
+        }
     } 
     return (
         <SignInFormWrapper>
               <SignInMessage>
                 <h1>Hi, Welcome Back!</h1>
               </SignInMessage>
+              {state.signInError && 
+                    <div className='error-message'>
+                        <p>{state.signInError}</p>
+                    </div>
+                }
             <Form onSubmit={submitForm}>
                 <div className="formRow">
                     <label htmlFor="firstName">

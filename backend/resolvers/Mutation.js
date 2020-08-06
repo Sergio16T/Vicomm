@@ -44,7 +44,7 @@ const mutation = {
         )
         `; 
         const result = await context.db.query(qString).catch(err => { 
-            throw new Error({"Error Message": err.message}); 
+            throw new Error(err.message); 
         }); 
         let userQuery = `
         SELECT 
@@ -55,7 +55,7 @@ const mutation = {
             ACCT_KEY = ${result.insertId}
         `; 
         const [user] = await context.db.query(userQuery).catch(err => {
-            throw new Error({"Error Message": err.message }); 
+            throw new Error(err.message); 
         }); 
         const token = jwt.sign({ ACCT_KEY: user.ACCT_KEY}, process.env.jwtsecret); 
         context.response.cookie("token", token, {

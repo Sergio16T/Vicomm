@@ -26,7 +26,7 @@ const MenuAppContainer = styled.div`
                     display: flex; 
                     align-items: center; 
                     padding: .5rem; 
-                    font-size: 1.3rem; 
+                    font-size: 1.2rem; 
                     color: rgba(0,0,0,0.4);
                     position: relative; 
                     overflow: hidden; 
@@ -36,10 +36,18 @@ const MenuAppContainer = styled.div`
                         height: 32px;
                         margin: 0 1rem;
                         color: ${props => props.theme.offWhite}; 
-                        background: #4285f4;
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                    }
+                    #homeIcon {
+                        background: #4285f4;
+                    }
+                    #productIcon {
+                        background: rgb(95, 46, 233); 
+                    }
+                    #ordersIcon {
+                        background: #EB3569; 
                     }
                     &:hover {
                         cursor: pointer; 

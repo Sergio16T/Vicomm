@@ -53,6 +53,11 @@ const Form = styled.form`
             }
         }
     }
+    .error {
+        color: red; 
+        font-size: 1rem; 
+        margin: .25rem 0; 
+    }
    
 `; 
 

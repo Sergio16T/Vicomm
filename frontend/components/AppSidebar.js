@@ -3,7 +3,6 @@ import { Side, MenuAppContainer } from './Styles/AppSidebarStyles';
 import Link from 'next/link'; 
 
 const SideBar = (props) => {
-    const [open, setOpen] = useState(false); 
     const { user } = props; 
     return (
         <Side isOpen={props.isOpen}>
@@ -14,15 +13,24 @@ const SideBar = (props) => {
                     </div>
                     <div className="nav-list-container">
                         <ul id="app-sidebar-list">
-                            <Link href="/dashboard">
-                                <li className="app-list-item">
-                                    <span className="faIcon">
-                                        <i className="fa fa-home"></i>
-                                    </span>
-                                   
-                                    <span>Home</span>
-                                </li>
-                            </Link>
+                            <MenuItem
+                            link="/dashboard"
+                            id="homeIcon"
+                            faIcon="fa fa-home"
+                            text="Home"
+                            />
+                            <MenuItem
+                            link="/dashboard"
+                            id="productIcon"
+                            faIcon="fas fa-tag"
+                            text="Products"
+                            />
+                            <MenuItem
+                            link="/dashboard"
+                            id="ordersIcon"
+                            faIcon="fas fa-shopping-cart"
+                            text="Orders"
+                            />
                         </ul>
                     </div>
                 </div>
@@ -36,5 +44,17 @@ const SideBar = (props) => {
     )
 }
 
+const MenuItem = (props) => {
+    return (
+        <Link href={props.link}>
+        <li className="app-list-item">
+            <span className="faIcon" id={props.id}>
+                <i className={props.faIcon}></i>
+            </span>
+            <span>{props.text}</span>
+        </li>
+    </Link>
+    )
+}
 
 export default SideBar ; 

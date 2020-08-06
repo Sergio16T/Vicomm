@@ -33,32 +33,85 @@ const SignUp = (props) => {
 
 
 const SignUpForm = (props) => {
-    const [ signUp, {data}] = useMutation(SIGN_UP_MUTATION); 
+    const [ signUp, { data }] = useMutation(SIGN_UP_MUTATION); 
     const [state, setState] = useState({
         firstName: '',
         lastName: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        emailError: ''
     }); 
 
     const handleInputChange = (e) => {
         const { name, value } = e.target; 
-        setState({
-            ...state, 
-            [name]: value
-        }); 
+        const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+        switch(name){
+            case "email":
+                if(state.emailError && emailRegEx.test(value)) {
+                    setState({...state, [name]: value, emailError: '' }); 
+                } else {
+                    setState({...state, [name]: value }); 
+                } 
+                break; 
+            case "confirmPassword": 
+                if(state.passwordError && value === state.password) setState({...state, [name]: value, passwordError: '' }); 
+                else setState({...state, [name]: value }); 
+                break; 
+            case "password" :
+                if(state.passwordError && value === state.confirmPassword) setState({ ...state, [name]: value, passwordError: ''}); 
+                else setState({...state, [name]: value }); 
+                break; 
+            default:
+                setState({
+                    ...state, 
+                    [name]: value
+                }); 
+        }
     }
     const submitForm = async (e) => {
         e.preventDefault(); 
-        console.log('sign up!')
-        await signUp({variables: {...state} }); 
-        Router.push({
-            pathname: "/dashboard"
-        });
+        if(!state.passwordsMatch) return; 
+        try {
+            await signUp({variables: {...state} }).catch(err => {
+                throw err; 
+            }); 
+            Router.push({
+                pathname: "/dashboard"
+            });
+        } catch(err) {
+            setState({...state, signUpError: err.message }); 
+        }
+    }
+    const confirmPasswordMatch = () => {
+        const { password, confirmPassword } = state; 
+        const match = password === confirmPassword ? true : false; 
+        const passwordError = match ? '' : 'Passwords do not match'
+        setState({...state, passwordsMatch: match, passwordError }); 
+    }
+    const handleBlur = (e) => {
+        const { name, value } = e.target; 
+        const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+        switch(name) {
+            case 'email':
+                if(!emailRegEx.test(value.trim())) setState({ ...state, emailError: "Please enter a valid email"}); 
+                break; 
+            case 'confirmPassword': 
+                if(state.password) confirmPasswordMatch(); 
+                break; 
+            case 'password': 
+                if(state.confirmPassword) confirmPasswordMatch(); 
+            break; 
+        }
+   
     }
     return (
         <SignUpFormWrapper>
+               {state.signUpError && 
+                    <div className='error-message'>
+                        <p>{state.signUpError}</p>
+                    </div>
+                }
             <Form onSubmit={submitForm}>
                 <div className="formRow">
                     <label htmlFor="firstName">
@@ -92,9 +145,11 @@ const SignUpForm = (props) => {
                     type="text"
                     name="email"
                     onChange={handleInputChange}
+                    onBlur={handleBlur}
                     value={state.email}
                     required
                     />
+                    {state.emailError && <p className="error">{state.emailError}</p>}
                 </div>
                 <div className="formRow">
                     <label htmlFor="firstName">
@@ -104,6 +159,7 @@ const SignUpForm = (props) => {
                     type="password"
                     name="password"
                     onChange={handleInputChange}
+                    onBlur={handleBlur}
                     value={state.password}
                     required
                     />
@@ -116,9 +172,11 @@ const SignUpForm = (props) => {
                     type="password"
                     name="confirmPassword"
                     onChange={handleInputChange}
+                    onBlur={handleBlur}
                     value={state.confirmPassword}
                     required
                     />
+                    {state.passwordError && <p className="error">{state.passwordError}</p>}
                 </div>
                 <div className="form-button-row">
                     <button type="submit">Sign Up</button>

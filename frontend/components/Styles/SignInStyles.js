@@ -35,6 +35,17 @@ const SignInFormWrapper = styled.div`
 padding-top: 150px; 
 width: 45%; 
 margin: 0 auto; 
+    .error-message {
+        background-color: rgb(255, 0, 0, .1);
+        border: 1px solid red; 
+        border-left: 5px solid red;
+        margin: .5rem 0; 
+        padding: .5rem 1rem; 
+        p {
+            color: red; 
+            font-size: 1.1rem; 
+        }
+    }
 @media (max-width: 900px) {
     width: 85%; 
 }

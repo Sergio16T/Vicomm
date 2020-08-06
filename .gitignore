@@ -3,3 +3,4 @@ node_modules
 .next
 clientConfig.js
 next.config.js
+connect.js
