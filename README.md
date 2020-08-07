@@ -12,7 +12,7 @@
 ### Summary
 * **Currently in development:** Building a SaaS product where users can customize their profile, create their own e-commerce store, connect their stripe account, host content, share posts, build a following, and view posts in their feed from other stores and users that they follow. 
 
-* **:Main Features:** 
+* **Main Features:** 
     - Dashboard
     - Profile page 
     - Social media feed
