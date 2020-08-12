@@ -6,7 +6,6 @@ const mutation = {
     async signUp(parent, args, context, info) {
         const email = args.email.toLowerCase(); 
         const password = await bcrypt.hash(args.password, 10); 
-        // need to add check to see if email already exists in DB to prevent duplicate emails
         let emailCheck = SQL`
         SELECT 
             * 

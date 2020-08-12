@@ -25,7 +25,7 @@ const AppHeader = (props) => {
                 <span id="userName">{`${user.FST_NAME}'s Store`}</span>
             </div>
             <div className="nav-right">
-                <img id="uploadImageIcon" src="https://res.cloudinary.com/dddnhychw/image/upload/v1596157219/Full%20Stack%20App/untitled_6_saqq66.svg"/>
+                <img id="uploadImageIcon" onClick={props.toggleModal} src="https://res.cloudinary.com/dddnhychw/image/upload/v1596157219/Full%20Stack%20App/untitled_6_saqq66.svg"/>
                 <VerticalDotMenu 
                 client={props.client}
                 />
@@ -48,12 +48,11 @@ const VerticalDotMenu = (props) => {
     }, []); 
 
     const handleClick = (e) => {
-        if(!e.target.contains(dotMenu.current) || e.target === dotMenu.current) {
-            return; 
+        if(!dotMenu.current.contains(e.target)) {
+            setIsOpen(false); 
         }
-        setIsOpen(false);
-        
     }
+
     const logOut = async (e) => {
         e.stopPropagation(); 
         e.preventDefault(); 

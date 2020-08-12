@@ -37,7 +37,7 @@ const StyledBanner = styled.div`
 `; 
 const Main = styled.div`
     width: 100%; 
-    margin-top:70px; 
+    padding-top:70px; 
 `; 
 const Section = styled.div`
     width: 100%; 
