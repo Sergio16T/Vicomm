@@ -30,6 +30,21 @@ const Query = {
             throw new Error('Error:', err.message); 
         }); 
         return user; 
+    },
+    getImageGallery: async(parent, args, context, info) => {
+        let qString = SQL`
+            SELECT 
+                * 
+            FROM 
+                mltmd 
+            WHERE 
+                CRTE_BY_ACCT_KEY = ${context.request.user.ACCT_KEY}
+                AND MLTMD_SZ_CD = ${"IMG|REG"}
+                AND ACT_IND = ${1}
+        `; 
+        const MLTMD = await context.db.query(qString).catch(err => { throw err; }); 
+        // console.log(MLTMD)
+        return MLTMD; 
     }
 }
 

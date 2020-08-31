@@ -142,6 +142,33 @@ const mutation = {
         context.response.clearCookie("token"); 
         return { message: "GoodBye!"}
     }, 
+    async uploadImageToGallery(parent, args, context, info) {
+        
+        let imageQString = SQL`
+        INSERT INTO 
+            mltmd 
+        SET 
+            MLTMD_URL=${args.image},
+            MLTMD_SZ_CD=${"IMG|REG"},
+            CRTE_TM = NOW(), 
+            CRTE_BY_ACCT_KEY = ${context.request.user.ACCT_KEY},
+            ACT_IND = ${1}`; 
+
+        await context.db.query(imageQString).catch(err => { throw err; }); 
+
+        let largeImageQString = SQL`
+        INSERT INTO 
+            mltmd 
+        SET 
+            MLTMD_URL=${args.largeImage},
+            MLTMD_SZ_CD=${"IMG|LRG"},
+            CRTE_TM = NOW(), 
+            CRTE_BY_ACCT_KEY = ${context.request.user.ACCT_KEY},
+            ACT_IND = ${1}`; 
+        await context.db.query(largeImageQString).catch(err => { throw err; }); 
+
+        return { message: "Success!"};
+    }
 }
 
 module.exports = mutation; 

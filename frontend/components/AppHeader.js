@@ -56,8 +56,9 @@ const VerticalDotMenu = (props) => {
     const logOut = async (e) => {
         e.stopPropagation(); 
         e.preventDefault(); 
+        props.client.clearStore(); 
         await signOut(); 
-        props.client.resetStore(); 
+        
         Router.push({
             pathname: "/"
         }); 

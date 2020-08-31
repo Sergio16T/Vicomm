@@ -1,12 +1,14 @@
 type Query {
     users: [User]!
-    user: User
+    user: User,
+    getImageGallery: [MultiMedia]
   }
 
 type Mutation {
     signUp(email: String!, firstName: String!, lastName: String!, password: String!): User!
     signIn(email: String!, password: String!): User!
     googleSignIn(firstName: String!, lastName: String!, email: String!, accessToken: String!): User!
+    uploadImageToGallery(image: String!, largeImage: String!): SuccessMessage!
     signOut: SuccessMessage!
 }
 
@@ -27,6 +29,13 @@ type Item {
     LG_IMG: String!
     PRICE: Int!
     CRTE_BY_ACCT_KEY: User!
+}
+type MultiMedia {
+    MLTMD_KEY: ID, 
+    MLTMD_SZ_CD: String!
+    MLTMD_URL: String!
+    SRC_TBL_KEY_CD: Int
+    CRTE_BY_ACCT_KEY: Int
 }
 type SuccessMessage {
     message: String!
