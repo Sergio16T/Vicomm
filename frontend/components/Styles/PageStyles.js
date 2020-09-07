@@ -10,7 +10,8 @@ const theme = {
 	blue: "rgba(10,10,54,1)", 
 	skyBlue:  "#4285f4", 
 	purple: "#5f2ee9",
-	pink: "#EB3569"
+    pink: "#EB3569",
+    pastelYellow: "#f1e0be"
 }
 
 const GlobalStyle = createGlobalStyle`	

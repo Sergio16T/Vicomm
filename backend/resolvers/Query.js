@@ -39,7 +39,6 @@ const Query = {
                 mltmd 
             WHERE 
                 CRTE_BY_ACCT_KEY = ${context.request.user.ACCT_KEY}
-                AND MLTMD_SZ_CD = ${"IMG|REG"}
                 AND ACT_IND = ${1}
         `; 
         const MLTMD = await context.db.query(qString).catch(err => { throw err; }); 

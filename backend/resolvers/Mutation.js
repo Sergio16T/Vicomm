@@ -149,25 +149,27 @@ const mutation = {
             mltmd 
         SET 
             MLTMD_URL=${args.image},
-            MLTMD_SZ_CD=${"IMG|REG"},
+            MLTMD_LG_URL=${args.largeImage},
             CRTE_TM = NOW(), 
             CRTE_BY_ACCT_KEY = ${context.request.user.ACCT_KEY},
             ACT_IND = ${1}`; 
 
-        await context.db.query(imageQString).catch(err => { throw err; }); 
-
-        let largeImageQString = SQL`
-        INSERT INTO 
-            mltmd 
-        SET 
-            MLTMD_URL=${args.largeImage},
-            MLTMD_SZ_CD=${"IMG|LRG"},
-            CRTE_TM = NOW(), 
-            CRTE_BY_ACCT_KEY = ${context.request.user.ACCT_KEY},
-            ACT_IND = ${1}`; 
-        await context.db.query(largeImageQString).catch(err => { throw err; }); 
+        await context.db.query(imageQString).catch(err => { throw err; });
 
         return { message: "Success!"};
+    },
+    async deleteImages(parent, args, context, info) {
+        for(let i =0; i < args.keys.length; i++) {
+            let key = parseInt(args.keys[i]); 
+            let deleteImgQ = SQL`
+                DELETE FROM 
+                    mltmd
+                WHERE 
+                    MLTMD_KEY = ${key}
+            `; 
+            await context.db.query(deleteImgQ).catch(err => { throw err }); 
+        }
+        return { message: "Success! Image has been deleted" }; 
     }
 }
 

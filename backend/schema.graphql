@@ -7,9 +7,10 @@ type Query {
 type Mutation {
     signUp(email: String!, firstName: String!, lastName: String!, password: String!): User!
     signIn(email: String!, password: String!): User!
+    signOut: SuccessMessage!
     googleSignIn(firstName: String!, lastName: String!, email: String!, accessToken: String!): User!
     uploadImageToGallery(image: String!, largeImage: String!): SuccessMessage!
-    signOut: SuccessMessage!
+    deleteImages(keys: [ID]): SuccessMessage!
 }
 
 type User {

@@ -16,7 +16,7 @@ const StyledSpinner = styled.div`
         justify-content: center;
         align-items: center;
         z-index: 3; 
-        min-height: 400px; 
+        min-height: 500px; 
     }
     #loading {
       display: inline-block;
