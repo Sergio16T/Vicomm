@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client'; 
 import Spinner from './Spinner'; 
 import { StyledModal } from './Styles/GalleryModalStyles'; 
@@ -40,6 +40,9 @@ const UploadImageModal = (props) => {
     const [count, setCount] = useState(0); 
     const uploadInput = useRef(); 
 
+    useEffect(() => {
+        !props.show && setSelected({}); 
+    },[props.show]); 
     const handleSelect = (image) => {
         const selectedImages = {...selected}; 
         if(image.MLTMD_KEY in selectedImages) delete selectedImages[image.MLTMD_KEY]; 
