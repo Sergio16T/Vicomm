@@ -6,6 +6,7 @@ import { BackDrop, ModalBackDrop, StyledPage } from './Styles/PageStyles';
 import { PageContent } from './Styles/DashboardStyles'; 
 import Router from 'next/router';
 import ImageGalleryModal from './GalleryModal'; 
+import Spinner from './Spinner'; 
 
 const GET_USER_QUERY = gql`
     query GET_USER_QUERY {
@@ -20,6 +21,7 @@ const DashBoard = () => {
     const [isOpen, setIsOpen] = useState(false); 
     const { client, loading, data } = useQuery(GET_USER_QUERY, { fetchPolicy: "network-only" }); 
     const [modalOpen, setModalOpen] = useState(false); 
+    const [spinner, setSpinner] = useState(false); 
     const backDrop = useRef(null); 
     const modalBackDrop = useRef(null); 
 
@@ -91,7 +93,12 @@ const DashBoard = () => {
             toggleModal={toggleModal}
             modalXColor={"white"}
             user={data.user ? data.user : ''}
+            multiSelect
+            setSpinner={setSpinner}
             />
+            <Spinner 
+            show={modalOpen}
+            spinner={spinner}/>
         </StyledPage>
     );
 };

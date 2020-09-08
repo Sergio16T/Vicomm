@@ -35,7 +35,7 @@ const PageContent = styled.div`
                 font-family: 'ubuntu'; 
             }
             span {
-                font-size: 1.3rem; 
+                font-size: 1.2rem; 
                 color: rgba(0,0,0,0.54);
                 margin-bottom: 1rem; 
             }

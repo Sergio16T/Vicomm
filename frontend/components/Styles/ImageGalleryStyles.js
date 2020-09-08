@@ -72,6 +72,13 @@ const StyledGallery = styled.div`
         }
       
     }
+    @media (max-width: 340px) {
+        .img-gallery { 
+            .gallery-img {
+                height: 100px; 
+            }
+        }
+    }
 `; 
 
 const StyledImgSelectedHeader = styled.div`

@@ -61,10 +61,9 @@ const StyledModal = styled.div`
         font-size: 1.3rem; 
         margin-right: 30px; 
         cursor: pointer;
-        .plusIcon {
+    }
+    .plusIcon {
             padding-right: .5rem;
-        }
-
     }
     .d-flex {
         display: flex; 
@@ -96,7 +95,18 @@ const StyledModal = styled.div`
     @media (max-width: 800px) {
         width: 90vw; 
     }
-
+    @media (max-width: 600px) {
+        #uploadImgBtn {
+            padding: .8rem 1rem; 
+        }
+        .plusIcon {
+            font-size: 1.5rem;
+            padding-right: 0;
+        }
+    }
+    @media (max-width: 340px) {
+        min-height: 400px; 
+    }
 `; 
 
 export { StyledModal }; 

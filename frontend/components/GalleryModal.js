@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client'; 
-import Spinner from './Spinner'; 
 import { StyledModal } from './Styles/GalleryModalStyles'; 
 import ImageGallery from './ImageGallery'; 
 import ImgSelectedHeader from './ModalSelectedImagesHeader'; 
@@ -35,7 +34,6 @@ const UploadImageModal = (props) => {
     const {loading, data} = useQuery(GET_IMG_GALLERY); 
     const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ['GET_IMG_GALLERY']}); 
     const [deleteImages] = useMutation(DELETE_IMGS_MUTATION, { refetchQueries: ['GET_IMG_GALLERY']});
-    const [spinner, setSpinner] = useState(false); 
     const [selected, setSelected] = useState({}); 
     const [count, setCount] = useState(0); 
     const uploadInput = useRef(); 
@@ -43,8 +41,9 @@ const UploadImageModal = (props) => {
     useEffect(() => {
         !props.show && setSelected({}); 
     },[props.show]); 
+    
     const handleSelect = (image) => {
-        const selectedImages = {...selected}; 
+        const selectedImages = props.multiSelect ? {...selected} : {}; 
         if(image.MLTMD_KEY in selectedImages) delete selectedImages[image.MLTMD_KEY]; 
         else selectedImages[image.MLTMD_KEY] = image; 
         setSelected(selectedImages); 
@@ -57,7 +56,7 @@ const UploadImageModal = (props) => {
         data.append('file', files[0]); 
         data.append('upload_preset', 'Vicomm'); 
         try {
-            setSpinner(true); 
+            props.setSpinner(true); 
             const res = await fetch('https://api.cloudinary.com/v1_1/dddnhychw/image/upload', {
                 method: 'POST', 
                 body: data  
@@ -71,19 +70,19 @@ const UploadImageModal = (props) => {
                  throw err; 
              }); 
             uploadInput.current.value= ""; 
-            setSpinner(false); 
+            props.setSpinner(false); 
         }
         catch(err) {
             console.log(err); 
-            setSpinner(false); 
+            props.setSpinner(false); 
         }
     }
     const deleteMultimedia = async () => {
-        setSpinner(true); 
+        props.setSpinner(true); 
         setTimeout( async () => { 
             await deleteImages({ variables: { keys: Object.keys(selected) }});
             setSelected({}); 
-            setSpinner(false); 
+            props.setSpinner(false); 
         }, 500); 
       
     }
@@ -103,7 +102,6 @@ const UploadImageModal = (props) => {
                 }
          
                 <div className="modal-content">
-                    <Spinner spinner={spinner}/>
                     {!loading && 
                         <ImageGallery
                          multiMedia ={data.getImageGallery}

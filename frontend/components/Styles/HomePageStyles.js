@@ -15,6 +15,8 @@ const StyledBanner = styled.div`
     .bannerColumn {
         width: 100%; 
         text-align: center; 
+        overflow: hidden;
+        position: relative; 
         h1 {
             font-size: 4.4rem;
             font-weight: 700; 
@@ -24,14 +26,72 @@ const StyledBanner = styled.div`
             font-size: 1.8rem; 
         }
     }
+    .blueSphere {
+        width: 750px; 
+        height: 750px; 
+        position: absolute; 
+        background: ${props => props.theme.skyBlue}; 
+        bottom: -400px; 
+        left: -400px; 
+        border-radius: 50%; 
+    }
+    .purpleSphere {
+        width: 750px; 
+        height: 750px; 
+        position: absolute; 
+        background: ${props => props.theme.purple}; 
+        bottom: -400px; 
+        right: -400px; 
+        border-radius: 50%; 
+    }
     @media (max-width: 1000px) {
         height: calc(100vh - 70px); 
         .bannerColumn {
-            margin: 0 2rem; 
+            padding: 0 2rem; 
             h1 {
                 font-size: 2.8rem; 
                 margin: 6rem 0 2rem 0; 
             }
+        }
+        .blueSphere, .purpleSphere {
+            width: 640px; 
+            height: 640px; 
+        }
+        .blueSphere {
+            bottom: -300px; 
+            left: -300px; 
+        }
+        .purpleSphere {
+            bottom: -340px;
+            right: -340px; 
+        }
+    }
+    @media (max-width: 650px) {
+        .blueSphere, .purpleSphere {
+            width: 540px; 
+            height: 540px; 
+        }
+        .blueSphere {
+            bottom: -260px; 
+            left: -260px; 
+        }
+        .purpleSphere {
+            bottom: -280px;
+            right: -280px; 
+        }
+    }
+    @media (max-width: 480px) {
+        .blueSphere, .purpleSphere {
+            width: 440px; 
+            height: 440px; 
+        }
+        .blueSphere {
+            bottom: -80px; 
+            left: -240px; 
+        }
+        .purpleSphere {
+            bottom: -180px;
+            right: -280px; 
         }
     }
 `; 

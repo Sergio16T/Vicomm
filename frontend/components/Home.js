@@ -11,6 +11,8 @@ const Home = (props) => {
                     <div className="bannerColumn">
                         <h1>Ecommerce for everyone!</h1>
                         <p>Create your content, follow your favorite pages, shop, and generate revenue!</p>
+                        <div className="blueSphere"></div>
+                        <div className="purpleSphere"></div>
                     </div>
                 </StyledBanner>
             </Main>
