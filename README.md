@@ -33,11 +33,12 @@
     - JWT authentication to persist log in
 
 <div>
+    <br/>
     <h2>Login Page (Google Oauth 2.0)</h2>
     <img src="https://res.cloudinary.com/dddnhychw/image/upload/v1600062153/Full%20Stack%20App/Screen_Shot_2020-09-14_at_12.41.54_AM_rgy3fy.png" alt="login" width ="800"/>
     <br/>
     <h2>Frictionless Sign Up (Google Oauth 2.0)</h2>
-    <img src="https://res.cloudinary.com/dddnhychw/image/upload/v1600101539/Full%20Stack%20App/Screen_Shot_2020-09-14_at_11.38.18_AM_wwlg2u.png" alt="Signup" width ="800"/>
+    <img src="https://res.cloudinary.com/dddnhychw/image/upload/v1600101732/Full%20Stack%20App/Screen_Shot_2020-09-14_at_11.41.57_AM_j0zxzk.png" alt="Signup" width ="800"/>
     <br/>
     <h2>Image Gallery Modal</h2>
     <img src="https://res.cloudinary.com/dddnhychw/image/upload/v1600062071/Full%20Stack%20App/Screen_Shot_2020-09-14_at_12.29.49_AM_ja37dh.png" alt="Image Gallery Modal" width ="800"/>
