@@ -146,7 +146,7 @@ const mutation = {
         
         let imageQString = SQL`
         INSERT INTO 
-            mltmd 
+            MLTMD 
         SET 
             MLTMD_URL=${args.image},
             MLTMD_LG_URL=${args.largeImage},
@@ -163,13 +163,59 @@ const mutation = {
             let key = parseInt(args.keys[i]); 
             let deleteImgQ = SQL`
                 DELETE FROM 
-                    mltmd
+                    MLTMD
                 WHERE 
                     MLTMD_KEY = ${key}
             `; 
             await context.db.query(deleteImgQ).catch(err => { throw err }); 
         }
         return { message: "Success! Image has been deleted" }; 
+    },
+    async updateCoverPhoto(parent, args, context, info) {
+        console.log(args.key); 
+        const checkForCoverPhotoQ = SQL`
+        SELECT 
+            COVER_PHOTO_KEY
+        FROM 
+            COVER_PHOTO
+        WHERE 
+            ACCT_KEY = ${context.request.user.ACCT_KEY}
+            AND ACT_IND = ${1}; 
+        `
+        const [photo] =  await context.db.query(checkForCoverPhotoQ).catch(err => { throw err; }); 
+        console.log(photo); 
+        if(photo) {
+            const updateCoverPhotoQ = SQL`
+            UPDATE 
+                COVER_PHOTO
+            SET 
+                MLTMD_KEY = ${args.key},
+                LST_UPDT_TM = NOW(), 
+                LST_UPDT_BY_ACCT_KEY=${context.request.user.ACCT_KEY}
+            WHERE 
+                ACCT_KEY = ${context.request.user.ACCT_KEY};
+            `; 
+            await context.db.query(updateCoverPhotoQ).catch(err => { throw err; }); 
+            return { COVER_PHOTO_KEY: photo.COVER_PHOTO_KEY }; 
+
+        } else {
+            const createCoverPhotoQ = SQL `
+            INSERT INTO 
+                COVER_PHOTO
+            SET 
+                ACCT_KEY = ${context.request.user.ACCT_KEY},
+                MLTMD_KEY = ${args.key},
+                CRTE_TM = NOW(), 
+                CRTE_BY_ACCT_KEY = ${context.request.user.ACCT_KEY},
+                ACT_IND = ${1};
+            `; 
+            const result = await context.db.query(createCoverPhotoQ).catch(err => { throw err; }); 
+            console.log('createCoverPhoto', result); 
+            return { COVER_PHOTO_KEY: result.insertId }; 
+        }
+    },
+    async removeCoverPhoto(parent, args, context, info) {
+        
     }
 }
 

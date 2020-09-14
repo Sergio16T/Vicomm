@@ -1,20 +1,25 @@
 import React from 'react'; 
-import { StyledImgSelectedHeader } from './Styles/ImageGalleryStyles'; 
+import { StyledImgSelectedHeader, StyledFaIcon } from './Styles/ImageGalleryStyles'; 
+import TooltipInfo from './TooltipInfo'; 
 import styled from 'styled-components'; 
 
-const ModalImgSelectedHeader = ({ count, deleteMultimedia }) => {
+const ModalImgSelectedHeader = ({ count, deleteMultimedia, useMLTMD, selected, setSelected }) => {
     return (
         <StyledImgSelectedHeader>
             <span className="selected-count">{count} selected</span>
             <div className="iconButtonList">
-                <button className="faIconBtn" onClick={deleteMultimedia}>
+                <StyledFaIcon onClick={deleteMultimedia} selected>
                     <i className="fas fa-trash"></i>
                     <TooltipInfo
                     text="Delete Selected Images"
                     />
-                </button>
+                </StyledFaIcon>
                 <Button 
-                text="Use"/>
+                text="Use"
+                useMLTMD={useMLTMD}
+                selected={selected}
+                setSelected={setSelected}
+                />
             </div>
    
         </StyledImgSelectedHeader>
@@ -54,18 +59,12 @@ const StyledBtn = styled.button`
                 transition: 0s;
             }
 `; 
-const Button = (props) => {
+const Button = ({ text, useMLTMD, selected, setSelected }) => {
     return (
-        <StyledBtn>
-            {props.text}
+        <StyledBtn onClick={() => useMLTMD(selected, setSelected)}>
+            {text}
         </StyledBtn>
     )
 }  
-const TooltipInfo = (props) => {
-    return (
-       <div className="tooltiptext">
-           {props.text}
-        </div>
-    ); 
-}
+
 export default ModalImgSelectedHeader; 

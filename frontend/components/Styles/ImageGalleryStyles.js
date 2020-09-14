@@ -91,8 +91,6 @@ const StyledImgSelectedHeader = styled.div`
     display: flex; 
     align-items: center;
     justify-content: space-between;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
     z-index: 2; 
 
     .selected-count {
@@ -107,7 +105,9 @@ const StyledImgSelectedHeader = styled.div`
         padding-right: 2rem; 
         align-items: center; 
     }
-    .faIconBtn {
+ 
+`; 
+const StyledFaIcon = styled.button`
         border: none; 
         outline: none; 
         background: transparent; 
@@ -116,14 +116,11 @@ const StyledImgSelectedHeader = styled.div`
         position: relative; 
         padding: .75rem;
         margin: 0 .75rem; 
-        /* width: 35px; 
-        height: 35px;  */
         border-radius: 50%; 
-        /* overflow: hidden; */
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #6f6757;
+        color: ${props => props.selected ? "#6f6757" : "white"};
         &:after {
             content: "";
             display: block;
@@ -145,8 +142,7 @@ const StyledImgSelectedHeader = styled.div`
             opacity: .2;
             transition: 0s;
         }
-    }
-    .faIconBtn .tooltiptext {
+     .tooltiptext {
             font-size: .9rem; 
             visibility: hidden;
             width: 120px;
@@ -162,21 +158,23 @@ const StyledImgSelectedHeader = styled.div`
             margin-left: -80px;
             opacity: 0;
             transition: opacity 0.3s;
-        }
-        .faIconBtn .tooltiptext::after {
-            content: " ";
-            position: absolute;
-            bottom: 100%;  
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: transparent transparent #555 transparent;
-        }
-        .faIconBtn:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
- 
-`; 
-export { StyledGallery, StyledImgSelectedHeader }; 
+    }
+    .tooltiptext::after {
+        content: " ";
+        position: absolute;
+        bottom: 100%;  
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent #555 transparent;
+    }
+    &:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
+    .px-2 {
+        padding: 0 1rem; 
+    }
+`;
+export { StyledGallery, StyledImgSelectedHeader, StyledFaIcon }; 

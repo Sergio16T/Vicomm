@@ -44,6 +44,21 @@ const Query = {
         const MLTMD = await context.db.query(qString).catch(err => { throw err; }); 
         // console.log(MLTMD)
         return MLTMD; 
+    },
+    getCoverPhoto: async(parent, args, context, info) => {
+        const coverPhotoQ = SQL`
+        SELECT 
+            MLTMD.* 
+        FROM 
+            COVER_PHOTO, 
+            MLTMD
+        WHERE 
+            COVER_PHOTO.ACCT_KEY = ${context.request.user.ACCT_KEY}
+            AND MLTMD.MLTMD_KEY = COVER_PHOTO.MLTMD_KEY
+            AND COVER_PHOTO.ACT_IND =${1}
+        `; 
+        const [multiMedia] = await context.db.query(coverPhotoQ).catch(err => { throw err; });  
+        return multiMedia; 
     }
 }
 

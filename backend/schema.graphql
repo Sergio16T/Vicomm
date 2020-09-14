@@ -1,7 +1,8 @@
 type Query {
     users: [User]!
-    user: User,
+    user: User
     getImageGallery: [MultiMedia]
+    getCoverPhoto: MultiMedia
   }
 
 type Mutation {
@@ -11,6 +12,8 @@ type Mutation {
     googleSignIn(firstName: String!, lastName: String!, email: String!, accessToken: String!): User!
     uploadImageToGallery(image: String!, largeImage: String!): SuccessMessage!
     deleteImages(keys: [ID]): SuccessMessage!
+    updateCoverPhoto(key: ID): CoverPhoto!
+    removeCoverPhoto: SuccessMessage!
 }
 
 type User {
@@ -33,11 +36,17 @@ type Item {
 }
 type MultiMedia {
     MLTMD_KEY: ID, 
-    MLTMD_SZ_CD: String!
     MLTMD_URL: String!
+    MLTMD_LG_URL: String!
     SRC_TBL_KEY_CD: Int
     CRTE_BY_ACCT_KEY: Int
 }
 type SuccessMessage {
     message: String!
+}
+type CoverPhoto {
+    COVER_PHOTO_KEY: ID, 
+    ACCT_KEY: ID, 
+    MLTMD_KEY: ID, 
+    ACT_IND: Int
 }

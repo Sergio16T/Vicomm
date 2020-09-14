@@ -15,7 +15,7 @@ const StyledModal = styled.div`
     opacity: ${props => props.show ? 1 : 0};
     visibility: ${props => props.show ? "visible" : "hidden"}; 
     box-shadow: ${props => props.theme.bs}; 
-    background: ${props => `linear-gradient(to Bottom, ${props.theme.skyBlue} 60px, white 0%)`}; 
+    background: ${props => `linear-gradient(to Bottom, transparent 60px, white 0%)`}; 
     transition: .4s ease; 
     z-index: 121; 
     border-radius: 6px; 
@@ -38,8 +38,6 @@ const StyledModal = styled.div`
         display: flex; 
         align-items: center;
         justify-content: space-between;
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
         z-index: 2; 
         h2 {
             font-size: 1.4rem; 

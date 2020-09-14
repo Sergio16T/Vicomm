@@ -43,11 +43,26 @@ const UploadImageModal = (props) => {
     },[props.show]); 
     
     const handleSelect = (image) => {
-        const selectedImages = props.multiSelect ? {...selected} : {}; 
-        if(image.MLTMD_KEY in selectedImages) delete selectedImages[image.MLTMD_KEY]; 
-        else selectedImages[image.MLTMD_KEY] = image; 
-        setSelected(selectedImages); 
-        setCount(Object.keys(selectedImages).length);
+        switch(props.multiSelect) {
+            case true: 
+                let selectedImages = {...selected}; 
+                if(image.MLTMD_KEY in selectedImages) delete selectedImages[image.MLTMD_KEY]; 
+                else selectedImages[image.MLTMD_KEY] = image; 
+                setSelected(selectedImages); 
+                setCount(Object.keys(selectedImages).length);
+                break; 
+            default: 
+                selectedImages = {...selected}; 
+                let imageDeleted = false; 
+                if(image.MLTMD_KEY in selectedImages) {
+                    delete selectedImages[image.MLTMD_KEY]; 
+                    imageDeleted = true; 
+                }
+                if(!imageDeleted) selectedImages = {}; 
+                if(!imageDeleted) selectedImages[image.MLTMD_KEY] = image; 
+                setSelected(selectedImages); 
+                setCount(Object.keys(selectedImages).length);
+        }
     }
 
     const uploadFile = async (e) => {
@@ -98,6 +113,9 @@ const UploadImageModal = (props) => {
                     <ImgSelectedHeader
                     count={count}
                     deleteMultimedia={deleteMultimedia}
+                    useMLTMD={props.useMLTMD}
+                    setSelected={setSelected}
+                    selected={selected}
                     />
                 }
          

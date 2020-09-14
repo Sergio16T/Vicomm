@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useQuery, gql } from '@apollo/client'; 
+import { useQuery, useMutation, gql } from '@apollo/client'; 
 import SideBar  from './AppSidebar'; 
 import AppHeader from './AppHeader'; 
 import { BackDrop, ModalBackDrop, StyledPage } from './Styles/PageStyles'; 
@@ -7,6 +7,7 @@ import { PageContent } from './Styles/DashboardStyles';
 import Router from 'next/router';
 import ImageGalleryModal from './GalleryModal'; 
 import Spinner from './Spinner'; 
+import CoverPhoto from './CoverPhoto'; 
 
 const GET_USER_QUERY = gql`
     query GET_USER_QUERY {
@@ -16,10 +17,26 @@ const GET_USER_QUERY = gql`
         }
     }
 `;
+const GET_COVER_PHOTO_QUERY = gql`
+    query GET_COVER_PHOTO_QUERY {
+        getCoverPhoto {
+            MLTMD_LG_URL
+        }
+    }
+`; 
+const UPDATE_COVER_PHOTO_MUTATION = gql`
+    mutation UPDATE_COVER_PHOTO_MUTATION($key: ID!) {
+        updateCoverPhoto(key: $key) {
+            COVER_PHOTO_KEY
+        }
+    }
+`;
 
 const DashBoard = () => {
     const [isOpen, setIsOpen] = useState(false); 
-    const { client, loading, data } = useQuery(GET_USER_QUERY, { fetchPolicy: "network-only" }); 
+    const { client, loading: userLoading, data: userData } = useQuery(GET_USER_QUERY, { fetchPolicy: "network-only" }); 
+    const { loading, data } = useQuery(GET_COVER_PHOTO_QUERY); 
+    const [updateCoverPhoto] = useMutation(UPDATE_COVER_PHOTO_MUTATION, { refetchQueries: ["GET_COVER_PHOTO_QUERY"]})
     const [modalOpen, setModalOpen] = useState(false); 
     const [spinner, setSpinner] = useState(false); 
     const backDrop = useRef(null); 
@@ -46,8 +63,8 @@ const DashBoard = () => {
         setIsOpen(!isOpen); 
     }
 
-    if (loading) return null; 
-    if(!data.user) {
+    if (userLoading) return null; 
+    if(!userData.user) {
         Router.push({
             pathname: "/login"
         }); 
@@ -58,21 +75,32 @@ const DashBoard = () => {
         else document.querySelector('body').style.overflow = "";
         setModalOpen(!modalOpen); 
     }
-    if(loading) return null; 
+    const uploadCoverPhoto = async (selected, cb) => {
+        const [image] = Object.values(selected); 
+        const MLTMD_KEY = parseInt(image.MLTMD_KEY); 
+        await updateCoverPhoto({ variables: { key: MLTMD_KEY }}).catch(err => { throw err; }); 
+        cb({}); 
+        toggleModal();
+    }
+    if(userLoading) return null; 
     return (
         <StyledPage>
             <BackDrop isOpen={isOpen} ref={backDrop}/>
             <ModalBackDrop isOpen={modalOpen} ref={modalBackDrop}/>
             <AppHeader 
-            user={data.user ? data.user : ''}
+            user={userData.user ? userData.user : ''}
             toggleSideBar={toggleSideBar}
             client={client}  
             toggleModal={toggleModal}
             />
             <SideBar 
             isOpen={isOpen}
-            user={data.user ? data.user : ''}/>
+            user={userData.user ? userData.user : ''}/>
             <PageContent>
+                <CoverPhoto
+                loading={loading}
+                data={data}
+                />
                 <div className="welcome-section">
 
                 </div>
@@ -85,16 +113,15 @@ const DashBoard = () => {
                         <h3>Logo</h3>
                         <span> Give your site a personal touch by uploading your own logo!</span>
                     </div>
-                </div>
-               
+                </div>    
             </PageContent>
             <ImageGalleryModal 
             show={modalOpen} 
             toggleModal={toggleModal}
             modalXColor={"white"}
-            user={data.user ? data.user : ''}
-            multiSelect
+            user={userData.user ? userData.user : ''}
             setSpinner={setSpinner}
+            useMLTMD={uploadCoverPhoto} 
             />
             <Spinner 
             show={modalOpen}

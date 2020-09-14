@@ -7,12 +7,12 @@ const PageContent = styled.div`
     height: 100%;
     box-sizing: border-box; 
     .welcome-section {
-        padding: 2rem; 
+        padding: 1.5rem; 
     }
     .feature-section {
         display: grid; 
         grid-template-columns: 400px 400px; 
-        grid-gap: 20px;
+        grid-gap: 30px;
         box-sizing: border-box;  
         padding: 0 2rem; 
         justify-content: center; 
@@ -43,7 +43,7 @@ const PageContent = styled.div`
     }
     @media (max-width: 1100px) {
         .welcome-section {
-            padding-top: 100px; 
+            /* padding-top: 100px;  */
         }
         .feature-section {
             padding: 0 4rem; 
