@@ -31,3 +31,18 @@
     - Connect your stipe account to receive $$ from in app/store purchases
     - Google Oauth to enable frictionless signup/signin 
     - JWT authentication to persist log in
+
+<div>
+    <h2>Login Page (Google Oauth 2.0)</h2>
+    <img src="https://res.cloudinary.com/dddnhychw/image/upload/v1600062153/Full%20Stack%20App/Screen_Shot_2020-09-14_at_12.41.54_AM_rgy3fy.png" alt="login" width ="800"/>
+    <br/>
+    <h2>Frictionless Sign Up (Google Oauth 2.0)</h2>
+    <img src="https://res.cloudinary.com/dddnhychw/image/upload/v1600101539/Full%20Stack%20App/Screen_Shot_2020-09-14_at_11.38.18_AM_wwlg2u.png" alt="Signup" width ="800"/>
+    <br/>
+    <h2>Image Gallery Modal</h2>
+    <img src="https://res.cloudinary.com/dddnhychw/image/upload/v1600062071/Full%20Stack%20App/Screen_Shot_2020-09-14_at_12.29.49_AM_ja37dh.png" alt="Image Gallery Modal" width ="800"/>
+    <br/>
+    <h2>Custom Spinner Overlay</h2>
+    <img src="https://res.cloudinary.com/dddnhychw/image/upload/v1600064669/Full%20Stack%20App/Screen_Shot_2020-09-14_at_1.23.57_AM_d6ldij.png" alt="Custom Spinner Overlay" width ="800"/>
+    <br/>
+<div>
