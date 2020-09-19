@@ -15,6 +15,7 @@ const GOOGLE_LOGIN_MUTATION = gql`
     }
 `; 
 
+// const CLIENT_ID = googleID;
 const CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
 
 const GoogleContainer = styled.div`
