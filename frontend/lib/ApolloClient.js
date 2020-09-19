@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import withApollo from 'next-with-apollo';
 import { ApolloProvider } from '@apollo/client';
 import { createHttpLink } from 'apollo-link-http'
-import { endPoint } from '../clientConfig'; 
+// import { endPoint } from '../clientConfig'; 
 
 const link = createHttpLink({
   uri: process.env.NEXT_PUBLIC_ENDPOINT,
