@@ -4,3 +4,4 @@ node_modules
 clientConfig.js
 next.config.js
 connect.js
+.env.local
