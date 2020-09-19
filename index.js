@@ -3,20 +3,21 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken'); 
 const db = require('./backend/db'); 
 const SQL = require('sql-template-strings'); 
-const cors = require('cors'); 
+// const cors = require('cors'); 
 require('dotenv').config(); 
 
 
 // express middleware to sets appropriate response headers
-// server.express.use(function(req, res, next) {
-//     res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-//     res.header(
-//       'Access-Control-Allow-Headers',
-//       'Origin, X-Requested-With, Content-Type, Accept'
-//     );
-//     next();
-// });
-server.express.use(cors()); 
+server.express.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept'
+      
+    );
+    next();
+});
+// server.express.use(cors()); 
 // express middleware to handle cookies 
 server.express.use(cookieParser()); 
 
