@@ -7,7 +7,7 @@ import { createHttpLink } from 'apollo-link-http'
 const link = createHttpLink({
   // uri: endPoint,
   uri: process.env.NEXT_PUBLIC_ENDPOINT,
-  credentials: 'include'
+  credentials: 'same-origin'
 });
 
 
