@@ -54,7 +54,7 @@ const GoogleBtn = (props) => {
 			email: response.profileObj.email, 
 			firstName: response.profileObj.givenName, 
 			lastName: response.profileObj.familyName
-		}}).catch(err => { console.log('googleLogIn Error', err)} ); 
+		}}); 
 		console.log('res', googleSignInRes); 
 		Router.push({
 			pathname: "/dashboard"
