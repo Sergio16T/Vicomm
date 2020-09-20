@@ -16,9 +16,6 @@ export default withApollo(
       return new ApolloClient({
         link, 
         cache: new InMemoryCache().restore(initialState || {}),
-        fetchOptions: {
-          mode: 'no-cors',
-        },
       });
     },
     {

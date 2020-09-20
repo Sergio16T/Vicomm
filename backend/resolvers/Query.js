@@ -14,16 +14,16 @@ const Query = {
         return result; 
     },
     user: async(parent, args, context, info) => {
-        console.log('request', context.request.user)
-        if(!context.request.user) return null; 
-        console.log('user check get', context.request.user.ACCT_KEY); 
+        // console.log('request user', context.req.user)
+        if(!context.req.user) return null; 
+        // console.log('user check get', context.req.user.ACCT_KEY); 
         let qString = SQL`
         SELECT 
             *
         FROM 
             ACCT
         WHERE 
-            ACCT_KEY = ${context.request.user.ACCT_KEY}
+            ACCT_KEY = ${context.req.user.ACCT_KEY}
             AND ACT_IND = 1
         `; 
         const [user] = await context.db.query(qString).catch(err => {
@@ -38,7 +38,7 @@ const Query = {
             FROM 
                 mltmd 
             WHERE 
-                CRTE_BY_ACCT_KEY = ${context.request.user.ACCT_KEY}
+                CRTE_BY_ACCT_KEY = ${context.req.user.ACCT_KEY}
                 AND ACT_IND = ${1}
         `; 
         const MLTMD = await context.db.query(qString).catch(err => { throw err; }); 
@@ -53,7 +53,7 @@ const Query = {
             COVER_PHOTO, 
             MLTMD
         WHERE 
-            COVER_PHOTO.ACCT_KEY = ${context.request.user.ACCT_KEY}
+            COVER_PHOTO.ACCT_KEY = ${context.req.user.ACCT_KEY}
             AND MLTMD.MLTMD_KEY = COVER_PHOTO.MLTMD_KEY
             AND COVER_PHOTO.ACT_IND =${1}
         `; 

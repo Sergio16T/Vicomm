@@ -57,13 +57,14 @@ const mutation = {
             throw new Error(err.message); 
         }); 
         const token = jwt.sign({ ACCT_KEY: user.ACCT_KEY}, process.env.jwtsecret); 
-        context.response.cookie("token", token, {
+        context.res.cookie("token", token, {
             httpOnly: true, 
             maxAge:  1000 * 60 * 60 * 24 * 365 
         });
         return user; 
     },
     async signIn(parent,args, context, info) {
+        // console.log('context:', context)
         const email = args.email.toLowerCase(); 
         let qString = SQL`
         SELECT 
@@ -74,6 +75,7 @@ const mutation = {
             EMAIL = ${email}
         `; 
         const [user] = await context.db.query(qString); 
+        // console.log('user:', user)
         if(!user) {
             throw new Error(`No user found for email: ${email}`); 
         }
@@ -82,7 +84,8 @@ const mutation = {
             throw new Error('Invalid password')
         } 
         const token  = jwt.sign({ ACCT_KEY: user.ACCT_KEY}, process.env.jwtsecret); 
-        context.response.cookie("token", token, {
+        // console.log('token', token)
+        context.res.cookie("token", token, {
             httpOnly: true, 
             maxAge: 1000 * 60 * 60 * 24 * 365
         }); 
@@ -130,7 +133,7 @@ const mutation = {
            [user] = await context.db.query(qString); 
         }
         const token  = jwt.sign({ ACCT_KEY: user.ACCT_KEY}, process.env.jwtsecret); 
-        context.response.cookie("token", token, {
+        context.res.cookie("token", token, {
             httpOnly: true, 
             maxAge: 1000 * 60 * 60 * 24 * 365
         }); 
@@ -139,7 +142,7 @@ const mutation = {
     }, 
     signOut(parent, args, context, info) {
         console.log('signout'); 
-        context.response.clearCookie("token"); 
+        context.res.clearCookie("token"); 
         return { message: "GoodBye!"}
     }, 
     async uploadImageToGallery(parent, args, context, info) {
@@ -151,7 +154,7 @@ const mutation = {
             MLTMD_URL=${args.image},
             MLTMD_LG_URL=${args.largeImage},
             CRTE_TM = NOW(), 
-            CRTE_BY_ACCT_KEY = ${context.request.user.ACCT_KEY},
+            CRTE_BY_ACCT_KEY = ${context.req.user.ACCT_KEY},
             ACT_IND = ${1}`; 
 
         await context.db.query(imageQString).catch(err => { throw err; });
@@ -179,7 +182,7 @@ const mutation = {
         FROM 
             COVER_PHOTO
         WHERE 
-            ACCT_KEY = ${context.request.user.ACCT_KEY}
+            ACCT_KEY = ${context.req.user.ACCT_KEY}
             AND ACT_IND = ${1}; 
         `
         const [photo] =  await context.db.query(checkForCoverPhotoQ).catch(err => { throw err; }); 
@@ -191,9 +194,9 @@ const mutation = {
             SET 
                 MLTMD_KEY = ${args.key},
                 LST_UPDT_TM = NOW(), 
-                LST_UPDT_BY_ACCT_KEY=${context.request.user.ACCT_KEY}
+                LST_UPDT_BY_ACCT_KEY=${context.req.user.ACCT_KEY}
             WHERE 
-                ACCT_KEY = ${context.request.user.ACCT_KEY};
+                ACCT_KEY = ${context.req.user.ACCT_KEY};
             `; 
             await context.db.query(updateCoverPhotoQ).catch(err => { throw err; }); 
             return { COVER_PHOTO_KEY: photo.COVER_PHOTO_KEY }; 
@@ -203,10 +206,10 @@ const mutation = {
             INSERT INTO 
                 COVER_PHOTO
             SET 
-                ACCT_KEY = ${context.request.user.ACCT_KEY},
+                ACCT_KEY = ${context.req.user.ACCT_KEY},
                 MLTMD_KEY = ${args.key},
                 CRTE_TM = NOW(), 
-                CRTE_BY_ACCT_KEY = ${context.request.user.ACCT_KEY},
+                CRTE_BY_ACCT_KEY = ${context.req.user.ACCT_KEY},
                 ACT_IND = ${1};
             `; 
             const result = await context.db.query(createCoverPhotoQ).catch(err => { throw err; }); 

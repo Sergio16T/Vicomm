@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'; 
+import React, { useState } from 'react'; 
 import { useMutation, gql } from '@apollo/client'; 
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 // import { googleID } from '../clientConfig'; 

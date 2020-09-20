@@ -3,26 +3,33 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken'); 
 const db = require('./backend/db'); 
 const SQL = require('sql-template-strings'); 
-// const cors = require('cors'); 
+const express = require('express');
+const app = express();
+const cors = require('cors'); 
 require('dotenv').config(); 
 
 
 // express middleware to sets appropriate response headers
-server.express.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-    res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    // res.header(
+    //   'Access-Control-Allow-Headers',
+    //   'Origin, X-Requested-With, Content-Type, Accept'
       
-    );
+    // );
     next();
 });
-// server.express.use(cors()); 
+const corsOptions = {
+    origin: 'http://localhost:3000', //change with your own client URL
+    credentials: true
+  }
+app.use(cors(corsOptions)); 
 // express middleware to handle cookies 
-server.express.use(cookieParser()); 
+app.use(cookieParser()); 
 
-server.express.use(async (req, res, next) => {
+app.use(async (req, res, next) => {
     const { token } = req.cookies; 
+    // console.log('token', token)
     if(!token) next();
     if(token) {
         const { ACCT_KEY } = jwt.verify(token, process.env.jwtsecret); 
@@ -45,9 +52,14 @@ server.express.use(async (req, res, next) => {
         next(); 
     }
 });
-server.start({
-    cors: {
-        credentials: true, // so not just anyone can crud data 
-        origin: process.env.FRONTEND_URL, 
-    },
-  },(details) => console.log(`GraphQL server is running on ${details.port}`));
+// server.start({
+//     cors: {
+//         credentials: true, // so not just anyone can crud data 
+//         origin: process.env.FRONTEND_URL, 
+//     },
+//   },(details) => console.log(`GraphQL server is running on ${details.port}`));
+server.applyMiddleware({ app, cors: false }); 
+
+app.listen({ port: 4000 }, () =>
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+);
