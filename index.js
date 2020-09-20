@@ -20,7 +20,7 @@ app.use(function(req, res, next) {
     next();
 });
 const corsOptions = {
-    origin: 'http://localhost:3000', //change with your own client URL
+    origin: process.env.FRONTEND_URL, //change with your own client URL
     credentials: true
   }
 app.use(cors(corsOptions)); 
@@ -48,7 +48,7 @@ app.use(async (req, res, next) => {
         `; 
         const [user] = await db.query(qString).catch(err => { throw err }); 
         req.user = user; 
-        console.log('user set', req.user)
+        // console.log('user set', req.user)
         next(); 
     }
 });
