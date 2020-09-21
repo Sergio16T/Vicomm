@@ -102,8 +102,8 @@ const StyledModal = styled.div`
             padding-right: 0;
         }
     }
-    @media (max-width: 340px) {
-        min-height: 400px; 
+    @media (max-width: 380px) {
+        min-height: 70vh; 
     }
 `; 
 

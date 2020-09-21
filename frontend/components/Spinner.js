@@ -204,10 +204,10 @@ const StyledChaseSpinner = styled.div`
     @media (max-width: 800px) {
         width: 90vw; 
     }
-    @media (max-width: 340px) {
-        min-height: 400px; 
+    @media (max-width: 380px) {
+        min-height: 70vh; 
         #backDrop {
-            min-height: 400px; 
+            min-height: 70vh; 
         }
     }
     @keyframes sk-chase {
