@@ -122,7 +122,7 @@ const UploadImageModal = (props) => {
                 <div className="modal-content">
                     {!loading && 
                         <ImageGallery
-                         multiMedia ={data.getImageGallery}
+                         multiMedia ={data !== undefined ? data.getImageGallery : []}
                         //  multiMedia ={[]}
                          handleSelect={handleSelect}
                          selected={selected}
