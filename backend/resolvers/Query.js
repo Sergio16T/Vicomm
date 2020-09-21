@@ -36,7 +36,7 @@ const Query = {
             SELECT 
                 * 
             FROM 
-                mltmd 
+                MLTMD 
             WHERE 
                 CRTE_BY_ACCT_KEY = ${context.req.user.ACCT_KEY}
                 AND ACT_IND = ${1}
