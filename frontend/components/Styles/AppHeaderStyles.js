@@ -62,6 +62,12 @@ padding: 0 2rem;
         }
     }
 }
+@media (max-width: 480px) {
+    #uploadImageIcon {
+        width: 70px; 
+        height: 70px; 
+    }
+}
 `; 
 
 const StyledMenu = styled.div`
