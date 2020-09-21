@@ -67,6 +67,14 @@ padding: 0 2rem;
         width: 70px; 
         height: 70px; 
     }
+    .nav-left {
+        flex: 0 0 60%; 
+        max-width: 60%; 
+    }
+    .nav-right {
+        flex: 0 0 40%; 
+        max-width: 40%; 
+    }
 }
 `; 
 
