@@ -120,14 +120,14 @@ const UploadImageModal = (props) => {
                 }
          
                 <div className="modal-content">
-                    {!loading && 
+                    {!loading && data ? 
                         <ImageGallery
-                         multiMedia ={data !== undefined ? data.getImageGallery : []}
+                         multiMedia ={data.getImageGallery}
                         //  multiMedia ={[]}
                          handleSelect={handleSelect}
                          selected={selected}
                          />
-                    }
+                    : null}
                 </div>
         </StyledModal>
     )
