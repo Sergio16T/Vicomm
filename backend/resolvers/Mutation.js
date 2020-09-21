@@ -79,7 +79,7 @@ const mutation = {
         if(!user) {
             throw new Error(`No user found for email: ${email}`); 
         }
-        const validPassword = bcrypt.compare(args.password, user.PASSWORD_NM);
+        const validPassword = await bcrypt.compare(args.password, user.PASSWORD_NM);
         if(!validPassword){
             throw new Error('Invalid password')
         } 
