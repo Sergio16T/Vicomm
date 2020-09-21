@@ -37,10 +37,15 @@ const StyledNav = styled.ul`
         padding: 0 1rem; 
         li {
             margin: auto 1rem auto 0; 
+            font-size: 1.2rem;
             button {
-                padding: .65rem .98rem; 
+                font-size: 1.2rem;
+                padding: .75rem .98rem; 
             }
         }
+    }
+    @media (max-width: 360px) {
+        
     }
 `; 
 

@@ -19,15 +19,18 @@ const GlobalStyle = createGlobalStyle`
 		box-sizing: border-box; 
 		font-size: 12px; 
 		height: 100%; 
+        min-height: 100vh; 
 	}
 	body {
 		margin: 0; 
 		padding: 0; 
 		font-family: "Lato"; 
 		height: 100%; 
+        min-height: 100vh; 
 	}
 	 div#__next {
         height: 100%;
+        min-height: 100vh; 
       }
 	a {
 		text-decoration: none; 

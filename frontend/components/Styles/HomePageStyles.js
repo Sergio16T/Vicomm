@@ -86,12 +86,22 @@ const StyledBanner = styled.div`
             height: 440px; 
         }
         .blueSphere {
-            bottom: -80px; 
+            bottom: -140px; 
             left: -240px; 
         }
         .purpleSphere {
-            bottom: -180px;
+            bottom: -200px;
             right: -280px; 
+        }
+    }
+    @media (max-width: 380px) {
+        .blueSphere {
+            bottom: -220px; 
+            left: -280px; 
+        }
+        .purpleSphere {
+            bottom: -280px;
+            right: -310px; 
         }
     }
 `; 
@@ -102,7 +112,7 @@ const Main = styled.div`
 const Section = styled.div`
     width: 100%; 
     border-top: 1px solid #f5f5f5;; 
-    border-bottom: 1px solid #f5f5f5; 
+    /* border-bottom: 1px solid #f5f5f5;  */
     padding: 2rem 0; 
     display: grid; 
     grid-template-columns: 1fr 1fr 1fr 1fr; 

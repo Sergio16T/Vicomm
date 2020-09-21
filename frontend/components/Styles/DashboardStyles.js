@@ -14,7 +14,7 @@ const PageContent = styled.div`
         grid-template-columns: 400px 400px; 
         grid-gap: 30px;
         box-sizing: border-box;  
-        padding: 0 2rem; 
+        padding: 0 2rem 2rem 2rem; 
         justify-content: center; 
        .feature-suggestion:first-child {
             border-left: ${props => "3px solid" + props.theme.purple};
@@ -46,12 +46,12 @@ const PageContent = styled.div`
             /* padding-top: 100px;  */
         }
         .feature-section {
-            padding: 0 4rem; 
+            padding: 0 4rem 2rem 4rem; 
             grid-template-columns: 1fr; 
         }
     }
     @media (max-width: 800px) {
-    padding: 0; 
+        padding: 0; 
     }
 `;
 

@@ -70,11 +70,11 @@ const GoogleBtn = (props) => {
 	}
 
 	const handleLoginFailure = (response) => {
-		alert('Failed to log in')
+		console.log(response); 
 	}
 
 	const handleLogoutFailure =  (response) => {
-		alert('Failed to log out')
+		console.log(response); 
 	}
     return (
     <div>
