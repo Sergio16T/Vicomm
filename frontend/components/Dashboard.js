@@ -36,7 +36,7 @@ const DashBoard = () => {
     const [isOpen, setIsOpen] = useState(false); 
     const { client, loading: userLoading, data: userData } = useQuery(GET_USER_QUERY, { fetchPolicy: "network-only" }); 
     const { loading, data } = useQuery(GET_COVER_PHOTO_QUERY); 
-    const [updateCoverPhoto] = useMutation(UPDATE_COVER_PHOTO_MUTATION, { refetchQueries: ["GET_COVER_PHOTO_QUERY"]})
+    const [updateCoverPhoto] = useMutation(UPDATE_COVER_PHOTO_MUTATION, { refetchQueries: ["GET_COVER_PHOTO_QUERY"]});
     const [modalOpen, setModalOpen] = useState(false); 
     const [spinner, setSpinner] = useState(false); 
     const backDrop = useRef(null); 

@@ -218,7 +218,15 @@ const mutation = {
         }
     },
     async removeCoverPhoto(parent, args, context, info) {
-        
+        const removeCoverPhotoQ = SQL`
+        DELETE FROM 
+            COVER_PHOTO
+        WHERE 
+            ACCT_KEY = ${context.req.user.ACCT_KEY}
+            AND ACT_IND = ${1};
+        `;    
+        await context.db.query(removeCoverPhotoQ).catch(err => { throw err; }); 
+        return { message: "Successfully Deleted Cover Photo" };
     }
 }
 
