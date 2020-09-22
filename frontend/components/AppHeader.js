@@ -25,7 +25,7 @@ const AppHeader = (props) => {
                 <span id="userName">{`${user.FST_NAME}'s Store`}</span>
             </div>
             <div className="nav-right">
-                <img id="uploadImageIcon" onClick={props.toggleModal} src="https://res.cloudinary.com/dddnhychw/image/upload/v1596157219/Full%20Stack%20App/untitled_6_saqq66.svg"/>
+                {props.render()}
                 <VerticalDotMenu 
                 client={props.client}
                 />

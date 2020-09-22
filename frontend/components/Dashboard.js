@@ -1,22 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client'; 
-import SideBar  from './AppSidebar'; 
-import AppHeader from './AppHeader'; 
-import { BackDrop, ModalBackDrop, StyledPage } from './Styles/PageStyles'; 
 import { PageContent } from './Styles/DashboardStyles'; 
-import Router from 'next/router';
 import ImageGalleryModal from './GalleryModal'; 
-import Spinner from './Spinner'; 
 import CoverPhoto from './CoverPhoto'; 
+import Page from './Page'; 
+import Link from 'next/link'; 
 
-const GET_USER_QUERY = gql`
-    query GET_USER_QUERY {
-        user {
-            FST_NAME,
-            LST_NAME
-        }
-    }
-`;
 const GET_COVER_PHOTO_QUERY = gql`
     query GET_COVER_PHOTO_QUERY {
         getCoverPhoto {
@@ -32,49 +21,10 @@ const UPDATE_COVER_PHOTO_MUTATION = gql`
     }
 `;
 
-const DashBoard = () => {
-    const [isOpen, setIsOpen] = useState(false); 
-    const { client, loading: userLoading, data: userData } = useQuery(GET_USER_QUERY, { fetchPolicy: "network-only" }); 
+const DashBoard = ({ modalOpen, toggleModal, userData, setSpinner }) => {
     const { loading, data } = useQuery(GET_COVER_PHOTO_QUERY); 
     const [updateCoverPhoto] = useMutation(UPDATE_COVER_PHOTO_MUTATION, { refetchQueries: ["GET_COVER_PHOTO_QUERY"]});
-    const [modalOpen, setModalOpen] = useState(false); 
-    const [spinner, setSpinner] = useState(false); 
-    const backDrop = useRef(null); 
-    const modalBackDrop = useRef(null); 
 
-    useEffect(() => {
-        document.addEventListener('click', handleClick); 
-        return () => document.removeEventListener('click', handleClick); 
-    }, []); 
-
-    const handleClick = (e) => {
-        if(e.target.contains(backDrop.current)) {
-            setIsOpen(false); 
-            document.querySelector('body').style.overflow = ''; 
-        } 
-        if(e.target.contains(modalBackDrop.current)) {
-            setModalOpen(false); 
-            document.querySelector('body').style.overflow = ''; 
-        }
-    }
-
-    const toggleSideBar = () => { 
-        if(!isOpen) document.querySelector('body').style.overflow = "hidden"; 
-        setIsOpen(!isOpen); 
-    }
-
-    if (userLoading) return null; 
-    if(!userData.user) {
-        Router.push({
-            pathname: "/login"
-        }); 
-        return null; 
-    }
-    const toggleModal = () => {
-        if(!modalOpen) document.querySelector('body').style.overflow = "hidden"; 
-        else document.querySelector('body').style.overflow = "";
-        setModalOpen(!modalOpen); 
-    }
     const uploadCoverPhoto = async (selected, cb) => {
         const [image] = Object.values(selected); 
         const MLTMD_KEY = parseInt(image.MLTMD_KEY); 
@@ -82,39 +32,28 @@ const DashBoard = () => {
         cb({}); 
         toggleModal();
     }
-    if(userLoading) return null; 
-    return (
-        <StyledPage>
-            <BackDrop isOpen={isOpen} ref={backDrop}/>
-            <ModalBackDrop isOpen={modalOpen} ref={modalBackDrop}/>
-            <AppHeader 
-            user={userData.user ? userData.user : ''}
-            toggleSideBar={toggleSideBar}
-            client={client}  
-            toggleModal={toggleModal}
-            />
-            <SideBar 
-            isOpen={isOpen}
-            user={userData.user ? userData.user : ''}/>
-            <PageContent>
-                <CoverPhoto
-                loading={loading}
-                data={data}
-                />
-                <div className="welcome-section">
 
-                </div>
-                <div className="feature-section">
+    return (
+        <PageContent>
+            <CoverPhoto
+            loading={loading}
+            data={data}
+            />
+            <div className="welcome-section">
+
+            </div>
+            <div className="feature-section">
+                <Link href="products">
                     <div className="feature-suggestion">
                         <h3>Add a Product And Start Selling</h3>
                         <span>Add Photos, Details, and Variants.</span>
                     </div>
-                    <div className="feature-suggestion">
-                        <h3>Logo</h3>
-                        <span> Give your site a personal touch by uploading your own logo!</span>
-                    </div>
-                </div>    
-            </PageContent>
+                </Link>
+                <div className="feature-suggestion">
+                    <h3>Logo</h3>
+                    <span> Give your site a personal touch by uploading your own logo!</span>
+                </div>
+            </div>    
             <ImageGalleryModal 
             show={modalOpen} 
             toggleModal={toggleModal}
@@ -123,12 +62,28 @@ const DashBoard = () => {
             setSpinner={setSpinner}
             useMLTMD={uploadCoverPhoto} 
             />
-            <Spinner 
-            show={modalOpen}
-            spinner={spinner}/>
-        </StyledPage>
-    );
+        </PageContent>    
+    );  
 };
  
+const DashboardPage = (props) => {
+    return (
+        <Page render={({ toggleModal }) => <ToggleImageGalleryBtn toggleModal={toggleModal}/>}>
+            {({ modalOpen, toggleModal, userData, setSpinner }) => 
+                <DashBoard
+                modalOpen={modalOpen}
+                toggleModal={toggleModal}
+                userData={userData}
+                setSpinner={setSpinner}
+                />
+            }
+        </Page>
+    )
+}
 
-export default DashBoard;
+const ToggleImageGalleryBtn = ({ toggleModal }) => {
+    return (
+        <img id="uploadImageIcon" onClick={toggleModal} src="https://res.cloudinary.com/dddnhychw/image/upload/v1596157219/Full%20Stack%20App/untitled_6_saqq66.svg"/>
+    ); 
+}
+export default DashboardPage;

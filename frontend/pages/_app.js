@@ -1,5 +1,7 @@
+import React from 'react'; 
 import App from 'next/app'; 
-import Page from '../components/Page'; 
+import Page, { DefaultPageProvider } from '../components/PageProvider'; 
+
 
 class MyApp extends App {
     static async getInitialProps({ Component, ctx }) {
@@ -11,12 +13,17 @@ class MyApp extends App {
         return { pageProps}; //when you return here in getInitalProps it exposes it in props.. 
     }
     render() {
-    const { Component, pageProps } = this.props; 
-    return (
-        <Page>
-            <Component {...pageProps}/>
-        </Page>
-    )
+        const { Component, pageProps, router } = this.props; 
+        if (router.pathname === "/" || router.pathname === "/login" || router.pathname ==="/signup")  return (
+            <DefaultPageProvider>
+                <Component {...pageProps}/>
+            </DefaultPageProvider>
+        ); 
+        return (
+            <Page>
+                <Component {...pageProps}/>
+            </Page>
+        ); 
     }
 }
 

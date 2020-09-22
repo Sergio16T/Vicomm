@@ -9,7 +9,7 @@ const StyledNav = styled.ul`
     li {
     padding: 0rem; 
     margin: 0 1rem; 
-    font-size: 1.3rem; 
+    font-size: 1.4rem; 
     font-family: 'Lato'; 
     list-style: none; 
     color: rgba(0, 0, 0, .6); 
@@ -37,9 +37,9 @@ const StyledNav = styled.ul`
         padding: 0 1rem; 
         li {
             margin: auto 1rem auto 0; 
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             button {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
                 padding: .75rem .98rem; 
             }
         }

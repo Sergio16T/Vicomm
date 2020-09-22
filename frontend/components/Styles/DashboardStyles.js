@@ -53,6 +53,15 @@ const PageContent = styled.div`
     @media (max-width: 800px) {
         padding: 0; 
     }
+    @media (max-width: 480px) {
+        .feature-section {
+            .feature-suggestion {
+                h3 {
+                    font-size: 1.3rem;
+                }
+            }
+        }
+    }
 `;
 
 export { PageContent }; 

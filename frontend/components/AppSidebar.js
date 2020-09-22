@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React from 'react'; 
 import { Side, MenuAppContainer } from './Styles/AppSidebarStyles'; 
 import Link from 'next/link'; 
 
@@ -20,7 +20,7 @@ const SideBar = (props) => {
                             text="Home"
                             />
                             <MenuItem
-                            link="/dashboard"
+                            link="/products"
                             id="productIcon"
                             faIcon="fas fa-tag"
                             text="Products"
@@ -34,7 +34,6 @@ const SideBar = (props) => {
                         </ul>
                     </div>
                 </div>
-                
                 <div className="navMenuAccount_Data">
                     <span className="userInitials">{`${user.FST_NAME.slice(0, 1)}${user.LST_NAME.slice(0, 1)}`}</span>
                     <span className="user-name">{`${user.FST_NAME} ${user.LST_NAME}`}</span>
@@ -47,13 +46,13 @@ const SideBar = (props) => {
 const MenuItem = (props) => {
     return (
         <Link href={props.link}>
-        <li className="app-list-item">
-            <span className="faIcon" id={props.id}>
-                <i className={props.faIcon}></i>
-            </span>
-            <span>{props.text}</span>
-        </li>
-    </Link>
+            <li className="app-list-item">
+                <span className="faIcon" id={props.id}>
+                    <i aria-hidden className={props.faIcon}></i>
+                </span>
+                <span>{props.text}</span>
+            </li>
+        </Link>
     )
 }
 

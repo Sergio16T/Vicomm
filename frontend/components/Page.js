@@ -1,16 +1,64 @@
-import { ThemeProvider }  from 'styled-components'; 
-import Meta from './Meta'; 
-import { theme, GlobalStyle } from './Styles/PageStyles'; 
+import React,  { useState, useRef, useEffect, useContext } from 'react';
+import AppHeader from './AppHeader'; 
+import { BackDrop, ModalBackDrop, StyledPage } from './Styles/PageStyles'; 
+import Spinner from './Spinner'; 
+import { Context } from './PageProvider';  
 
 
-function Page(props) {
+const Page = props => {
+    const { isOpen, setIsOpen, userData, client } = useContext(Context); 
+    const [modalOpen, setModalOpen] = useState(false); 
+    const [spinner, setSpinner] = useState(false); 
+    const backDrop = useRef(null); 
+    const modalBackDrop = useRef(null); 
+
+    useEffect(() => {
+        document.addEventListener('click', handleClick); 
+        return () => document.removeEventListener('click', handleClick); 
+    }, []); 
+
+    const handleClick = (e) => {
+        if(e.target.contains(backDrop.current)) {
+            setIsOpen(false); 
+            console.log('contains')
+            document.querySelector('body').style.overflow = ''; 
+        } 
+        if(e.target.contains(modalBackDrop.current)) {
+            setModalOpen(false); 
+            document.querySelector('body').style.overflow = ''; 
+        }
+    }
+
+    const toggleSideBar = () => { 
+        if(!isOpen) document.querySelector('body').style.overflow = "hidden"; 
+        setIsOpen(!isOpen); 
+    }
+
+    const toggleModal = () => {
+        if(!modalOpen) document.querySelector('body').style.overflow = "hidden"; 
+        else document.querySelector('body').style.overflow = "";
+        setModalOpen(!modalOpen); 
+    }
+
+
     return (
-        <ThemeProvider theme={theme}>
-            <GlobalStyle/>
-            <Meta/>
-            {props.children} 
-        </ThemeProvider>
+        <StyledPage>
+            <BackDrop isOpen={isOpen} ref={backDrop}/>
+            <ModalBackDrop isOpen={modalOpen} ref={modalBackDrop}/>
+            <AppHeader
+            user={userData.user ? userData.user : ''}
+            toggleSideBar={toggleSideBar}
+            client={client}  
+            toggleModal={toggleModal}
+            render={() => props.render({ toggleModal })}
+            />
+            {props.children({ modalOpen, toggleModal, userData, setSpinner })}
+            <Spinner 
+            show={modalOpen}
+            spinner={spinner}/>
+        </StyledPage>
     );
-}
+};
+
 
 export default Page;
