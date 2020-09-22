@@ -15,10 +15,11 @@ app.use(function(req, res, next) {
     next();
 });
 const corsOptions = {
-    origin: process.env.FRONTEND_URL, //change with your own client URL
+    origin: process.env.FRONTEND_URL, // client URL
     credentials: true
-  }
+}
 app.use(cors(corsOptions)); 
+
 // express middleware to handle cookies 
 app.use(cookieParser()); 
 

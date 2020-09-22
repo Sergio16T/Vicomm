@@ -3,7 +3,7 @@ import { StyledImgSelectedHeader, StyledFaIcon } from './Styles/ImageGalleryStyl
 import TooltipInfo from './TooltipInfo'; 
 import styled from 'styled-components'; 
 
-const ModalImgSelectedHeader = ({ count, deleteMultimedia, useMLTMD, selected, setSelected }) => {
+const ModalImgSelectedHeader = ({ count, deleteMultimedia, useMLTMD, selected, setSelected, multiSelect }) => {
     return (
         <StyledImgSelectedHeader>
             <span className="selected-count">{count} selected</span>
@@ -11,7 +11,7 @@ const ModalImgSelectedHeader = ({ count, deleteMultimedia, useMLTMD, selected, s
                 <StyledFaIcon onClick={deleteMultimedia} selected>
                     <i className="fas fa-trash"></i>
                     <TooltipInfo
-                    text="Delete Selected Images"
+                    text={`Delete Selected Image${multiSelect ? "s" : ""}`}
                     />
                 </StyledFaIcon>
                 <Button 

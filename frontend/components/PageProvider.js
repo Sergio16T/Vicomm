@@ -1,11 +1,11 @@
 import React, { useState } from 'react'; 
 import { useQuery, gql } from '@apollo/client'; 
 import Router from 'next/router';
+import WithApollo from '../lib/ApolloClient'; 
 import { ThemeProvider }  from 'styled-components'; 
 import Meta from './Meta'; 
 import SideBar  from './AppSidebar'; 
 import { theme, GlobalStyle } from './Styles/PageStyles'; 
-import WithApollo from '../lib/ApolloClient'; 
 
 const GET_USER_QUERY = gql`
     query GET_USER_QUERY {
