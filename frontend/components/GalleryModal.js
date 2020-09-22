@@ -116,6 +116,7 @@ const UploadImageModal = (props) => {
                     useMLTMD={props.useMLTMD}
                     setSelected={setSelected}
                     selected={selected}
+                    multiSelect={props.multiSelect}
                     />
                 }
          

@@ -60,7 +60,8 @@ const DashBoard = ({ modalOpen, toggleModal, userData, setSpinner }) => {
             modalXColor={"white"}
             user={userData.user ? userData.user : ''}
             setSpinner={setSpinner}
-            useMLTMD={uploadCoverPhoto} 
+            useMLTMD={uploadCoverPhoto}
+            multiSelect={false}
             />
         </PageContent>    
     );  
