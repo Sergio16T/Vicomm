@@ -11,6 +11,7 @@ background-color: #4285f4;
 display: flex; 
 align-items: center; 
 padding: 0 2rem; 
+z-index: 3;
 .nav-left{ 
     display: flex; 
     flex: 0 0 50%; 
