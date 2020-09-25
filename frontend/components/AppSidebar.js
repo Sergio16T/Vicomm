@@ -27,6 +27,12 @@ const SideBar = (props) => {
                             />
                             <MenuItem
                             link="/dashboard"
+                            id="categoriesIcon"
+                            faIcon="fas fa-list"
+                            text="Categories"
+                            />
+                            <MenuItem
+                            link="/dashboard"
                             id="ordersIcon"
                             faIcon="fas fa-shopping-cart"
                             text="Orders"

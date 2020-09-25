@@ -1,10 +1,10 @@
 import withApollo from '../lib/ApolloClient'; 
 import SignUp from '../components/SignUp'; 
 
-const signup = () => {
+const SignupPage = () => {
     return (
         <SignUp/>
     );
 };
 
-export default withApollo(signup);
+export default withApollo(SignupPage);

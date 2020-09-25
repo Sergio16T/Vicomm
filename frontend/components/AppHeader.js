@@ -13,7 +13,7 @@ const SIGN_OUT_MUTATION = gql`
 
 
 const AppHeader = (props) => {
-    const { user } = props; 
+    const { text } = props; 
     return (
         <StyledHeader>
             <div className="nav-left">
@@ -22,7 +22,7 @@ const AppHeader = (props) => {
                     <div></div>
                     <div></div>
                 </div>
-                <span id="userName">{`${user.FST_NAME}'s Store`}</span>
+                <span id="userName">{text}</span>
             </div>
             <div className="nav-right">
                 {props.render()}

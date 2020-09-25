@@ -1,10 +1,10 @@
 import withApollo from '../lib/ApolloClient'; 
 import Dashboard from '../components/Dashboard'; 
 
-const dashboard = () => {
+const DashboardPage = () => {
     return (
        <Dashboard/>
     );
 };
 
-export default withApollo(dashboard);
+export default withApollo(DashboardPage);

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client'; 
 import { PageContent } from './Styles/DashboardStyles'; 
 import ImageGalleryModal from './GalleryModal'; 
 import CoverPhoto from './CoverPhoto'; 
 import Page from './Page'; 
 import Link from 'next/link'; 
+import { Context } from './PageProvider'; 
 
 const GET_COVER_PHOTO_QUERY = gql`
     query GET_COVER_PHOTO_QUERY {
@@ -21,7 +22,7 @@ const UPDATE_COVER_PHOTO_MUTATION = gql`
     }
 `;
 
-const DashBoard = ({ modalOpen, toggleModal, userData, setSpinner }) => {
+const DashBoard = ({ modalOpen, toggleModal, setSpinner }) => {
     const { loading, data } = useQuery(GET_COVER_PHOTO_QUERY); 
     const [updateCoverPhoto] = useMutation(UPDATE_COVER_PHOTO_MUTATION, { refetchQueries: ["GET_COVER_PHOTO_QUERY"]});
 
@@ -58,19 +59,21 @@ const DashBoard = ({ modalOpen, toggleModal, userData, setSpinner }) => {
             show={modalOpen} 
             toggleModal={toggleModal}
             modalXColor={"white"}
-            user={userData.user ? userData.user : ''}
             setSpinner={setSpinner}
             useMLTMD={uploadCoverPhoto}
-            multiSelect={false}
             />
         </PageContent>    
     );  
 };
  
 const DashboardPage = (props) => {
+    const { userData } = useContext(Context)
     return (
-        <Page render={({ toggleModal }) => <ToggleImageGalleryBtn toggleModal={toggleModal}/>}>
-            {({ modalOpen, toggleModal, userData, setSpinner }) => 
+        <Page 
+        render={({ toggleModal }) => <ToggleImageGalleryBtn toggleModal={toggleModal}/>}
+        text={`${userData.user.FST_NAME}'s Store`}
+        >
+            {({ modalOpen, toggleModal, setSpinner }) => 
                 <DashBoard
                 modalOpen={modalOpen}
                 toggleModal={toggleModal}

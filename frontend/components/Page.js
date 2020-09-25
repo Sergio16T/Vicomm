@@ -6,7 +6,7 @@ import { Context } from './PageProvider';
 
 
 const Page = props => {
-    const { isOpen, setIsOpen, userData, client } = useContext(Context); 
+    const { isOpen, setIsOpen, client } = useContext(Context); 
     const [modalOpen, setModalOpen] = useState(false); 
     const [spinner, setSpinner] = useState(false); 
     const backDrop = useRef(null); 
@@ -46,13 +46,13 @@ const Page = props => {
             <BackDrop isOpen={isOpen} ref={backDrop}/>
             <ModalBackDrop isOpen={modalOpen} ref={modalBackDrop}/>
             <AppHeader
-            user={userData.user ? userData.user : ''}
             toggleSideBar={toggleSideBar}
             client={client}  
             toggleModal={toggleModal}
             render={() => props.render({ toggleModal })}
+            text={props.text}
             />
-            {props.children({ modalOpen, toggleModal, userData, setSpinner })}
+            {props.children({ modalOpen, toggleModal, setSpinner })}
             <Spinner 
             show={modalOpen}
             spinner={spinner}/>

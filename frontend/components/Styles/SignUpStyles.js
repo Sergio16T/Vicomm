@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const SignUpPage = styled.div`
     /* padding-top: 100px;  */
-    height: 100%; 
+    /* height: 100%;  */
     background: rgba(0, 0, 0, 0.02);
     padding: 100px 0; 
     .OAuthLineBreak {

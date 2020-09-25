@@ -49,6 +49,9 @@ const MenuAppContainer = styled.div`
                     #ordersIcon {
                         background: #EB3569; 
                     }
+                    #categoriesIcon {
+                        background: #FFC53A; 
+                    }
                     &:hover {
                         cursor: pointer; 
                         background: ${props => props.theme.lightgrey};
