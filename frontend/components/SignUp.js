@@ -186,7 +186,10 @@ const SignUpForm = (props) => {
                     <span id="OAuth_or_text">or </span>
                 <span className="OAuthProvider_lineBreak"></span>
                 </div>
-                <GoogleLogin buttonText="Sign Up with Google"/>
+                <GoogleLogin 
+                buttonText="Sign Up with Google"
+                signUp
+                />
             </Form>
         </SignUpFormWrapper>
     )

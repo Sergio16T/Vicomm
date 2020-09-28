@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useMutation, gql } from '@apollo/client'; 
+import { useMutation, useQuery, gql } from '@apollo/client'; 
 import Link from 'next/link'; 
 import { Form } from './Styles/FormStyles'; 
 import GoogleLogin from './GoogleLogin'; 
 import { SignInPage, SignInFormWrapper, SignInMessage } from './Styles/SignInStyles'; 
+import { GET_USER_QUERY } from './PageProvider'; 
 import Router from 'next/router'; 
 
 const SIGN_IN_MUTATION = gql`
@@ -17,6 +18,15 @@ const SIGN_IN_MUTATION = gql`
 `; 
 
 const SignIn = (props) => {
+    const { loading, data } = useQuery(GET_USER_QUERY); 
+    
+    if(loading) return null; 
+    if(data.user) {
+        Router.push({
+            pathname: "/dashboard"
+        }); 
+        return null;
+    }
     return (
         <SignInPage>
             <Link href="/">
@@ -28,7 +38,7 @@ const SignIn = (props) => {
     ); 
 }
 const SignInForm = () => {
-    const [signIn, { data }] = useMutation(SIGN_IN_MUTATION); 
+    const [signIn] = useMutation(SIGN_IN_MUTATION, {refetchQueries: ["GET_USER_QUERY"]}); 
     const [state, setState] = useState({
         email: '',
         password: ''
@@ -46,9 +56,6 @@ const SignInForm = () => {
         try {
             await signIn({ variables: {...state}}).catch(err=> {
                 throw err; 
-            }); 
-            Router.push({
-                pathname: '/dashboard'
             }); 
         } catch(err) {
             setState({...state, signInError: err.message }); 

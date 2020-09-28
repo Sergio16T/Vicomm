@@ -32,7 +32,7 @@ const GoogleContainer = styled.div`
 	}
 `; 
 const GoogleBtn = (props) => {
-	const [googleSignIn, { data }] = useMutation(GOOGLE_LOGIN_MUTATION); 
+	const [googleSignIn] = useMutation(GOOGLE_LOGIN_MUTATION, {refetchQueries: ["GET_USER_QUERY"]}); 
     const [state, setState] = useState({
         isLoggedIn: false, 
         accessToken: '', 
@@ -44,10 +44,10 @@ const GoogleBtn = (props) => {
 		console.log('response', response); 
 		if(!response.accessToken) return; 
 		setState({
-		...state, 
-		isLoggedIn: true,
-		accessToken: response.accessToken,
-		email: response.profileObj.email
+			...state, 
+			isLoggedIn: true,
+			accessToken: response.accessToken,
+			email: response.profileObj.email
 		}); 
 		const googleSignInRes = await googleSignIn({variables: { 
 			accessToken: response.accessToken, 
@@ -56,9 +56,11 @@ const GoogleBtn = (props) => {
 			lastName: response.profileObj.familyName
 		}}); 
 		console.log('res', googleSignInRes); 
-		Router.push({
-			pathname: "/dashboard"
-		}); 
+		if(props.signUp) {
+			Router.push({
+				pathname: "/dashboard"
+			}); 
+		}
 	}
 
 	const logout = (response) => {

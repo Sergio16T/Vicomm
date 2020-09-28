@@ -42,7 +42,6 @@ const Query = {
                 AND ACT_IND = ${1}
         `; 
         const MLTMD = await context.db.query(qString).catch(err => { throw err; }); 
-        // console.log(MLTMD)
         return MLTMD; 
     },
     getCoverPhoto: async(parent, args, context, info) => {

@@ -64,7 +64,6 @@ const mutation = {
         return user; 
     },
     async signIn(parent,args, context, info) {
-        // console.log('context:', context)
         const email = args.email.toLowerCase(); 
         let qString = SQL`
         SELECT 
@@ -89,11 +88,11 @@ const mutation = {
             httpOnly: true, 
             maxAge: 1000 * 60 * 60 * 24 * 365
         }); 
+        console.log('logging in');
         return user; 
     }, 
     async googleSignIn(parent, args, context, info) {
         const email = args.email.toLowerCase(); 
-        console.log('email', email); 
         let qString = SQL`
         SELECT 
             * 
@@ -137,7 +136,7 @@ const mutation = {
             httpOnly: true, 
             maxAge: 1000 * 60 * 60 * 24 * 365
         }); 
-        console.log('googleLogIn', user); 
+        console.log('googleLogIn'); 
         return user; 
     }, 
     signOut(parent, args, context, info) {
@@ -175,7 +174,6 @@ const mutation = {
         return { message: "Success! Image has been deleted" }; 
     },
     async updateCoverPhoto(parent, args, context, info) {
-        console.log(args.key); 
         const checkForCoverPhotoQ = SQL`
         SELECT 
             COVER_PHOTO_KEY
@@ -184,9 +182,9 @@ const mutation = {
         WHERE 
             ACCT_KEY = ${context.req.user.ACCT_KEY}
             AND ACT_IND = ${1}; 
-        `
+        `;
         const [photo] =  await context.db.query(checkForCoverPhotoQ).catch(err => { throw err; }); 
-        console.log(photo); 
+
         if(photo) {
             const updateCoverPhotoQ = SQL`
             UPDATE 
@@ -213,7 +211,6 @@ const mutation = {
                 ACT_IND = ${1};
             `; 
             const result = await context.db.query(createCoverPhotoQ).catch(err => { throw err; }); 
-            console.log('createCoverPhoto', result); 
             return { COVER_PHOTO_KEY: result.insertId }; 
         }
     },

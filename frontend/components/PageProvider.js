@@ -63,5 +63,5 @@ function DefaultPage(props) {
 const DefaultPageProvider = WithApollo(DefaultPage); 
 
 export default WithApollo(PageProvider);
-export { DefaultPageProvider, Context }; 
+export { DefaultPageProvider, Context, GET_USER_QUERY }; 
 
