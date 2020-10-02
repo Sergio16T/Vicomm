@@ -30,8 +30,8 @@ const PageContent = styled.div`
             }
             h3 {
                 margin-top: 0; 
-                margin-bottom: 1rem; 
-                font-size: 1.5rem; 
+                margin-bottom: .75rem; 
+                font-size: 1.4rem; 
                 font-family: 'ubuntu'; 
             }
             span {
@@ -57,7 +57,10 @@ const PageContent = styled.div`
         .feature-section {
             .feature-suggestion {
                 h3 {
-                    font-size: 1.3rem;
+                    font-size: 1.2rem;
+                }
+                span {
+                    font-size: 1.1rem; 
                 }
             }
         }

@@ -20,7 +20,7 @@ class MyApp extends App {
             </DefaultPageProvider>
         ); 
         return (
-            <Page>
+            <Page {...router}>
                 <Component {...pageProps}/>
             </Page>
         ); 

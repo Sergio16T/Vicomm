@@ -26,7 +26,7 @@ const Form = styled.form`
     position: relative;
     font-family: 'Lato'; 
     width: 100%; 
-    max-width: 800px;
+    max-width: 720px;
     .formRow, .flex-row {
         width: 100%; 
         margin: 2rem 0; 
@@ -45,7 +45,7 @@ const Form = styled.form`
             white-space: nowrap
         }
         .active-content {
-                transform: translateY(-58px) scale(.7);
+                transform: translateY(-58px) scale(.6);
         }
         input {
             font-size: 2rem; 
@@ -60,7 +60,7 @@ const Form = styled.form`
                 outline: none;
                 box-shadow: inset 0 -2px 1px -2px grey;
                 &:focus + label {
-                    transform: translateY(-58px) scale(.7);
+                    transform: translateY(-58px) scale(.6);
                 }
             }
         }
@@ -78,11 +78,10 @@ const Form = styled.form`
         flex-direction: row; 
         .flex-group {
             display: flex;
-            flex-grow: 1;
             margin-right: 1rem;
         }
         .formCol {
-            flex-grow: 1; 
+            flex-grow: 2; 
             margin-right: 1rem; 
             position: relative;
             &:last-child {
@@ -122,11 +121,21 @@ const Form = styled.form`
         font-size: 1rem; 
         margin: .25rem 0; 
     }
-   @media (max-width: 800px) {
+   @media (max-width: 950px) {
        .flex-row {
            flex-direction: column;
+           .formCol {
+               margin-bottom: .75rem;
+           }
        }
    }
+   @media (max-width: 480px) {
+        .formRow, .flex-row {
+                input, label, .input-addOn {
+                    font-size: 1.8rem;
+                }
+        }
+    }
 `; 
 
 export { ProductPageContent, Body, Form }; 

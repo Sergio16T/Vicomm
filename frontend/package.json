@@ -21,6 +21,7 @@
     "next-with-apollo": "^5.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-dropzone": "^11.2.0",
     "react-google-login": "^5.1.21",
     "styled-components": "^5.1.1"
   },

@@ -108,6 +108,7 @@ const UploadImageModal = (props) => {
                     uploadInput={uploadInput}
                     uploadFile={uploadFile}
                     toggleModal={props.toggleModal}
+                    multiSelect={props.multiSelect}
                     />
                 : 
                     <ImgSelectedHeader

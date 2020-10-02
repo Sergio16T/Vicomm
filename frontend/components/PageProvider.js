@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import { useQuery, gql } from '@apollo/client'; 
 import Router from 'next/router';
 import WithApollo from '../lib/ApolloClient'; 
@@ -6,6 +6,7 @@ import { ThemeProvider }  from 'styled-components';
 import Meta from './Meta'; 
 import SideBar  from './AppSidebar'; 
 import { theme, GlobalStyle } from './Styles/PageStyles'; 
+import usePrevious from '../lib/Hooks/usePrevious';
 
 const GET_USER_QUERY = gql`
     query GET_USER_QUERY {
@@ -21,12 +22,18 @@ const Context = React.createContext();
 function PageProvider(props) {
     const { client, loading: userLoading, data: userData } = useQuery(GET_USER_QUERY); 
     const [isOpen, setIsOpen ] = useState(false); 
+    const previousPath = usePrevious(props.pathname); 
     const context = {
         isOpen: isOpen, 
         setIsOpen: setIsOpen,
         client, 
         userData
     }
+    useEffect(() => {
+        if(previousPath !== props.pathname) {
+            window.innerWidth < 800 && setIsOpen(false);
+        }
+    },[props.pathname]); 
 
     if (userLoading) return null; 
     if(!userData.user) {

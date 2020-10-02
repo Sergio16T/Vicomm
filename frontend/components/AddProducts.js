@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import {useDropzone} from 'react-dropzone'
 import Page from './Page';
 import { ProductPageContent, Body, Form  } from './Styles/ProductStyles'; 
+import ImageGalleryModal from './GalleryModal'; 
+import DropZone from './Styles/DropZoneStyles'; 
 
-const AddProducts = (props) => {
+const AddProducts = () => {
     return (
-       <Page
-       render={() => null}
-       text="Add A Product"
-       >
-           {({ modalOpen, toggleModal, setSpinner }) => 
-            <AddProductForm/>
-           }
-       </Page>
+        <Page
+        render={() => null}
+        text="Add A Product"
+        >
+            {({ modalOpen, toggleModal, setSpinner }) => 
+                <AddProductForm toggleModal={toggleModal} modalOpen={modalOpen} setSpinner={setSpinner}/>
+            }
+        </Page>
     );
 };
-
-const AddProductForm = (props) => {
+const AddProductForm = ({ toggleModal, modalOpen, setSpinner}) => {
     const [state, setState] = useState({
         name: "",
         price: "",
         salePrice: "",
         weight: "", 
     }); 
-    
+    const onDrop = useCallback((acceptedFiles) => {
+        console.log(acceptedFiles); 
+    }, []); 
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop}); 
+
     const handleInputChange = (e) => {
         const { name, value } = e.target; 
         switch(name) {
@@ -34,6 +40,11 @@ const AddProductForm = (props) => {
             setState({...state, [name]:value}); 
         }
       
+    }
+    const useMLTMD = (selected, cb) => {
+        console.log(selected);
+        cb({}); 
+        toggleModal(); 
     }
     return (
         <ProductPageContent>
@@ -99,10 +110,32 @@ const AddProductForm = (props) => {
                         </div>
                       
                     </div>
+                    <DropZone {...getRootProps({
+                        onClick: event => event.stopPropagation()
+                    })}>
+                        <i className="fas fa-camera-retro retroCam"></i>
+                        <p id="dragNdrop-p">Drag & Drop To Upload</p>
+                        <div className="line-break-container">
+                            <span className="lineBreak"></span>
+                            <span id="or-text">or </span>
+                            <span className="lineBreak"></span>
+                        </div>
+                        <button type="button" className="browse-btn" onClick={toggleModal}><i className="fas fa-images imgIcon"></i>Browse Gallery</button>
+                        <input {...getInputProps()}/>
+                    </DropZone>
                 </Form>
             </Body>
+            <ImageGalleryModal 
+            show={modalOpen} 
+            toggleModal={toggleModal}
+            modalXColor={"white"}
+            setSpinner={setSpinner}
+            multiSelect
+            useMLTMD={useMLTMD}
+            />
         </ProductPageContent>
     ); 
 }
+
 
 export default AddProducts;

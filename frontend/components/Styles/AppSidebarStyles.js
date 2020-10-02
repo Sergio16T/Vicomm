@@ -123,7 +123,8 @@ const Side = styled.div`
     margin-bottom: 90px; 
     @media (max-width: 800px) {
         transform: ${props => props.isOpen ? "translateX(0)" : "translateX(-100%)" };
-        transition: all 0.3s;
+        /* transition: all 0.3s; */
+        transition: transform 400ms cubic-bezier(0.4, 0, 0.3, 1);
     }
 `; 
 

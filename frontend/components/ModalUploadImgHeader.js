@@ -9,7 +9,7 @@ const ModalUploadImgHeader = (props) => {
         <div className="modal-header">
             <h2>Image Gallery</h2>
             <div className="d-flex">
-                <RemoveCoverPhotoBtn toggleModal={props.toggleModal}/>
+                {!props.multiSelect  && <RemoveCoverPhotoBtn toggleModal={props.toggleModal}/>}
                 <label id="uploadImgBtn" htmlFor="uploadImg"> 
                     <i className="fas fa-plus-square plusIcon"></i> {width > 600 && "Upload Images"}
                 </label>

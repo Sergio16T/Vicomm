@@ -54,7 +54,7 @@ const StyledModal = styled.div`
         border: none;
         border-radius: 6px; 
         background: rgb(255,171,0); 
-        padding: .8rem;
+        padding: .8rem 1rem;
         color: white; 
         font-size: 1.3rem; 
         margin-right: 30px; 

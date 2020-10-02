@@ -20,7 +20,7 @@ const StyledBanner = styled.div`
         h1 {
             font-size: 4.4rem;
             font-weight: 700; 
-            margin: 8rem 0 3rem 0; 
+            margin: 10rem 0 3rem 0; 
         }
         p {
             font-size: 1.8rem; 
@@ -44,13 +44,30 @@ const StyledBanner = styled.div`
         right: -400px; 
         border-radius: 50%; 
     }
+    @media (max-width: 1100px) {
+        .blueSphere, .purpleSphere {
+            width: 600px; 
+            height: 600px; 
+        }
+        .blueSphere {
+            bottom: -300px; 
+            left: -300px; 
+        }
+        .purpleSphere {
+            bottom: -340px;
+            right: -340px; 
+        }
+    }
     @media (max-width: 1000px) {
         height: calc(100vh - 70px); 
         .bannerColumn {
             padding: 0 2rem; 
             h1 {
-                font-size: 2.8rem; 
-                margin: 6rem 0 2rem 0; 
+                font-size: 2.4rem; 
+                margin: 10rem 0 2rem 0; 
+            }
+            p {
+                font-size: 1.4rem; 
             }
         }
         .blueSphere, .purpleSphere {

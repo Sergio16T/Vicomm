@@ -9,7 +9,7 @@ const StyledNav = styled.ul`
     li {
     padding: 0rem; 
     margin: 0 1rem; 
-    font-size: 1.4rem; 
+    font-size: 1.3rem; 
     font-family: 'Lato'; 
     list-style: none; 
     color: rgba(0, 0, 0, .6); 
@@ -17,12 +17,13 @@ const StyledNav = styled.ul`
             cursor: pointer;
         }
         button {
+            text-transform: uppercase;
             animation-name: ${Wobble}; 
             animation-delay: .25s; 
             animation-duration: 3s; 
             animation-timing-function: ease-in-out; 
-            font-size: 1.4rem; 
-            padding: .75rem 2.5rem;
+            font-size: 1.2rem; 
+            padding: 1rem 2.2rem;
             background-color: #3BD2A2;  
             border: none; 
             outline: none; 
@@ -34,13 +35,13 @@ const StyledNav = styled.ul`
         }
     }      
     @media (max-width: 480px) {
-        padding: 0 1rem; 
+        padding: 0 .5rem; 
         li {
             margin: auto 1rem auto 0; 
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             button {
-                font-size: 1.3rem;
-                padding: .75rem .98rem; 
+                font-size: 1.1rem;
+                padding: .85rem 1rem; 
             }
         }
     }

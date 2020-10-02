@@ -19,7 +19,7 @@ const StyledHeader = styled.div`
     }
     @media (max-width: 480px) {
         img {
-            margin: auto 0rem auto 2rem; 
+            margin: auto 0rem auto 1rem; 
         }
     }
 `; 

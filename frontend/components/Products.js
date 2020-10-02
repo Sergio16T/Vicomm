@@ -39,7 +39,7 @@ const AddProductButton = (props) => {
     return (
         <Link href="/products/add">
             <StyledAddButton>
-                <i class="fas fa-plus-circle plusIcon"></i>
+                <i className="fas fa-plus-circle plusIcon"></i>
                 <span>Add</span>
             </StyledAddButton>
         </Link>
