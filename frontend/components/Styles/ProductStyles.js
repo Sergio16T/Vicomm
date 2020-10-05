@@ -69,6 +69,8 @@ const Form = styled.form`
             z-index: 2;
             background: transparent;
             color: white; 
+            border-radius: 0; 
+            -webkit-border-radius: 0;
             &:focus {
                 outline: none;
                 border-bottom: 2px solid rgba(255,255,255,0.3); 
