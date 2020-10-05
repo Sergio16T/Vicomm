@@ -13,7 +13,7 @@ const HorizontalScrollGallery = styled.div`
         box-shadow: ${props => props.theme.bs};
         height: 310px; 
         padding: 1rem 0; 
-        border-radius: 6px;
+        border-radius: 4px;
         box-sizing: border-box; 
         overflow-x: auto;
         .card-container {
@@ -52,7 +52,7 @@ const HorizontalScrollGallery = styled.div`
             height: 40px; 
             width: 40px; 
             display: flex; 
-            z-index: 10;
+            z-index: 2;
             cursor: pointer; 
             transition: all .3s ease-in; 
             .icon {

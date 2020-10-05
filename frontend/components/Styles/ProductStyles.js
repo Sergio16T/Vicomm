@@ -6,6 +6,7 @@ const ProductPageContent = styled.div`
     padding-bottom: 100px; 
     width: 100%; 
     box-sizing: border-box; 
+    background: linear-gradient(#221b43 440px, white 440px); 
     @media (max-width: 800px) {
         padding: 100px 0 100px 0; 
     }
@@ -16,10 +17,17 @@ const Body = styled.div`
     display: flex; 
     flex-direction: column; 
     justify-content:center; 
-    padding: 0 2rem; 
+    padding: 1rem 2rem; 
     align-items: center; 
     /* background-color: #F2F2F2;  */
     /* margin: 0 auto;  */
+    .form-container {
+        background: white; 
+        box-shadow: ${props => props.theme.bs}; 
+        padding: .5rem; 
+        border-radius: 4px; 
+        margin: 2rem 0;
+    }
 `; 
 
 const Form = styled.form`
@@ -27,12 +35,14 @@ const Form = styled.form`
     font-family: 'Lato'; 
     width: 100%; 
     max-width: 720px;
+    .formCol, .flex-group {
+        height: 70px;
+        box-sizing: border-box;
+    }
     .formRow, .flex-row {
         width: 100%; 
-        margin: 2rem 0; 
+        margin: 1.5rem 0; 
         label {
-            color: #A3AFBF; 
-            /* text-transform: uppercase;  */
             font-size: 2rem; 
             margin-bottom: .5rem;
             display: block; 
@@ -42,25 +52,29 @@ const Form = styled.form`
             pointer-events: none; 
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap
+            white-space: nowrap; 
+            color: rgba(255,255,255,0.3); 
         }
         .active-content {
-                transform: translateY(-58px) scale(.6);
+            transform: translateY(-58px) scale(.55);
         }
         input {
             font-size: 2rem; 
             border: 0;
-            border-bottom: 1px solid #d9e4ec; 
-            /* border-radius: 4px;  */
-            padding: .25rem; 
+            border-bottom: 1px solid rgba(255,255,255,0.3); 
+            padding: .25rem 0; 
             width: 100%; 
             box-sizing: border-box; 
+            height: 35px;
             z-index: 2;
+            background: transparent;
+            color: white; 
             &:focus {
                 outline: none;
-                box-shadow: inset 0 -2px 1px -2px grey;
+                border-bottom: 2px solid rgba(255,255,255,0.3); 
                 &:focus + label {
-                    transform: translateY(-58px) scale(.6);
+                    transform: translateY(-58px) scale(.55);
+                    color: rgba(255,255,255,0.7); 
                 }
             }
         }
@@ -95,6 +109,7 @@ const Form = styled.form`
         right: 3px; 
         transform: translateY(-68px);
         font-size: 2rem;
+        color: white;
     }
     .form-button-row {
         width: 100%; 
@@ -104,7 +119,6 @@ const Form = styled.form`
             margin: auto; 
             font-size: 1.4rem; 
             border-radius: 6px;
-            /* width: 40%;   */
             width: 100%; 
             outline: none; 
             padding: 1.25rem 1rem; 
@@ -122,7 +136,39 @@ const Form = styled.form`
         font-size: 1rem; 
         margin: .25rem 0; 
     }
+    .descriptionRow {
+        box-sizing: border-box;
+        width: 100%; 
+        margin: 2rem 0;
+        padding: 2rem; 
+        border-radius: 4px; 
+        box-shadow: ${props => props.theme.bs};
+        label {
+            text-transform: uppercase;
+            font-size: 1.4rem; 
+            color: #A3AFBF;
+        }
+        textArea {
+            margin-top: 1rem; 
+            width: 100%;
+            min-height: 300px;
+            border: 1px solid #d9e4ec; 
+            box-sizing: border-box;
+            font-family: "Lato";
+            padding: .5rem;
+            font-size: 1.4rem; 
+            &:focus {
+                outline: none;
+            }
+        }
+    }
    @media (max-width: 950px) {
+       .form-row, .flex-row {
+           margin: 0;
+       }
+       .mobile-row {
+           margin-bottom: 1rem;
+       }
        .flex-row {
            flex-direction: column;
            .flex-group {
@@ -131,6 +177,9 @@ const Form = styled.form`
            }
            .formCol {
                 margin-bottom: .75rem;
+           }
+           .mb-0 {
+               margin-bottom: 0;
            }
        }
    }

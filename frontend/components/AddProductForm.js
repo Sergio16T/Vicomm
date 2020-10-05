@@ -14,6 +14,7 @@ const AddProductForm = ({ toggleModal, modalOpen, setSpinner}) => {
         price: "",
         salePrice: "",
         weight: "", 
+        description: ""
     }); 
     const [selectedImages, setImages] = useState([]); 
     const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ["GET_IMG_GALLERY"]}); 
@@ -76,21 +77,23 @@ const AddProductForm = ({ toggleModal, modalOpen, setSpinner}) => {
         <ProductPageContent>
             <Body>
                 <Form>
-                    <div className="formRow">
-                        <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        value={state.name}
-                        onChange={handleInputChange}
-                        required
-                        />
-                          <label className={`${state.name ? "active-content": ""} p-label `} htmlFor="name">
-                            Name
-                        </label>
+                    <div className="flex-row mobile-row">
+                        <div className="formCol mb-0">
+                            <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            value={state.name}
+                            onChange={handleInputChange}
+                            required
+                            />
+                            <label className={`${state.name ? "active-content": ""} p-label `} htmlFor="name">
+                                Name
+                            </label>
+                        </div>
                     </div>
                     <div className="flex-row">
-                        <div className="flex-group">
+                        <div className="flex-group mobile-row">
                             <div className="formCol">
                                 <input
                                 type="number"
@@ -118,7 +121,7 @@ const AddProductForm = ({ toggleModal, modalOpen, setSpinner}) => {
                                 </label>
                             </div>
                         </div>
-                        <div className="formCol">
+                        <div className="formCol mobile-row">
                             <input
                             type="number"
                             name="weight"
@@ -136,34 +139,51 @@ const AddProductForm = ({ toggleModal, modalOpen, setSpinner}) => {
                         </div>
                       
                     </div>
-                    <DropZone {...getRootProps({
-                        onClick: event => event.stopPropagation()
-                    })}>
-                        {loadingDots && 
-                            <LoadingDots>
-                                <div class="spinner">
-                                    <div class="bounce1"></div>
-                                    <div class="bounce2"></div>
-                                    <div class="bounce3"></div>
-                                </div>
-                            </LoadingDots>
-                        }
-                        <i className="fas fa-camera-retro retroCam"></i>
-                        <p id="dragNdrop-p">Drag & Drop To Upload</p>
-                        <div className="line-break-container">
-                            <span className="lineBreak"></span>
-                            <span id="or-text">or </span>
-                            <span className="lineBreak"></span>
-                        </div>
-                        <button type="button" className="browse-btn" onClick={toggleModal}><i className="fas fa-images imgIcon"></i>Browse Gallery</button>
-                        <input {...getInputProps()} ref={dropInput}/>
-                    </DropZone>
+                    <div className="form-container">
+                        <DropZone {...getRootProps({
+                            onClick: event => event.stopPropagation()
+                        })}>
+                            {loadingDots && 
+                                <LoadingDots>
+                                    <div class="spinner">
+                                        <div class="bounce1"></div>
+                                        <div class="bounce2"></div>
+                                        <div class="bounce3"></div>
+                                    </div>
+                                </LoadingDots>
+                            }
+                            <i className="fas fa-camera-retro retroCam"></i>
+                            <p id="dragNdrop-p">Drag & Drop To Upload</p>
+                            <div className="line-break-container">
+                                <span className="lineBreak"></span>
+                                <span id="or-text">or </span>
+                                <span className="lineBreak"></span>
+                            </div>
+                            <button type="button" className="browse-btn" onClick={toggleModal}><i className="fas fa-images imgIcon"></i>Browse Gallery</button>
+                            <input {...getInputProps()} ref={dropInput}/>
+                        </DropZone>
+                    </div>
                     <ScrollGallery 
                     selectedImages={selectedImages}
                     setImages={setImages}
                     productImages={productImages}
                     setProductImages={setProductImages}
                     />
+                    <div className="descriptionRow">
+                        <div className="desc-form-row">
+                            <label htmlFor="description">
+                                    Description
+                            </label>
+                            <textarea
+                            type="text"
+                            name="description"
+                            id="description"
+                            value={state.description}
+                            onChange={handleInputChange}
+                            required
+                            />
+                        </div>
+                    </div>
                 </Form>
             </Body>
             <ImageGalleryModal 
