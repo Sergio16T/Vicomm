@@ -7,6 +7,7 @@ import Meta from './Meta';
 import SideBar  from './AppSidebar'; 
 import { theme, GlobalStyle } from './Styles/PageStyles'; 
 import usePrevious from '../lib/Hooks/usePrevious';
+import smoothscroll from 'smoothscroll-polyfill'; 
 
 const GET_USER_QUERY = gql`
     query GET_USER_QUERY {
@@ -29,6 +30,10 @@ function PageProvider(props) {
         client, 
         userData
     }
+    useEffect(() => {
+        smoothscroll.polyfill(); 
+    },[]); 
+
     useEffect(() => {
         if(previousPath !== props.pathname && window.innerWidth < 800) {
             document.querySelector('body').style.overflow = ''; 
@@ -59,6 +64,11 @@ function PageProvider(props) {
 }
 
 function DefaultPage(props) {
+    
+    useEffect(() => {
+        smoothscroll.polyfill(); 
+    },[]); 
+
     return (
         <ThemeProvider theme={theme}>
             <GlobalStyle/>

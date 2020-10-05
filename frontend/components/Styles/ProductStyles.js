@@ -7,7 +7,7 @@ const ProductPageContent = styled.div`
     width: 100%; 
     box-sizing: border-box; 
     @media (max-width: 800px) {
-        padding: 100px 0 0 0; 
+        padding: 100px 0 100px 0; 
     }
 `; 
 
