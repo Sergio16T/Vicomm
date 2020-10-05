@@ -17,7 +17,8 @@ const GET_IMG_GALLERY = gql`
 const UPLOAD_IMG_MUTATION = gql`
     mutation UPLOAD_IMG_MUTATION($image: String!, $largeImage: String!) {
         uploadImageToGallery(image: $image, largeImage: $largeImage) {
-            message
+            MLTMD_KEY
+            MLTMD_URL
         }
     }
 `; 
@@ -139,3 +140,4 @@ const UploadImageModal = (props) => {
 
 
 export default UploadImageModal;
+export { UPLOAD_IMG_MUTATION }; 

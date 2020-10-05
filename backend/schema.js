@@ -13,7 +13,7 @@ const typeDefs = gql`
         signIn(email: String!, password: String!): User!
         signOut: SuccessMessage!
         googleSignIn(firstName: String!, lastName: String!, email: String!, accessToken: String!): User!
-        uploadImageToGallery(image: String!, largeImage: String!): SuccessMessage!
+        uploadImageToGallery(image: String!, largeImage: String!): MultiMedia!
         deleteImages(keys: [ID]): SuccessMessage!
         updateCoverPhoto(key: ID): CoverPhoto!
         removeCoverPhoto: SuccessMessage!

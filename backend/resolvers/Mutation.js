@@ -156,9 +156,17 @@ const mutation = {
             CRTE_BY_ACCT_KEY = ${context.req.user.ACCT_KEY},
             ACT_IND = ${1}`; 
 
-        await context.db.query(imageQString).catch(err => { throw err; });
-
-        return { message: "Success!"};
+        const result = await context.db.query(imageQString).catch(err => { throw err; });
+        let getNewMltmdQ = SQL`
+        SELECT 
+            * 
+        FROM 
+            MLTMD 
+        WHERE 
+            MLTMD_KEY = ${result.insertId};
+        `; 
+        const [MLTMD] = await context.db.query(getNewMltmdQ).catch(err => { throw err; }); 
+        return MLTMD;
     },
     async deleteImages(parent, args, context, info) {
         for(let i =0; i < args.keys.length; i++) {

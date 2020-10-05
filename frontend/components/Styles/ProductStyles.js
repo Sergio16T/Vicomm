@@ -3,10 +3,9 @@ import styled from 'styled-components';
 const ProductPageContent = styled.div`
     padding-left: 210px; 
     padding-top: 120px; 
+    padding-bottom: 100px; 
     width: 100%; 
-    height: 100%;
     box-sizing: border-box; 
-
     @media (max-width: 800px) {
         padding: 100px 0 0 0; 
     }
@@ -19,6 +18,7 @@ const Body = styled.div`
     justify-content:center; 
     padding: 0 2rem; 
     align-items: center; 
+    /* background-color: #F2F2F2;  */
     /* margin: 0 auto;  */
 `; 
 
