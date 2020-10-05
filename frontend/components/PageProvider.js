@@ -30,8 +30,9 @@ function PageProvider(props) {
         userData
     }
     useEffect(() => {
-        if(previousPath !== props.pathname) {
-            window.innerWidth < 800 && setIsOpen(false);
+        if(previousPath !== props.pathname && window.innerWidth < 800) {
+            document.querySelector('body').style.overflow = ''; 
+            setIsOpen(false);
         }
     },[props.pathname]); 
 
