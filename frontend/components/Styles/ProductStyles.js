@@ -79,6 +79,7 @@ const Form = styled.form`
         .flex-group {
             display: flex;
             margin-right: 1rem;
+            flex-basis: 72.75%
         }
         .formCol {
             flex-grow: 2; 
@@ -124,8 +125,12 @@ const Form = styled.form`
    @media (max-width: 950px) {
        .flex-row {
            flex-direction: column;
+           .flex-group {
+                margin-right: 0; 
+                flex-basis: auto;
+           }
            .formCol {
-               margin-bottom: .75rem;
+                margin-bottom: .75rem;
            }
        }
    }
