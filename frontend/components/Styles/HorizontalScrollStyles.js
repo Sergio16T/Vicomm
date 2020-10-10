@@ -164,12 +164,6 @@ const HorizontalScrollGallery = styled.div`
         height: 240px; 
         .gallery {
             height: 240px;
-            .card-container, .image_manager, .card {
-                width: ${props => props.onlyCard ? "calc(100% - 2rem)" : "280px"}; 
-            }
-            .card {
-                min-width: 280px;
-            }
             .image_manager {
                 visibility: visible;
             }
