@@ -44,7 +44,7 @@ const DashBoard = ({ modalOpen, toggleModal, setSpinner }) => {
 
             </div>
             <div className="feature-section">
-                <Link href="products">
+                <Link href="/products/add">
                     <div className="feature-suggestion">
                         <h3>Add a Product And Start Selling</h3>
                         <span>Add Photos, Details, and Variants.</span>
