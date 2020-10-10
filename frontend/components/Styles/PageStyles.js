@@ -36,6 +36,16 @@ const GlobalStyle = createGlobalStyle`
 		text-decoration: none; 
 		color: black; 
 	}
+    .rp-button {
+        outline: none; 
+        border:none; 
+        background-color: transparent; 
+        position: relative;
+        &:disabled {
+            pointer-events: none;
+            opacity: .6;
+        }
+    }
 `; 
 
 const BackDrop = styled.div`

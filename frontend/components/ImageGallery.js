@@ -18,7 +18,7 @@ const ImageGallery = (props) => {
                         </div>
                     )} 
                 </div>
-          : 
+            : 
                 <div className="no-img-message">
                     <p>You don't have any images</p>
                 </div>
