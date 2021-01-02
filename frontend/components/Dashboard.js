@@ -68,7 +68,8 @@ const DashBoard = () => {
 };
 
 const DashboardPage = (props) => {
-    const { userData } = useContext(Context)
+    const { userData } = useContext(Context);
+
     return (
         <Page
             render={({ toggleModal }) => <ToggleImageGalleryBtn toggleModal={toggleModal}/>}

@@ -1,7 +1,7 @@
-import Link from 'next/link'; 
-import StyledNav from './Styles/NavStyles'; 
+import Link from 'next/link';
+import StyledNav from './Styles/NavStyles';
 
-const Nav = (props) => {
+const Nav = () => {
     return (
         <StyledNav>
             <Link href="/login">

@@ -32,7 +32,7 @@ const DELETE_IMGS_MUTATION = gql`
 `;
 
 const UploadImageModal = (props) => {
-    const {loading, data} = useQuery(GET_IMG_GALLERY);
+    const { loading, data } = useQuery(GET_IMG_GALLERY);
     const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ['GET_IMG_GALLERY']});
     const [deleteImages] = useMutation(DELETE_IMGS_MUTATION, { refetchQueries: ['GET_IMG_GALLERY']});
     const [selected, setSelected] = useState({});
@@ -88,7 +88,7 @@ const UploadImageModal = (props) => {
             uploadInput.current.value= "";
             props.setSpinner(false);
         }
-        catch(err) {
+        catch (err) {
             console.log(err);
             props.setSpinner(false);
         }
@@ -106,29 +106,29 @@ const UploadImageModal = (props) => {
         <StyledModal show={props.show} modalXColor={props.modalXColor}>
                 {!Object.keys(selected).length ?
                     <UploadImgHeader
-                    uploadInput={uploadInput}
-                    uploadFile={uploadFile}
-                    toggleModal={props.toggleModal}
-                    multiSelect={props.multiSelect}
+                        uploadInput={uploadInput}
+                        uploadFile={uploadFile}
+                        toggleModal={props.toggleModal}
+                        multiSelect={props.multiSelect}
                     />
                 :
                     <ImgSelectedHeader
-                    count={count}
-                    deleteMultimedia={deleteMultimedia}
-                    useMLTMD={props.useMLTMD}
-                    setSelected={setSelected}
-                    selected={selected}
-                    multiSelect={props.multiSelect}
+                        count={count}
+                        deleteMultimedia={deleteMultimedia}
+                        useMLTMD={props.useMLTMD}
+                        setSelected={setSelected}
+                        selected={selected}
+                        multiSelect={props.multiSelect}
                     />
                 }
 
                 <div className="modal-content">
                     {!loading && data ?
                         <ImageGallery
-                         multiMedia ={data.getImageGallery}
-                        //  multiMedia ={[]}
-                         handleSelect={handleSelect}
-                         selected={selected}
+                            multiMedia ={data.getImageGallery}
+                            //  multiMedia ={[]}
+                            handleSelect={handleSelect}
+                            selected={selected}
                          />
                     : null}
                 </div>

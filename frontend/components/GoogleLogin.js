@@ -83,22 +83,22 @@ const GoogleBtn = (props) => {
 			{state.isLoggedIn ?
 				<GoogleContainer>
 					<GoogleLogout
-					clientId={CLIENT_ID}
-					buttonText='Logout'
-					onLogoutSuccess={logout}
-					onFailure={handleLogoutFailure}
+						clientId={CLIENT_ID}
+						buttonText='Logout'
+						onLogoutSuccess={logout}
+						onFailure={handleLogoutFailure}
 					/>
 				</GoogleContainer>
 				:
 
 				<GoogleContainer>
 					<GoogleLogin
-					clientId={CLIENT_ID}
-					buttonText={props.buttonText}
-					onSuccess={login}
-					onFailure={handleLoginFailure}
-					cookiePolicy={'single_host_origin'}
-					responseType='code,token'
+						clientId={CLIENT_ID}
+						buttonText={props.buttonText}
+						onSuccess={login}
+						onFailure={handleLoginFailure}
+						cookiePolicy={'single_host_origin'}
+						responseType='code,token'
 					/>
 				</GoogleContainer>
 			}
