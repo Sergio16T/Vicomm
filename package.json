@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "nodemon -e js,graphql -x node --inspect ./index.js",
     "prod": "node index.js",
-    "client": "cd frontend && npm run start",
-    "start": "concurrently \"npm run prod\" \"npm run client\"",
+    "client": "cd frontend && npm run dev",
+    "start": "concurrently \"npm run dev\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

@@ -1,21 +1,22 @@
 import { useState, useEffect } from 'react';
 
 const useWindowWidth = () => {
-    const [width, setWidth] = useState(); 
-    
+    const [width, setWidth] = useState();
+
     useEffect(() => {
         setWidth(window.innerWidth);
         const eventListener = () => {
-            setWidth(window.innerWidth); 
+            setWidth(window.innerWidth);
         }
-        window.addEventListener('resize', eventListener); 
+        window.addEventListener('resize', eventListener);
         return () => {
-            window.removeEventListener('resize', eventListener); 
+            window.removeEventListener('resize', eventListener);
         }
-    }, []); 
-    return { 
+    }, []);
+
+    return {
         width
     }
 }
 
-export default useWindowWidth; 
+export default useWindowWidth;

@@ -1,77 +1,79 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useContext } from 'react';
 import { useMutation } from '@apollo/client';
 import {useDropzone} from 'react-dropzone'
-import { UPLOAD_IMG_MUTATION } from './GalleryModal'; 
-import { ProductPageContent, Body, Form  } from './Styles/ProductStyles'; 
-import ImageGalleryModal from './GalleryModal'; 
-import DropZone from './Styles/DropZoneStyles'; 
-import LoadingDots from './Styles/LoadingDots'; 
-import ScrollGallery from './ScrollGallery'; 
+import { UPLOAD_IMG_MUTATION } from './GalleryModal';
+import { ProductPageContent, Body, Form  } from './Styles/ProductStyles';
+import ImageGalleryModal from './GalleryModal';
+import DropZone from './Styles/DropZoneStyles';
+import LoadingDots from './Styles/LoadingDots';
+import ScrollGallery from './ScrollGallery';
+import { PageContext } from './Page';
 
-const AddProductForm = ({ toggleModal, modalOpen, setSpinner}) => {
+const AddProductForm = () => {
+    const { toggleModal, modalOpen, setSpinner} = useContext(PageContext);
     const [state, setState] = useState({
         name: "",
         price: "",
         salePrice: "",
-        weight: "", 
+        weight: "",
         description: ""
-    }); 
-    const [selectedImages, setImages] = useState([]); 
-    const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ["GET_IMG_GALLERY"]}); 
-    const [ loadingDots, setLoading ] = useState(false); 
-    const [productImages, setProductImages] = useState([]); 
-    const dropInput = useRef(); 
+    });
+    const [selectedImages, setImages] = useState([]);
+    const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ["GET_IMG_GALLERY"]});
+    const [ loadingDots, setLoading ] = useState(false);
+    const [productImages, setProductImages] = useState([]);
+    const dropInput = useRef();
 
     const onDrop = useCallback(async (acceptedFiles) => {
-        if(!acceptedFiles.length) {
+        if (!acceptedFiles.length) {
             // no files provided set error message
-            console.log('no files'); 
-            return; 
+            console.log('no files');
+            return;
         }
-        setLoading(true); 
-        const data = new FormData(); 
-        data.append('file', acceptedFiles[0]); 
-        data.append('upload_preset', 'Vicomm'); 
+        setLoading(true);
+        const data = new FormData();
+        data.append('file', acceptedFiles[0]);
+        data.append('upload_preset', 'Vicomm');
         try {
             const res = await fetch('https://api.cloudinary.com/v1_1/dddnhychw/image/upload', {
-                method: 'POST', 
-                body: data  
-            }); 
-            const file = await res.json(); 
-            if(file.hasOwnProperty('error')) throw file.error.message; 
-            const { data: { uploadImageToGallery: image }} = await uploadImageToGallery({ variables: { 
-                image: file.secure_url, 
+                method: 'POST',
+                body: data
+            });
+            const file = await res.json();
+            if (file.hasOwnProperty('error')) throw file.error.message;
+            const { data: { uploadImageToGallery: image }} = await uploadImageToGallery({ variables: {
+                image: file.secure_url,
                 largeImage: file.eager[0].secure_url
-             }}).catch(err => { 
-                 throw err; 
-             }); 
-            dropInput.current.value= ""; 
+             }}).catch(err => {
+                 throw err;
+             });
+            dropInput.current.value= "";
             setImages([image]);
-            setLoading(false); 
+            setLoading(false);
         } catch(err) {
             console.log(err);
-            setLoading(false); 
+            setLoading(false);
         }
-    }, []); 
+    }, []);
 
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop}); 
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target; 
+        const { name, value } = e.target;
         switch(name) {
             case "weight":
-                if(value > 1000) setState({...state, [name]: 1000}); 
-                else setState({...state, [name]:value}); 
+                if (value > 1000) setState({...state, [name]: 1000});
+                else setState({...state, [name]:value});
                 break;
-            default: 
-            setState({...state, [name]:value}); 
+            default:
+            setState({...state, [name]:value});
         }
-      
+
     }
     const useMLTMD = (selected, cb) => {
         setImages(Object.values(selected));
-        cb({}); 
-        toggleModal(); 
+        cb({});
+        toggleModal();
     }
     return (
         <ProductPageContent>
@@ -80,12 +82,12 @@ const AddProductForm = ({ toggleModal, modalOpen, setSpinner}) => {
                     <div className="flex-row mobile-row">
                         <div className="formCol mb-0">
                             <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            value={state.name}
-                            onChange={handleInputChange}
-                            required
+                                type="text"
+                                name="name"
+                                id="name"
+                                value={state.name}
+                                onChange={handleInputChange}
+                                required
                             />
                             <label className={`${state.name ? "active-content": ""} p-label `} htmlFor="name">
                                 Name
@@ -96,12 +98,12 @@ const AddProductForm = ({ toggleModal, modalOpen, setSpinner}) => {
                         <div className="flex-group mobile-row">
                             <div className="formCol">
                                 <input
-                                type="number"
-                                name="price"
-                                id="price"
-                                value={state.price}
-                                onChange={handleInputChange}
-                                required
+                                    type="number"
+                                    name="price"
+                                    id="price"
+                                    value={state.price}
+                                    onChange={handleInputChange}
+                                    required
                                 />
                                 <label className={`${state.price ? "active-content": ""} p-label `} htmlFor="price">
                                     Price
@@ -109,12 +111,12 @@ const AddProductForm = ({ toggleModal, modalOpen, setSpinner}) => {
                             </div>
                             <div className="formCol">
                                 <input
-                                type="number"
-                                name="salePrice"
-                                id="salePrice"
-                                value={state.salePrice}
-                                onChange={handleInputChange}
-                                required
+                                    type="number"
+                                    name="salePrice"
+                                    id="salePrice"
+                                    value={state.salePrice}
+                                    onChange={handleInputChange}
+                                    required
                                 />
                                 <label className={`${state.salePrice ? "active-content": ""} p-label `} htmlFor="salePrice">
                                     Sale Price
@@ -123,27 +125,27 @@ const AddProductForm = ({ toggleModal, modalOpen, setSpinner}) => {
                         </div>
                         <div className="formCol mobile-row">
                             <input
-                            type="number"
-                            name="weight"
-                            id="productWeight"
-                            value={state.weight}
-                            onChange={handleInputChange}
-                            min="0"
-                            max="1000"
-                            required
+                                type="number"
+                                name="weight"
+                                id="productWeight"
+                                value={state.weight}
+                                onChange={handleInputChange}
+                                min="0"
+                                max="1000"
+                                required
                             />
                             <label className={`${state.weight ? "active-content": ""} p-label `} htmlFor="productWeight">
                                 Weight
                             </label>
                             <span className="input-addOn">lbs.</span>
                         </div>
-                      
+
                     </div>
                     <div className="form-container">
                         <DropZone {...getRootProps({
                             onClick: event => event.stopPropagation()
                         })}>
-                            {loadingDots && 
+                            {loadingDots &&
                                 <LoadingDots>
                                     <div class="spinner">
                                         <div class="bounce1"></div>
@@ -163,11 +165,11 @@ const AddProductForm = ({ toggleModal, modalOpen, setSpinner}) => {
                             <input {...getInputProps()} ref={dropInput}/>
                         </DropZone>
                     </div>
-                    <ScrollGallery 
-                    selectedImages={selectedImages}
-                    setImages={setImages}
-                    productImages={productImages}
-                    setProductImages={setProductImages}
+                    <ScrollGallery
+                        selectedImages={selectedImages}
+                        setImages={setImages}
+                        productImages={productImages}
+                        setProductImages={setProductImages}
                     />
                     <div className="descriptionRow">
                         <div className="desc-form-row">
@@ -175,28 +177,28 @@ const AddProductForm = ({ toggleModal, modalOpen, setSpinner}) => {
                                     Description
                             </label>
                             <textarea
-                            type="text"
-                            name="description"
-                            id="description"
-                            value={state.description}
-                            onChange={handleInputChange}
-                            required
+                                type="text"
+                                name="description"
+                                id="description"
+                                value={state.description}
+                                onChange={handleInputChange}
+                                required
                             />
                         </div>
                     </div>
                 </Form>
             </Body>
-            <ImageGalleryModal 
-            show={modalOpen} 
-            toggleModal={toggleModal}
-            modalXColor={"white"}
-            setSpinner={setSpinner}
-            multiSelect
-            useMLTMD={useMLTMD}
+            <ImageGalleryModal
+                show={modalOpen}
+                toggleModal={toggleModal}
+                modalXColor={"white"}
+                setSpinner={setSpinner}
+                multiSelect
+                useMLTMD={useMLTMD}
             />
         </ProductPageContent>
-    ); 
+    );
 }
 
 
-export default AddProductForm; 
+export default AddProductForm;

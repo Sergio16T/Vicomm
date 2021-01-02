@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'; 
-import Router from 'next/router'; 
-import { useMutation, gql } from '@apollo/client'; 
-import { StyledHeader, StyledMenu, SubMenu } from './Styles/AppHeaderStyles'; 
+import React, { useState, useEffect, useRef } from 'react';
+import Router from 'next/router';
+import { useMutation, gql } from '@apollo/client';
+import { StyledHeader, StyledMenu, SubMenu } from './Styles/AppHeaderStyles';
 
 const SIGN_OUT_MUTATION = gql`
     mutation SIGN_OUT_MUTATION {
@@ -9,11 +9,11 @@ const SIGN_OUT_MUTATION = gql`
             message
         }
     }
-`; 
+`;
 
 
 const AppHeader = (props) => {
-    const { text } = props; 
+    const { text } = props;
     return (
         <StyledHeader>
             <div className="nav-left">
@@ -26,42 +26,42 @@ const AppHeader = (props) => {
             </div>
             <div className="nav-right">
                 {props.render()}
-                <VerticalDotMenu 
-                client={props.client}
+                <VerticalDotMenu
+                    client={props.client}
                 />
             </div>
         </StyledHeader>
-    ); 
+    );
 }
 
 
 
 const VerticalDotMenu = (props) => {
-    const [signOut, { data }] = useMutation(SIGN_OUT_MUTATION); 
-    const [isOpen, setIsOpen] = useState(false); 
-    const subMenu = useRef(null); 
-    const dotMenu = useRef(null); 
+    const [signOut, { data }] = useMutation(SIGN_OUT_MUTATION);
+    const [isOpen, setIsOpen] = useState(false);
+    const subMenu = useRef(null);
+    const dotMenu = useRef(null);
 
     useEffect(() => {
-        document.addEventListener("click", handleClick); 
-        return () => document.removeEventListener('click', handleClick); 
-    }, []); 
+        document.addEventListener("click", handleClick);
+        return () => document.removeEventListener('click', handleClick);
+    }, []);
 
     const handleClick = (e) => {
-        if(!dotMenu.current.contains(e.target)) {
-            setIsOpen(false); 
+        if (!dotMenu.current.contains(e.target)) {
+            setIsOpen(false);
         }
     }
 
     const logOut = async (e) => {
-        e.stopPropagation(); 
-        e.preventDefault(); 
-        props.client.clearStore(); 
-        await signOut(); 
-        
+        e.stopPropagation();
+        e.preventDefault();
+        props.client.clearStore();
+        await signOut();
+
         Router.push({
             pathname: "/"
-        }); 
+        });
     }
     return (
         <StyledMenu onClick={() => setIsOpen(true)} ref={dotMenu}>
@@ -74,6 +74,6 @@ const VerticalDotMenu = (props) => {
                 </span>
             </SubMenu>
         </StyledMenu>
-    )
+    );
 }
-export default AppHeader; 
+export default AppHeader;

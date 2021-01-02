@@ -1,5 +1,5 @@
-import Header from '../components/Header'; 
-import { HomePage, StyledBanner, Main, Section } from './Styles/HomePageStyles'; 
+import Header from '../components/Header';
+import { HomePage, StyledBanner, Main, Section } from './Styles/HomePageStyles';
 
 
 const Home = (props) => {
@@ -35,7 +35,7 @@ const Home = (props) => {
                 </div>
             </Section>
         </HomePage>
-    )
+    );
 }
 
 export default Home

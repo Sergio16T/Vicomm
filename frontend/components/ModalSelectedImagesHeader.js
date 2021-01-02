@@ -1,7 +1,7 @@
-import React from 'react'; 
-import { StyledImgSelectedHeader, StyledFaIcon } from './Styles/ImageGalleryStyles'; 
-import TooltipInfo from './TooltipInfo'; 
-import styled from 'styled-components'; 
+import React from 'react';
+import { StyledImgSelectedHeader, StyledFaIcon } from './Styles/ImageGalleryStyles';
+import TooltipInfo from './TooltipInfo';
+import styled from 'styled-components';
 
 const ModalImgSelectedHeader = ({ count, deleteMultimedia, useMLTMD, selected, setSelected, multiSelect }) => {
     return (
@@ -14,28 +14,28 @@ const ModalImgSelectedHeader = ({ count, deleteMultimedia, useMLTMD, selected, s
                     text={`Delete Selected Image${multiSelect ? "s" : ""}`}
                     />
                 </StyledFaIcon>
-                <Button 
-                text="Use"
-                useMLTMD={useMLTMD}
-                selected={selected}
-                setSelected={setSelected}
+                <Button
+                    text="Use"
+                    useMLTMD={useMLTMD}
+                    selected={selected}
+                    setSelected={setSelected}
                 />
             </div>
-   
+
         </StyledImgSelectedHeader>
     )
 }
 
 const StyledBtn = styled.button`
-        outline: none; 
+        outline: none;
         border: none;
-        border-radius: 6px; 
-        background: rgb(255,171,0); 
+        border-radius: 6px;
+        background: rgb(255,171,0);
         padding: .8rem 1.5rem;
-        color: white; 
-        font-size: 1.3rem; 
-        cursor: pointer; 
-        position: relative; 
+        color: white;
+        font-size: 1.3rem;
+        cursor: pointer;
+        position: relative;
         overflow: hidden;
         &:after {
                 content: "";
@@ -50,7 +50,7 @@ const StyledBtn = styled.button`
                 background-repeat: no-repeat;
                 background-position: 50%;
                 transform: scale(10,10);
-                opacity: 0; 
+                opacity: 0;
                 transition: transform .5s, opacity 1s;
             }
             &:active:after {
@@ -58,13 +58,13 @@ const StyledBtn = styled.button`
                 opacity: .2;
                 transition: 0s;
             }
-`; 
+`;
 const Button = ({ text, useMLTMD, selected, setSelected }) => {
     return (
         <StyledBtn onClick={() => useMLTMD(selected, setSelected)}>
             {text}
         </StyledBtn>
     )
-}  
+}
 
-export default ModalImgSelectedHeader; 
+export default ModalImgSelectedHeader;

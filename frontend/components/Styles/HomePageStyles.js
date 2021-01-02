@@ -7,7 +7,8 @@ const StyledBanner = styled.div`
     width: 100%; 
     background-position: top right;
     background-repeat: no-repeat;
-    height: 525px; 
+    /* height: 525px;  */
+    height: 70vh;
     background-size: cover;
     display: flex; 
     overflow: hidden; 

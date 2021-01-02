@@ -1,9 +1,9 @@
-import React from 'react'; 
-import { Side, MenuAppContainer } from './Styles/AppSidebarStyles'; 
-import Link from 'next/link'; 
+import React from 'react';
+import { Side, MenuAppContainer } from './Styles/AppSidebarStyles';
+import Link from 'next/link';
 
 const SideBar = (props) => {
-    const { user } = props; 
+    const { user } = props;
     return (
         <Side isOpen={props.isOpen}>
             <MenuAppContainer>
@@ -14,28 +14,28 @@ const SideBar = (props) => {
                     <div className="nav-list-container">
                         <ul id="app-sidebar-list">
                             <MenuItem
-                            link="/dashboard"
-                            id="homeIcon"
-                            faIcon="fa fa-home"
-                            text="Home"
+                                link="/dashboard"
+                                id="homeIcon"
+                                faIcon="fa fa-home"
+                                text="Home"
                             />
                             <MenuItem
-                            link="/products"
-                            id="productIcon"
-                            faIcon="fas fa-tag"
-                            text="Products"
+                                link="/products"
+                                id="productIcon"
+                                faIcon="fas fa-tag"
+                                text="Products"
                             />
                             <MenuItem
-                            link="/dashboard"
-                            id="categoriesIcon"
-                            faIcon="fas fa-list"
-                            text="Categories"
+                                link="/dashboard"
+                                id="categoriesIcon"
+                                faIcon="fas fa-list"
+                                text="Categories"
                             />
                             <MenuItem
-                            link="/dashboard"
-                            id="ordersIcon"
-                            faIcon="fas fa-shopping-cart"
-                            text="Orders"
+                                link="/dashboard"
+                                id="ordersIcon"
+                                faIcon="fas fa-shopping-cart"
+                                text="Orders"
                             />
                         </ul>
                     </div>
@@ -46,7 +46,7 @@ const SideBar = (props) => {
                 </div>
             </MenuAppContainer>
         </Side>
-    )
+    );
 }
 
 const MenuItem = (props) => {
@@ -59,7 +59,7 @@ const MenuItem = (props) => {
                 <span>{props.text}</span>
             </li>
         </Link>
-    )
+    );
 }
 
-export default SideBar ; 
+export default SideBar ;

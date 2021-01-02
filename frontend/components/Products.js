@@ -1,7 +1,7 @@
 import React from 'react';
-import Page from './Page'; 
-import styled from 'styled-components'; 
-import Link from 'next/link'; 
+import Page from './Page';
+import styled from 'styled-components';
+import Link from 'next/link';
 
 const Products = (props) => {
     return (
@@ -9,28 +9,26 @@ const Products = (props) => {
         render={() => <AddProductButton/>}
         text="Products"
         >
-            {({ modalOpen, toggleModal, setSpinner }) => {
-
-            }}
+            <div></div>
         </Page>
-        
+
     );
 };
 
 const StyledAddButton = styled.button`
-    outline: none; 
-    border: none; 
-    background: transparent; 
-    color: white; 
-    cursor: pointer; 
+    outline: none;
+    border: none;
+    background: transparent;
+    color: white;
+    cursor: pointer;
     font-size: 1.2rem;
     text-transform: uppercase;
-    display: flex; 
-    align-items: center; 
+    display: flex;
+    align-items: center;
     margin-right: 1rem;
     .plusIcon {
         font-size: 1.4rem;
-        margin-right: 1rem; 
+        margin-right: 1rem;
     }
 `;
 

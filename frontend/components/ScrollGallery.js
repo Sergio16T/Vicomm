@@ -1,53 +1,53 @@
-import { useState, useEffect, useRef } from 'react'; 
-import HorizontalScrollGallery from './Styles/HorizontalScrollStyles'; 
-import TooltipInfo from './TooltipInfo'; 
+import { useState, useEffect, useRef } from 'react';
+import HorizontalScrollGallery from './Styles/HorizontalScrollStyles';
+import TooltipInfo from './TooltipInfo';
 
 const ScrollGallery = ({ selectedImages, setImages, productImages, setProductImages }) => {
-    const gallery = useRef(); 
-    const [updatingImages, setUpdating] = useState(false); 
-    const [newImagesAdded, setImagesAdded ] = useState(false); 
+    const gallery = useRef();
+    const [updatingImages, setUpdating] = useState(false);
+    const [newImagesAdded, setImagesAdded ] = useState(false);
     const [scroll, setScroll] = useState({
         scrollWidth: null,
         clientWidth: null
-    }); 
+    });
 
     useEffect(() => {
-        const currentImages = [...productImages]; 
-        if(selectedImages.length) {
-            const sameImages = selectedImages.every((image, index) => image === currentImages[index]); 
+        const currentImages = [...productImages];
+        if (selectedImages.length) {
+            const sameImages = selectedImages.every((image, index) => image === currentImages[index]);
             let merged = currentImages.concat(selectedImages);
-            if(!sameImages) {
+            if (!sameImages) {
                 setProductImages(merged);
-                setImagesAdded(true); 
+                setImagesAdded(true);
             }
             setImages([]);
         }
-    },[selectedImages]); 
+    },[selectedImages]);
 
     useEffect(() => {
-        if(newImagesAdded && !updatingImages) {
+        if (newImagesAdded && !updatingImages) {
             gallery.current.scrollTo({
                 left: gallery.current.scrollWidth,
                 behavior: "smooth"
             });
             setImagesAdded(false);
         }
-    },[newImagesAdded, updatingImages]); 
+    },[newImagesAdded, updatingImages]);
 
     useEffect(() => {
-        productImages.length && updateScrollPosition(); 
+        productImages.length && updateScrollPosition();
     },[productImages]);
 
     const handleScrollRight = () => {
-        const scrollPosition = (gallery.current.scrollWidth * .3) + gallery.current.scrollLeft; 
+        const scrollPosition = (gallery.current.scrollWidth * .3) + gallery.current.scrollLeft;
         gallery.current.scrollTo({
-            left: scrollPosition < 200 ? 600 : scrollPosition, 
+            left: scrollPosition < 200 ? 600 : scrollPosition,
             behavior: "smooth"
-        }); 
+        });
     }
 
     const handleScrollLeft = () => {
-        const scrollPosition = gallery.current.scrollLeft - (gallery.current.scrollLeft * .5); 
+        const scrollPosition = gallery.current.scrollLeft - (gallery.current.scrollLeft * .5);
         const position = scrollPosition < 390 ? 0 : scrollPosition;
         gallery.current.scrollTo({
             left: position,
@@ -55,44 +55,44 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
         });
     }
     const moveImageLeft = (index) => {
-        setUpdating(true); 
+        setUpdating(true);
         const images = [...productImages];
-        let temp = images[index]; 
-        images[index] = images[index-1]; 
+        let temp = images[index];
+        images[index] = images[index-1];
         images[index-1] = temp;
-        setProductImages(images); 
+        setProductImages(images);
         setUpdating(false);
     }
     const moveImagesRight = (index) => {
-        setUpdating(true); 
-        const images = [...productImages]; 
-        let temp = images[index]; 
-        images[index] = images[index + 1]; 
-        images[index + 1] = temp; 
+        setUpdating(true);
+        const images = [...productImages];
+        let temp = images[index];
+        images[index] = images[index + 1];
+        images[index + 1] = temp;
         setProductImages(images);
         setUpdating(false);
     }
     const removeImage = (index) => {
-        setUpdating(true); 
-        const images = [...productImages]; 
-        images.splice(index, 1); 
+        setUpdating(true);
+        const images = [...productImages];
+        images.splice(index, 1);
         setProductImages(images);
         setUpdating(false);
     }
     const updateScrollPosition = () => {
         setScroll({
-            scrollWidth: gallery.current.scrollWidth, 
+            scrollWidth: gallery.current.scrollWidth,
             clientWidth: gallery.current.clientWidth,
             scrollLeft: gallery.current.scrollLeft,
             percentage: (100 * gallery.current.scrollLeft)/ (gallery.current.scrollWidth - gallery.current.clientWidth)
-        }); 
+        });
     }
 
-    if(productImages.length) return (
+    if (productImages.length) return (
         <HorizontalScrollGallery onlyCard={productImages.length === 1}>
             <div className="gallery" ref={gallery} onScroll={updateScrollPosition}>
                 <span className={`${scroll.scrollWidth === scroll.clientWidth ? "d-none" : scroll.percentage === 0 ? "d-none": ""} arrow-left`} onClick={handleScrollLeft}><i className="fas fa-angle-left icon"></i></span>
-                {productImages.length ? productImages.map((card,index) =>  
+                {productImages.length ? productImages.map((card,index) =>
                     <div className="card-container" key={index}>
                         <div key={index} className="card" style={{backgroundImage: `url(${card.MLTMD_URL})`}}></div>
                         <div className="image_manager">
@@ -127,8 +127,8 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
                 <span className={`${scroll.scrollWidth === scroll.clientWidth ? "d-none" : scroll.percentage === 100 ? "d-none": ""} arrow-right`} onClick={handleScrollRight}><i className="fas fa-angle-right icon"></i></span>
             </div>
         </HorizontalScrollGallery>
-    ); 
+    );
     return null
 }
 
-export default ScrollGallery; 
+export default ScrollGallery;

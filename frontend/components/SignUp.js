@@ -1,16 +1,16 @@
-import React, { useState } from 'react'; 
-import { useMutation, gql } from '@apollo/client'; 
-import Router from 'next/router'; 
-import Header from './Header'; 
-import { Body, Form} from './Styles/FormStyles'; 
-import { SignUpPage, SignUpMessage, SignUpFormWrapper } from './Styles/SignUpStyles'; 
-import GoogleLogin from './GoogleLogin'; 
+import React, { useState } from 'react';
+import { useMutation, gql } from '@apollo/client';
+import Router from 'next/router';
+import Header from './Header';
+import { Body, Form} from './Styles/FormStyles';
+import { SignUpPage, SignUpMessage, SignUpFormWrapper } from './Styles/SignUpStyles';
+import GoogleLogin from './GoogleLogin';
 
 const SIGN_UP_MUTATION = gql`
     mutation SIGN_UP_MUTATION($email: String!, $firstName: String!, $lastName: String!, $password: String!) {
         signUp(email: $email, firstName: $firstName, lastName: $lastName, password: $password) {
             ACCT_KEY,
-            FST_NAME, 
+            FST_NAME,
             EMAIL
         }
     }
@@ -33,7 +33,7 @@ const SignUp = (props) => {
 
 
 const SignUpForm = (props) => {
-    const [ signUp, { data }] = useMutation(SIGN_UP_MUTATION); 
+    const [ signUp, { data }] = useMutation(SIGN_UP_MUTATION);
     const [state, setState] = useState({
         firstName: '',
         lastName: '',
@@ -41,73 +41,73 @@ const SignUpForm = (props) => {
         password: '',
         confirmPassword: '',
         emailError: ''
-    }); 
+    });
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target; 
-        const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+        const { name, value } = e.target;
+        const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         switch(name){
             case "email":
                 if(state.emailError && emailRegEx.test(value)) {
-                    setState({...state, [name]: value, emailError: '' }); 
+                    setState({...state, [name]: value, emailError: '' });
                 } else {
-                    setState({...state, [name]: value }); 
-                } 
-                break; 
-            case "confirmPassword": 
-                if(state.passwordError && value === state.password) setState({...state, [name]: value, passwordError: '' }); 
-                else setState({...state, [name]: value }); 
-                break; 
+                    setState({...state, [name]: value });
+                }
+                break;
+            case "confirmPassword":
+                if(state.passwordError && value === state.password) setState({...state, [name]: value, passwordError: '' });
+                else setState({...state, [name]: value });
+                break;
             case "password" :
-                if(state.passwordError && value === state.confirmPassword) setState({ ...state, [name]: value, passwordError: ''}); 
-                else setState({...state, [name]: value }); 
-                break; 
+                if(state.passwordError && value === state.confirmPassword) setState({ ...state, [name]: value, passwordError: ''});
+                else setState({...state, [name]: value });
+                break;
             default:
                 setState({
-                    ...state, 
+                    ...state,
                     [name]: value
-                }); 
+                });
         }
     }
     const submitForm = async (e) => {
-        e.preventDefault(); 
-        if(!state.passwordsMatch) return; 
+        e.preventDefault();
+        if(!state.passwordsMatch) return;
         try {
             await signUp({variables: {...state} }).catch(err => {
-                throw err; 
-            }); 
+                throw err;
+            });
             Router.push({
                 pathname: "/dashboard"
             });
         } catch(err) {
-            setState({...state, signUpError: err.message }); 
+            setState({...state, signUpError: err.message });
         }
     }
     const confirmPasswordMatch = () => {
-        const { password, confirmPassword } = state; 
-        const match = password === confirmPassword ? true : false; 
+        const { password, confirmPassword } = state;
+        const match = password === confirmPassword ? true : false;
         const passwordError = match ? '' : 'Passwords do not match'
-        setState({...state, passwordsMatch: match, passwordError }); 
+        setState({...state, passwordsMatch: match, passwordError });
     }
     const handleBlur = (e) => {
-        const { name, value } = e.target; 
-        const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+        const { name, value } = e.target;
+        const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         switch(name) {
             case 'email':
-                if(!emailRegEx.test(value.trim())) setState({ ...state, emailError: "Please enter a valid email"}); 
-                break; 
-            case 'confirmPassword': 
-                if(state.password) confirmPasswordMatch(); 
-                break; 
-            case 'password': 
-                if(state.confirmPassword) confirmPasswordMatch(); 
-            break; 
+                if(!emailRegEx.test(value.trim())) setState({ ...state, emailError: "Please enter a valid email"});
+                break;
+            case 'confirmPassword':
+                if(state.password) confirmPasswordMatch();
+                break;
+            case 'password':
+                if(state.confirmPassword) confirmPasswordMatch();
+            break;
         }
-   
+
     }
     return (
         <SignUpFormWrapper>
-               {state.signUpError && 
+               {state.signUpError &&
                     <div className='error-message'>
                         <p>{state.signUpError}</p>
                     </div>
@@ -118,11 +118,11 @@ const SignUpForm = (props) => {
                         First Name
                     </label>
                     <input
-                    type="text"
-                    name="firstName"
-                    onChange={handleInputChange}
-                    value={state.firstName}
-                    required
+                        type="text"
+                        name="firstName"
+                        onChange={handleInputChange}
+                        value={state.firstName}
+                        required
                     />
                 </div>
                 <div className="formRow">
@@ -130,11 +130,11 @@ const SignUpForm = (props) => {
                         Last Name
                     </label>
                     <input
-                    type="text"
-                    name="lastName"
-                    onChange={handleInputChange}
-                    value={state.lastName}
-                    required
+                        type="text"
+                        name="lastName"
+                        onChange={handleInputChange}
+                        value={state.lastName}
+                        required
                     />
                 </div>
                 <div className="formRow">
@@ -142,12 +142,12 @@ const SignUpForm = (props) => {
                         Email
                     </label>
                     <input
-                    type="text"
-                    name="email"
-                    onChange={handleInputChange}
-                    onBlur={handleBlur}
-                    value={state.email}
-                    required
+                        type="text"
+                        name="email"
+                        onChange={handleInputChange}
+                        onBlur={handleBlur}
+                        value={state.email}
+                        required
                     />
                     {state.emailError && <p className="error">{state.emailError}</p>}
                 </div>
@@ -156,12 +156,12 @@ const SignUpForm = (props) => {
                         Password
                     </label>
                     <input
-                    type="password"
-                    name="password"
-                    onChange={handleInputChange}
-                    onBlur={handleBlur}
-                    value={state.password}
-                    required
+                        type="password"
+                        name="password"
+                        onChange={handleInputChange}
+                        onBlur={handleBlur}
+                        value={state.password}
+                        required
                     />
                 </div>
                 <div className="formRow">
@@ -169,12 +169,12 @@ const SignUpForm = (props) => {
                         Confirm Password
                     </label>
                     <input
-                    type="password"
-                    name="confirmPassword"
-                    onChange={handleInputChange}
-                    onBlur={handleBlur}
-                    value={state.confirmPassword}
-                    required
+                        type="password"
+                        name="confirmPassword"
+                        onChange={handleInputChange}
+                        onBlur={handleBlur}
+                        value={state.confirmPassword}
+                        required
                     />
                     {state.passwordError && <p className="error">{state.passwordError}</p>}
                 </div>
@@ -186,13 +186,13 @@ const SignUpForm = (props) => {
                     <span id="OAuth_or_text">or </span>
                 <span className="OAuthProvider_lineBreak"></span>
                 </div>
-                <GoogleLogin 
-                buttonText="Sign Up with Google"
-                signUp
+                <GoogleLogin
+                    buttonText="Sign Up with Google"
+                    signUp
                 />
             </Form>
         </SignUpFormWrapper>
-    )
+    );
 }
 
 export default SignUp;
