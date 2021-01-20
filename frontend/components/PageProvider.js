@@ -12,8 +12,8 @@ import smoothscroll from 'smoothscroll-polyfill';
 const GET_USER_QUERY = gql`
     query GET_USER_QUERY {
         user {
-            FST_NAME,
-            LST_NAME
+            fst_nm,
+            lst_nm
         }
     }
 `;
@@ -21,7 +21,7 @@ const GET_USER_QUERY = gql`
 const Context = React.createContext();
 
 function PageProvider(props) {
-    const { client, loading: userLoading, data: userData } = useQuery(GET_USER_QUERY);
+    const { client, loading: userLoading, error, data: userData } = useQuery(GET_USER_QUERY);
     const [isOpen, setIsOpen ] = useState(false);
     const previousPath = usePrevious(props.pathname);
     const context = {
@@ -41,9 +41,9 @@ function PageProvider(props) {
             setIsOpen(false);
         }
     },[props.pathname]);
-
+    if (error) return <p>{error.message}</p>
     if (userLoading) return null;
-    if(!userData.user) {
+    if (!userData.user) {
         Router.push({
             pathname: "/login"
         });

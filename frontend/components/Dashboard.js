@@ -10,26 +10,26 @@ import { Context } from './PageProvider';
 const GET_COVER_PHOTO_QUERY = gql`
     query GET_COVER_PHOTO_QUERY {
         getCoverPhoto {
-            MLTMD_LG_URL
+            mltmd_lg_url
         }
     }
 `;
 const UPDATE_COVER_PHOTO_MUTATION = gql`
     mutation UPDATE_COVER_PHOTO_MUTATION($key: ID!) {
         updateCoverPhoto(key: $key) {
-            COVER_PHOTO_KEY
+            id
         }
     }
 `;
 
 const DashBoard = () => {
     const { modalOpen, toggleModal, setSpinner } = useContext(PageContext);
-    const { loading, data } = useQuery(GET_COVER_PHOTO_QUERY);
+    const { loading, error, data } = useQuery(GET_COVER_PHOTO_QUERY);
     const [updateCoverPhoto] = useMutation(UPDATE_COVER_PHOTO_MUTATION, { refetchQueries: ["GET_COVER_PHOTO_QUERY"]});
 
     const uploadCoverPhoto = async (selected, cb) => {
         const [image] = Object.values(selected);
-        const MLTMD_KEY = parseInt(image.MLTMD_KEY);
+        const MLTMD_KEY = parseInt(image.id);
         await updateCoverPhoto({ variables: { key: MLTMD_KEY }}).catch(err => { throw err; });
         cb({});
         toggleModal();
@@ -38,6 +38,7 @@ const DashBoard = () => {
     return (
         <PageContent>
             <CoverPhoto
+                error={error}
                 loading={loading}
                 data={data}
             />
@@ -73,7 +74,7 @@ const DashboardPage = (props) => {
     return (
         <Page
             render={({ toggleModal }) => <ToggleImageGalleryBtn toggleModal={toggleModal}/>}
-            text={`${userData.user.FST_NAME}'s Store`}
+            text={`${userData.user.fst_nm}'s Store`}
         >
                 <DashBoard
                     userData={userData}

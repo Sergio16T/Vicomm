@@ -94,7 +94,7 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
                 <span className={`${scroll.scrollWidth === scroll.clientWidth ? "d-none" : scroll.percentage === 0 ? "d-none": ""} arrow-left`} onClick={handleScrollLeft}><i className="fas fa-angle-left icon"></i></span>
                 {productImages.length ? productImages.map((card,index) =>
                     <div className="card-container" key={index}>
-                        <div key={index} className="card" style={{backgroundImage: `url(${card.MLTMD_URL})`}}></div>
+                        <div key={index} className="card" style={{backgroundImage: `url(${card.mltmd_url})`}}></div>
                         <div className="image_manager">
                             <button type="button" className={`${index === 0 ? "invisible" : ""} rp-button`} onClick={() => moveImageLeft(index)} disabled={index === 0}>
                                 <i className="fas fa-angle-left manager_icon"></i>

@@ -9,8 +9,8 @@ import styled from 'styled-components';
 const GOOGLE_LOGIN_MUTATION = gql`
     mutation GOOGLE_LOGIN_MUTATION($firstName: String!, $lastName: String!, $email: String!, $accessToken: String!) {
         googleSignIn(firstName: $firstName, lastName: $lastName, email: $email, accessToken: $accessToken) {
-            FST_NAME,
-            EMAIL
+            fst_nm,
+            email
         }
     }
 `;

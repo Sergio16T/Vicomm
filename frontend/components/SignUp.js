@@ -9,14 +9,14 @@ import GoogleLogin from './GoogleLogin';
 const SIGN_UP_MUTATION = gql`
     mutation SIGN_UP_MUTATION($email: String!, $firstName: String!, $lastName: String!, $password: String!) {
         signUp(email: $email, firstName: $firstName, lastName: $lastName, password: $password) {
-            ACCT_KEY,
-            FST_NAME,
-            EMAIL
+            id,
+            fst_nm,
+            email
         }
     }
 `
 
-const SignUp = (props) => {
+const SignUp = () => {
     return (
         <SignUpPage>
             <Header/>
@@ -27,13 +27,13 @@ const SignUp = (props) => {
                 <SignUpForm/>
             </Body>
         </SignUpPage>
-    )
+    );
 }
 
 
 
-const SignUpForm = (props) => {
-    const [ signUp, { data }] = useMutation(SIGN_UP_MUTATION);
+const SignUpForm = () => {
+    const [signUp] = useMutation(SIGN_UP_MUTATION);
     const [state, setState] = useState({
         firstName: '',
         lastName: '',
@@ -46,20 +46,20 @@ const SignUpForm = (props) => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        switch(name){
+        switch (name){
             case "email":
-                if(state.emailError && emailRegEx.test(value)) {
+                if (state.emailError && emailRegEx.test(value)) {
                     setState({...state, [name]: value, emailError: '' });
                 } else {
                     setState({...state, [name]: value });
                 }
                 break;
             case "confirmPassword":
-                if(state.passwordError && value === state.password) setState({...state, [name]: value, passwordError: '' });
+                if (state.passwordError && value === state.password) setState({...state, [name]: value, passwordError: '' });
                 else setState({...state, [name]: value });
                 break;
             case "password" :
-                if(state.passwordError && value === state.confirmPassword) setState({ ...state, [name]: value, passwordError: ''});
+                if (state.passwordError && value === state.confirmPassword) setState({ ...state, [name]: value, passwordError: ''});
                 else setState({...state, [name]: value });
                 break;
             default:
@@ -71,7 +71,7 @@ const SignUpForm = (props) => {
     }
     const submitForm = async (e) => {
         e.preventDefault();
-        if(!state.passwordsMatch) return;
+        if (!state.passwordsMatch) return;
         try {
             await signUp({variables: {...state} }).catch(err => {
                 throw err;
@@ -92,15 +92,15 @@ const SignUpForm = (props) => {
     const handleBlur = (e) => {
         const { name, value } = e.target;
         const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        switch(name) {
+        switch (name) {
             case 'email':
-                if(!emailRegEx.test(value.trim())) setState({ ...state, emailError: "Please enter a valid email"});
+                if (!emailRegEx.test(value.trim())) setState({ ...state, emailError: "Please enter a valid email"});
                 break;
             case 'confirmPassword':
-                if(state.password) confirmPasswordMatch();
+                if (state.password) confirmPasswordMatch();
                 break;
             case 'password':
-                if(state.confirmPassword) confirmPasswordMatch();
+                if (state.confirmPassword) confirmPasswordMatch();
             break;
         }
 

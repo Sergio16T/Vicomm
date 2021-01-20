@@ -10,12 +10,12 @@ const ImageGallery = (props) => {
                 <div className="img-gallery">
                     {multiMedia.map((image) =>
                         <div
-                            key={image.MLTMD_KEY}
-                            className={`${image.MLTMD_KEY in selected ? "selected" : ""} gallery-img`}
-                            style={{backgroundImage: `url(${image.MLTMD_URL})`}}
+                            key={image.id}
+                            className={`${image.id in selected ? "selected" : ""} gallery-img`}
+                            style={{backgroundImage: `url(${image.mltmd_url})`}}
                             onClick={() => handleSelect(image)}
                         >
-                             {image.MLTMD_KEY in selected ? <div className="check-circle"><i className="fas fa-check checkIcon"></i></div> : null}
+                             {image.id in selected ? <div className="check-circle"><i className="fas fa-check checkIcon"></i></div> : null}
                         </div>
                     )}
                 </div>

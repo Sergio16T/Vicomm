@@ -8,8 +8,8 @@ import UploadImgHeader from './ModalUploadImgHeader';
 const GET_IMG_GALLERY = gql`
     query GET_IMG_GALLERY{
         getImageGallery {
-            MLTMD_KEY
-            MLTMD_URL
+            id
+            mltmd_url
         }
     }
 `;
@@ -17,8 +17,8 @@ const GET_IMG_GALLERY = gql`
 const UPLOAD_IMG_MUTATION = gql`
     mutation UPLOAD_IMG_MUTATION($image: String!, $largeImage: String!) {
         uploadImageToGallery(image: $image, largeImage: $largeImage) {
-            MLTMD_KEY
-            MLTMD_URL
+            id
+            mltmd_url
         }
     }
 `;
@@ -47,20 +47,20 @@ const UploadImageModal = (props) => {
         switch(props.multiSelect) {
             case true:
                 let selectedImages = {...selected};
-                if (image.MLTMD_KEY in selectedImages) delete selectedImages[image.MLTMD_KEY];
-                else selectedImages[image.MLTMD_KEY] = image;
+                if (image.id in selectedImages) delete selectedImages[image.id];
+                else selectedImages[image.id] = image;
                 setSelected(selectedImages);
                 setCount(Object.keys(selectedImages).length);
                 break;
             default:
                 selectedImages = {...selected};
                 let imageDeleted = false;
-                if (image.MLTMD_KEY in selectedImages) {
-                    delete selectedImages[image.MLTMD_KEY];
+                if (image.id in selectedImages) {
+                    delete selectedImages[image.id];
                     imageDeleted = true;
                 }
                 if (!imageDeleted) selectedImages = {};
-                if (!imageDeleted) selectedImages[image.MLTMD_KEY] = image;
+                if (!imageDeleted) selectedImages[image.id] = image;
                 setSelected(selectedImages);
                 setCount(Object.keys(selectedImages).length);
         }

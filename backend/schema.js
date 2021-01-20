@@ -20,38 +20,34 @@ const typeDefs = gql`
     }
 
     type User {
-        ACCT_KEY: ID
-        FST_NAME: String!
-        LST_NAME: String!
-        EMAIL: String!
-        PASSWORD_NM: String!
-        ACCT_TYP_CD: String!
+        id: ID
+        fst_nm: String!
+        lst_nm: String!
+        email: String!
+        password_nm: String!
     }
 
     type Item {
-        ITEM_KEY: ID
-        ITEM_TITLE: String! 
-        ITEM_DESC: String!
-        IMG: String!
-        LG_IMG: String!
-        PRICE: Int!
-        CRTE_BY_ACCT_KEY: User!
+        id: ID
+        item_title: String! 
+        item_desc: String!
+        price: Int!
+        crte_by_acct_key: ID!
     }
     type MultiMedia {
-        MLTMD_KEY: ID, 
-        MLTMD_URL: String!
-        MLTMD_LG_URL: String!
-        SRC_TBL_KEY_CD: Int
-        CRTE_BY_ACCT_KEY: Int
+        id: ID, 
+        mltmd_url: String!
+        mltmd_lg_url: String!
+        crte_by_acct_key: ID!
     }
     type SuccessMessage {
         message: String!
     }
     type CoverPhoto {
-        COVER_PHOTO_KEY: ID, 
-        ACCT_KEY: ID, 
-        MLTMD_KEY: ID, 
-        ACT_IND: Int
+        id: ID, 
+        acct_key: ID, 
+        mltmd_key: ID, 
+        act_ind: Int
     }
 `; 
 

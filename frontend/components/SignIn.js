@@ -10,9 +10,9 @@ import Router from 'next/router';
 const SIGN_IN_MUTATION = gql`
     mutation SIGN_IN_MUTATION($email: String! $password: String!) {
         signIn(email: $email, password: $password) {
-            ACCT_KEY,
-            FST_NAME,
-            EMAIL
+            id,
+            fst_nm,
+            email
         }
     }
 `;
@@ -58,6 +58,7 @@ const SignInForm = () => {
                 throw err;
             });
         } catch(err) {
+            console.log(err)
             setState({...state, signInError: err.message });
         }
     }

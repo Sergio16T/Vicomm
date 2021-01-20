@@ -14,12 +14,4 @@ const connection = mysql.createPool({
 // promise wrapper to enable async await with MYSQL
 connection.query = util.promisify(connection.query).bind(connection);
 
-// connection.connect(function(err){
-//     if (err) {
-//         console.log("error connecting: " + err.stack);
-//         return;
-//     };
-//     console.log("connected as... " + connection.threadId);
-// });
-
 module.exports = connection;

@@ -41,8 +41,8 @@ const SideBar = (props) => {
                     </div>
                 </div>
                 <div className="navMenuAccount_Data">
-                    <span className="userInitials">{`${user.FST_NAME.slice(0, 1)}${user.LST_NAME.slice(0, 1)}`}</span>
-                    <span className="user-name">{`${user.FST_NAME} ${user.LST_NAME}`}</span>
+                    <span className="userInitials">{`${user.fst_nm.slice(0, 1)}${user.lst_nm.slice(0, 1)}`}</span>
+                    <span className="user-name">{`${user.fst_nm} ${user.lst_nm}`}</span>
                 </div>
             </MenuAppContainer>
         </Side>

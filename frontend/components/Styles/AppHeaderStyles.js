@@ -119,7 +119,7 @@ const SubMenu = styled.div`
     flex-direction: column; 
     padding: ${props => props.isOpen ? "1rem 0" : "0"}; 
     box-sizing: border-box; 
-    height: 110px; 
+    /* height: 110px;  */
     span {
         overflow: hidden; 
         text-align: left; 
