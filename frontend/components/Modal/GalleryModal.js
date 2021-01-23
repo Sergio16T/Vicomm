@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
-import { StyledModal } from './Styles/GalleryModalStyles';
-import ImageGallery from './ImageGallery';
+import ImageGallery from '../ImageGallery';
 import ImgSelectedHeader from './ModalSelectedImagesHeader';
 import UploadImgHeader from './ModalUploadImgHeader';
 
@@ -103,7 +102,7 @@ const UploadImageModal = (props) => {
 
     }
     return (
-        <StyledModal show={props.show} modalXColor={props.modalXColor}>
+        <>
                 {!Object.keys(selected).length ?
                     <UploadImgHeader
                         uploadInput={uploadInput}
@@ -132,7 +131,7 @@ const UploadImageModal = (props) => {
                          />
                     : null}
                 </div>
-        </StyledModal>
+        </>
     );
 }
 

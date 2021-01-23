@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import Router from 'next/router';
-import WithApollo from '../lib/ApolloClient';
+import WithApollo from '../../lib/ApolloClient';
 import { ThemeProvider }  from 'styled-components';
 import Meta from './Meta';
 import SideBar  from './AppSidebar';
-import { theme, GlobalStyle } from './Styles/PageStyles';
-import usePrevious from '../lib/Hooks/usePrevious';
+import { theme, GlobalStyle } from '../Styles/PageStyles';
+import usePrevious from '../../lib/Hooks/usePrevious';
 import smoothscroll from 'smoothscroll-polyfill';
 
 const GET_USER_QUERY = gql`
@@ -41,6 +41,7 @@ function PageProvider(props) {
             setIsOpen(false);
         }
     },[props.pathname]);
+
     if (error) return <p>{error.message}</p>
     if (userLoading) return null;
     if (!userData.user) {

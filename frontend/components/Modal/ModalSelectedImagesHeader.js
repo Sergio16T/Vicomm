@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyledImgSelectedHeader, StyledFaIcon } from './Styles/ImageGalleryStyles';
-import TooltipInfo from './TooltipInfo';
+import { StyledImgSelectedHeader, StyledFaIcon } from '../Styles/ImageGalleryStyles';
+import TooltipInfo from '../TooltipInfo';
 import styled from 'styled-components';
 
 const ModalImgSelectedHeader = ({ count, deleteMultimedia, useMLTMD, selected, setSelected, multiSelect }) => {

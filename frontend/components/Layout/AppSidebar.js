@@ -1,5 +1,5 @@
 import React from 'react';
-import { Side, MenuAppContainer } from './Styles/AppSidebarStyles';
+import { Side, MenuAppContainer } from '../Styles/AppSidebarStyles';
 import Link from 'next/link';
 
 const SideBar = (props) => {

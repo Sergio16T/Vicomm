@@ -1,7 +1,7 @@
 import React,  { useState, useRef, useEffect, useContext } from 'react';
 import AppHeader from './AppHeader';
-import { BackDrop, ModalBackDrop, StyledPage } from './Styles/PageStyles';
-import Spinner from './Spinner';
+import { BackDrop, ModalBackDrop, StyledPage } from '../Styles/PageStyles';
+import Spinner from '../SpinKit/ChaseSpinner';
 import { Context } from './PageProvider';
 
 const PageContext = React.createContext();
@@ -19,24 +19,24 @@ const Page = props => {
     }, []);
 
     const handleClick = (e) => {
-        if(e.target.contains(backDrop.current)) {
+        if (e.target.contains(backDrop.current)) {
             setIsOpen(false);
             console.log('contains')
             document.querySelector('body').style.overflow = '';
         }
-        if(e.target.contains(modalBackDrop.current)) {
+        if (e.target.contains(modalBackDrop.current)) {
             setModalOpen(false);
             document.querySelector('body').style.overflow = '';
         }
     }
 
     const toggleSideBar = () => {
-        if(!isOpen) document.querySelector('body').style.overflow = "hidden";
+        if (!isOpen) document.querySelector('body').style.overflow = "hidden";
         setIsOpen(!isOpen);
     }
 
     const toggleModal = () => {
-        if(!modalOpen) document.querySelector('body').style.overflow = "hidden";
+        if (!modalOpen) document.querySelector('body').style.overflow = "hidden";
         else document.querySelector('body').style.overflow = "";
         setModalOpen(!modalOpen);
     }
@@ -58,7 +58,8 @@ const Page = props => {
             </PageContext.Provider>
             <Spinner
                 show={modalOpen}
-                spinner={spinner}/>
+                spinner={spinner}
+            />
         </StyledPage>
     );
 };

@@ -1,9 +1,9 @@
 import React from 'react';
-import AddProducts from '../../components/AddProducts'; 
+import AddProduct from '../../components/AddProduct';
 
 const AddProductPage = props => {
     return (
-        <AddProducts/>
+        <AddProduct/>
     );
 };
 

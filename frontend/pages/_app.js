@@ -1,6 +1,6 @@
 import React from 'react';
 import App from 'next/app';
-import Page, { DefaultPageProvider } from '../components/PageProvider';
+import Page, { DefaultPageProvider } from '../components/Layout/PageProvider';
 
 
 class MyApp extends App {

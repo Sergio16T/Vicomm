@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMutation, gql } from '@apollo/client';
-import { StyledFaIcon } from './Styles/ImageGalleryStyles';
-import TooltipInfo from './TooltipInfo';
+import { StyledFaIcon } from '../Styles/ImageGalleryStyles';
+import TooltipInfo from '../TooltipInfo';
 
 const REMOVE_COVER_PHOTO_MUTATION = gql`
     mutation REMOVE_COVER_PHOTO_MUTATION {

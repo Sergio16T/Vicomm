@@ -1,8 +1,8 @@
-import Header from '../components/Header';
+import Header from './Layout/Header';
 import { HomePage, StyledBanner, Main, Section } from './Styles/HomePageStyles';
 
 
-const Home = (props) => {
+const Home = () => {
     return (
         <HomePage>
             <Header/>

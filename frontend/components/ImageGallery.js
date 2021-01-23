@@ -5,7 +5,6 @@ const ImageGallery = (props) => {
     const { multiMedia, selected, handleSelect } = props;
     return (
         <StyledGallery>
-            {/* {multiMedia.length > 0 && <p className="gallery-p">All images</p>} */}
             {multiMedia.length ?
                 <div className="img-gallery">
                     {multiMedia.map((image) =>

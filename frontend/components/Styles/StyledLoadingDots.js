@@ -1,8 +1,8 @@
-import styled from 'styled-components'; 
+import styled from 'styled-components';
 
-const LoadingDots = styled.div`
+const StyledLoadingDots = styled.div`
     .spinner {
-    margin: 1rem auto; 
+    margin: 1rem auto;
     width: 70px;
     text-align: center;
     }
@@ -33,14 +33,14 @@ const LoadingDots = styled.div`
     }
 
     @keyframes sk-bouncedelay {
-    0%, 80%, 100% { 
+    0%, 80%, 100% {
         -webkit-transform: scale(0);
         transform: scale(0);
-    } 40% { 
+    } 40% {
         -webkit-transform: scale(1.0);
         transform: scale(1.0);
     }
     }
 `;
 
-export default LoadingDots; 
+export default StyledLoadingDots;

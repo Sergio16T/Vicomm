@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Router from 'next/router';
 import { useMutation, gql } from '@apollo/client';
-import { StyledHeader, StyledMenu, SubMenu } from './Styles/AppHeaderStyles';
+import { StyledHeader, StyledMenu, SubMenu } from '../Styles/AppHeaderStyles';
 
 const SIGN_OUT_MUTATION = gql`
     mutation SIGN_OUT_MUTATION {

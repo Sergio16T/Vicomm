@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-//move styles for header into it's own styled component
 const StyledModal = styled.div`
     position: fixed;
     width: 60vw;
@@ -50,31 +49,11 @@ const StyledModal = styled.div`
             color:white;
         }
     }
-    #uploadImgBtn {
-        outline: none;
-        border: none;
-        border-radius: 6px;
-        background: rgb(255,171,0);
-        padding: .8rem 1rem;
-        color: white;
-        font-size: 1.3rem;
-        margin-right: 30px;
-        cursor: pointer;
-    }
     .plusIcon {
             padding-right: .5rem;
     }
     .d-flex {
         display: flex;
-    }
-    #uploadImg {
-        position: absolute;
-        border: 0;
-        height: 1px;
-        width: 1px;
-        white-space: nowrap;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
     }
     .modal-x {
         margin-right: 20px;
@@ -95,9 +74,6 @@ const StyledModal = styled.div`
         width: 90vw;
     }
     @media (max-width: 600px) {
-        #uploadImgBtn {
-            padding: .8rem 1rem;
-        }
         .plusIcon {
             font-size: 1.5rem;
             padding-right: 0;

@@ -1,9 +1,8 @@
 import React from 'react';
-import AddProductForm from './AddProductForm';
-import Page from './Page';
+import AddProductForm from './Forms/AddProductForm';
+import Page from './Layout/Page';
 
-
-const AddProducts = () => {
+const AddProduct = () => {
     return (
         <Page
             render={() => null}
@@ -14,6 +13,4 @@ const AddProducts = () => {
     );
 };
 
-
-
-export default AddProducts;
+export default AddProduct;

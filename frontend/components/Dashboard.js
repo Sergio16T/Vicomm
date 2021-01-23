@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import { PageContent } from './Styles/DashboardStyles';
-import ImageGalleryModal from './GalleryModal';
+import Modal from './Modal/Modal';
+import ImageGalleryModal from './Modal/GalleryModal';
 import CoverPhoto from './CoverPhoto';
-import Page, { PageContext }  from './Page';
+import Page, { PageContext }  from './Layout/Page';
 import Link from 'next/link';
-import { Context } from './PageProvider';
+import { Context } from './Layout/PageProvider';
+import ToggleImageGalleryBtn from './Buttons/ToggleImageGalleryBtn';
 
 const GET_COVER_PHOTO_QUERY = gql`
     query GET_COVER_PHOTO_QUERY {
@@ -57,13 +59,16 @@ const DashBoard = () => {
                     <span> Give your site a personal touch by uploading your own logo!</span>
                 </div>
             </div>
-            <ImageGalleryModal
+            <Modal
                 show={modalOpen}
-                toggleModal={toggleModal}
-                modalXColor={"white"}
-                setSpinner={setSpinner}
-                useMLTMD={uploadCoverPhoto}
-            />
+                modalXColor="white"
+            >
+                <ImageGalleryModal
+                    toggleModal={toggleModal}
+                    setSpinner={setSpinner}
+                    useMLTMD={uploadCoverPhoto}
+                />
+            </Modal>
         </PageContent>
     );
 };
@@ -83,9 +88,4 @@ const DashboardPage = (props) => {
     );
 }
 
-const ToggleImageGalleryBtn = ({ toggleModal }) => {
-    return (
-        <img id="uploadImageIcon" onClick={toggleModal} src="https://res.cloudinary.com/dddnhychw/image/upload/v1596157219/Full%20Stack%20App/untitled_6_saqq66.svg"/>
-    );
-}
 export default DashboardPage;

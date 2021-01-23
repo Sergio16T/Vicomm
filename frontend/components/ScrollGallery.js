@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import HorizontalScrollGallery from './Styles/HorizontalScrollStyles';
 import TooltipInfo from './TooltipInfo';
 
-const ScrollGallery = ({ selectedImages, setImages, productImages, setProductImages }) => {
+const ScrollGallery = ({ selectedImages, setImages, productImages, setProductImages, toggleCropPhotoModal }) => {
     const gallery = useRef();
     const [updatingImages, setUpdating] = useState(false);
     const [newImagesAdded, setImagesAdded ] = useState(false);
@@ -22,7 +22,7 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
             }
             setImages([]);
         }
-    },[selectedImages]);
+    }, [selectedImages, productImages, setProductImages, setImages]);
 
     useEffect(() => {
         if (newImagesAdded && !updatingImages) {
@@ -32,11 +32,11 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
             });
             setImagesAdded(false);
         }
-    },[newImagesAdded, updatingImages]);
+    }, [newImagesAdded, updatingImages, gallery]);
 
     useEffect(() => {
         productImages.length && updateScrollPosition();
-    },[productImages]);
+    }, [productImages, updateScrollPosition]);
 
     const handleScrollRight = () => {
         const scrollPosition = (gallery.current.scrollWidth * .3) + gallery.current.scrollLeft;
@@ -54,6 +54,7 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
             behavior: "smooth"
         });
     }
+
     const moveImageLeft = (index) => {
         setUpdating(true);
         const images = [...productImages];
@@ -63,6 +64,7 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
         setProductImages(images);
         setUpdating(false);
     }
+
     const moveImagesRight = (index) => {
         setUpdating(true);
         const images = [...productImages];
@@ -72,6 +74,7 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
         setProductImages(images);
         setUpdating(false);
     }
+
     const removeImage = (index) => {
         setUpdating(true);
         const images = [...productImages];
@@ -79,6 +82,7 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
         setProductImages(images);
         setUpdating(false);
     }
+
     const updateScrollPosition = () => {
         setScroll({
             scrollWidth: gallery.current.scrollWidth,
@@ -92,43 +96,44 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
         <HorizontalScrollGallery onlyCard={productImages.length === 1}>
             <div className="gallery" ref={gallery} onScroll={updateScrollPosition}>
                 <span className={`${scroll.scrollWidth === scroll.clientWidth ? "d-none" : scroll.percentage === 0 ? "d-none": ""} arrow-left`} onClick={handleScrollLeft}><i className="fas fa-angle-left icon"></i></span>
-                {productImages.length ? productImages.map((card,index) =>
-                    <div className="card-container" key={index}>
-                        <div key={index} className="card" style={{backgroundImage: `url(${card.mltmd_url})`}}></div>
-                        <div className="image_manager">
-                            <button type="button" className={`${index === 0 ? "invisible" : ""} rp-button`} onClick={() => moveImageLeft(index)} disabled={index === 0}>
-                                <i className="fas fa-angle-left manager_icon"></i>
-                                <TooltipInfo
-                                text="Move left"
-                                />
-                            </button>
-                            <button type="button" className="rp-button">
-                                <i className="fas fa-pencil-alt manager_icon"></i>
-                                <TooltipInfo
-                                text="Edit image"
-                                />
-                            </button>
-                            <button type="button" className="rp-button" onClick={() => removeImage(index)}>
-                                <span className="span-x">&times;</span>
-                                <TooltipInfo
-                                text="Remove image"
-                                />
-                            </button>
-                            <button type="button" className={`${index === productImages.length - 1 ? "invisible" : ""} rp-button`} onClick={() => moveImagesRight(index)} disabled={index === productImages.length -1}>
-                                <i className="fas fa-angle-right manager_icon"></i>
-                                <TooltipInfo
-                                text="Move right"
-                                />
-                            </button>
+                    {productImages.length ? productImages.map((card,index) =>
+                        <div className="card-container" key={index}>
+                            <div key={index} className="card" style={{backgroundImage: `url(${card.mltmd_url})`}}></div>
+                            <div className="image_manager">
+                                <button type="button" className={`${index === 0 ? "invisible" : ""} rp-button`} onClick={() => moveImageLeft(index)} disabled={index === 0}>
+                                    <i className="fas fa-angle-left manager_icon"></i>
+                                    <TooltipInfo
+                                    text="Move left"
+                                    />
+                                </button>
+                                <button type="button" className="rp-button" onClick={() => toggleCropPhotoModal(card.id)}>
+                                    <i className="fas fa-pencil-alt manager_icon"></i>
+                                    <TooltipInfo
+                                    text="Edit image"
+                                    />
+                                </button>
+                                <button type="button" className="rp-button" onClick={() => removeImage(index)}>
+                                    <span className="span-x">&times;</span>
+                                    <TooltipInfo
+                                    text="Remove image"
+                                    />
+                                </button>
+                                <button type="button" className={`${index === productImages.length - 1 ? "invisible" : ""} rp-button`} onClick={() => moveImagesRight(index)} disabled={index === productImages.length -1}>
+                                    <i className="fas fa-angle-right manager_icon"></i>
+                                    <TooltipInfo
+                                    text="Move right"
+                                    />
+                                </button>
+                            </div>
                         </div>
-                    </div>)
-                    : null
-                }
+                        )
+                        : null
+                    }
                 <span className={`${scroll.scrollWidth === scroll.clientWidth ? "d-none" : scroll.percentage === 100 ? "d-none": ""} arrow-right`} onClick={handleScrollRight}><i className="fas fa-angle-right icon"></i></span>
             </div>
         </HorizontalScrollGallery>
     );
-    return null
+    return null;
 }
 
 export default ScrollGallery;

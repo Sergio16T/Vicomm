@@ -1,14 +1,16 @@
 import React, { useState, useCallback, useRef, useContext } from 'react';
 import { useMutation } from '@apollo/client';
 import {useDropzone} from 'react-dropzone'
-import { UPLOAD_IMG_MUTATION } from './GalleryModal';
-import { ProductPageContent, Body, Form  } from './Styles/ProductStyles';
-import ImageGalleryModal from './GalleryModal';
-import DropZone from './Styles/DropZoneStyles';
-import LoadingDots from './Styles/LoadingDots';
-import ScrollGallery from './ScrollGallery';
-import { PageContext } from './Page';
+import { UPLOAD_IMG_MUTATION } from '../Modal/GalleryModal';
+import { ProductPageContent, Body, Form } from '../Styles/ProductStyles';
+import Modal from '../Modal/Modal';
+import ImageGalleryModal from '../Modal/GalleryModal';
+import DropZone from '../Styles/DropZoneStyles';
+import LoadingDots from '../SpinKit/LoadingDots';
+import ScrollGallery from '../ScrollGallery';
+import { PageContext } from '../Layout/Page';
 
+// refactor selectedImages and productImages to use useReducer hook
 const AddProductForm = () => {
     const { toggleModal, modalOpen, setSpinner} = useContext(PageContext);
     const [state, setState] = useState({
@@ -22,6 +24,7 @@ const AddProductForm = () => {
     const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ["GET_IMG_GALLERY"]});
     const [ loadingDots, setLoading ] = useState(false);
     const [productImages, setProductImages] = useState([]);
+    const [activeIndex, setActiveIndex] = useState(0);
     const dropInput = useRef();
 
     const onDrop = useCallback(async (acceptedFiles) => {
@@ -74,6 +77,17 @@ const AddProductForm = () => {
         setImages(Object.values(selected));
         cb({});
         toggleModal();
+    }
+
+    const toggleImageGalleryModal = () => {
+        toggleModal();
+        setActiveIndex(0);
+    }
+
+    const toggleCropPhotoModal = (img) => {
+        console.log(img);
+        toggleModal();
+        setActiveIndex(1);
     }
     return (
         <ProductPageContent>
@@ -145,15 +159,7 @@ const AddProductForm = () => {
                         <DropZone {...getRootProps({
                             onClick: event => event.stopPropagation()
                         })}>
-                            {loadingDots &&
-                                <LoadingDots>
-                                    <div class="spinner">
-                                        <div class="bounce1"></div>
-                                        <div class="bounce2"></div>
-                                        <div class="bounce3"></div>
-                                    </div>
-                                </LoadingDots>
-                            }
+                            {loadingDots && <LoadingDots/>}
                             <i className="fas fa-camera-retro retroCam"></i>
                             <p id="dragNdrop-p">Drag & Drop To Upload</p>
                             <div className="line-break-container">
@@ -161,7 +167,7 @@ const AddProductForm = () => {
                                 <span id="or-text">or </span>
                                 <span className="lineBreak"></span>
                             </div>
-                            <button type="button" className="browse-btn" onClick={toggleModal}><i className="fas fa-images imgIcon"></i>Browse Gallery</button>
+                            <button type="button" className="browse-btn" onClick={toggleImageGalleryModal}><i className="fas fa-images imgIcon"></i>Browse Gallery</button>
                             <input {...getInputProps()} ref={dropInput}/>
                         </DropZone>
                     </div>
@@ -170,6 +176,7 @@ const AddProductForm = () => {
                         setImages={setImages}
                         productImages={productImages}
                         setProductImages={setProductImages}
+                        toggleCropPhotoModal={toggleCropPhotoModal}
                     />
                     <div className="descriptionRow">
                         <div className="desc-form-row">
@@ -188,14 +195,21 @@ const AddProductForm = () => {
                     </div>
                 </Form>
             </Body>
-            <ImageGalleryModal
+            <Modal
                 show={modalOpen}
-                toggleModal={toggleModal}
-                modalXColor={"white"}
-                setSpinner={setSpinner}
-                multiSelect
-                useMLTMD={useMLTMD}
-            />
+                modalXColor="white"
+                activeIndex={activeIndex}
+            >
+                <ImageGalleryModal
+                    toggleModal={toggleModal}
+                    setSpinner={setSpinner}
+                    multiSelect
+                    useMLTMD={useMLTMD}
+                />
+                 <div className="modal-content">
+
+                 </div>
+            </Modal>
         </ProductPageContent>
     );
 }
