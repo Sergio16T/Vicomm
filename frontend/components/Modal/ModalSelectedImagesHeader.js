@@ -23,7 +23,7 @@ const ModalImgSelectedHeader = ({ count, deleteMultimedia, useMLTMD, selected, s
             </div>
 
         </StyledImgSelectedHeader>
-    )
+    );
 }
 
 const StyledBtn = styled.button`
@@ -61,10 +61,11 @@ const StyledBtn = styled.button`
 `;
 const Button = ({ text, useMLTMD, selected, setSelected }) => {
     return (
+        // eslint-disable-next-line
         <StyledBtn onClick={() => useMLTMD(selected, setSelected)}>
             {text}
         </StyledBtn>
-    )
+    );
 }
 
 export default ModalImgSelectedHeader;

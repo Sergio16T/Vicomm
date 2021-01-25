@@ -44,15 +44,16 @@ const UploadImageModal = (props) => {
 
     const handleSelect = (image) => {
         switch(props.multiSelect) {
-            case true:
+            case true: {
                 let selectedImages = {...selected};
                 if (image.id in selectedImages) delete selectedImages[image.id];
                 else selectedImages[image.id] = image;
                 setSelected(selectedImages);
                 setCount(Object.keys(selectedImages).length);
                 break;
-            default:
-                selectedImages = {...selected};
+            }
+            default: {
+                let selectedImages = {...selected};
                 let imageDeleted = false;
                 if (image.id in selectedImages) {
                     delete selectedImages[image.id];
@@ -62,6 +63,7 @@ const UploadImageModal = (props) => {
                 if (!imageDeleted) selectedImages[image.id] = image;
                 setSelected(selectedImages);
                 setCount(Object.keys(selectedImages).length);
+            }
         }
     }
 
@@ -77,7 +79,8 @@ const UploadImageModal = (props) => {
                 body: data
             });
             const file = await res.json();
-            if (file.hasOwnProperty('error')) throw file.error.message;
+
+            if (Object.prototype.hasOwnProperty.call(file, "error")) throw file.error.message;
             await uploadImageToGallery({ variables: {
                 image: file.secure_url,
                 largeImage: file.eager[0].secure_url

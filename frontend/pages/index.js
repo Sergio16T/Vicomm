@@ -1,7 +1,7 @@
-import Home from '../components/Home'; 
-import WithApollo from '../lib/ApolloClient'; 
+import Home from '../components/Home';
+import WithApollo from '../lib/ApolloClient';
 
-const HomePage = (props) => {
+const HomePage = () => {
     return (
         <Home/>
     );

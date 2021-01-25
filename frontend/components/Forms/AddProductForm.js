@@ -1,10 +1,11 @@
-import React, { useState, useCallback, useRef, useContext } from 'react';
+import React, { useState, useCallback, useRef, useContext, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import {useDropzone} from 'react-dropzone'
 import { UPLOAD_IMG_MUTATION } from '../Modal/GalleryModal';
 import { ProductPageContent, Body, Form } from '../Styles/ProductStyles';
 import Modal from '../Modal/Modal';
 import ImageGalleryModal from '../Modal/GalleryModal';
+import CropPhotoModal from '../Modal/CropPhotoModal';
 import DropZone from '../Styles/DropZoneStyles';
 import LoadingDots from '../SpinKit/LoadingDots';
 import ScrollGallery from '../ScrollGallery';
@@ -25,7 +26,22 @@ const AddProductForm = () => {
     const [ loadingDots, setLoading ] = useState(false);
     const [productImages, setProductImages] = useState([]);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [cropImage, setCropImage] = useState({
+        img: null,
+        index: null
+    });
     const dropInput = useRef();
+
+    useEffect(() => {
+        if (!modalOpen && cropImage.img) {
+            setTimeout(() => {
+                setCropImage({
+                    img: null,
+                    index: null
+                });
+            }, 401);
+        }
+    }, [modalOpen, cropImage.img]);
 
     const onDrop = useCallback(async (acceptedFiles) => {
         if (!acceptedFiles.length) {
@@ -43,7 +59,7 @@ const AddProductForm = () => {
                 body: data
             });
             const file = await res.json();
-            if (file.hasOwnProperty('error')) throw file.error.message;
+            if (Object.prototype.hasOwnProperty.call(file, "error")) throw file.error.message;
             const { data: { uploadImageToGallery: image }} = await uploadImageToGallery({ variables: {
                 image: file.secure_url,
                 largeImage: file.eager[0].secure_url
@@ -57,9 +73,9 @@ const AddProductForm = () => {
             console.log(err);
             setLoading(false);
         }
-    }, []);
+    }, [uploadImageToGallery]);
 
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
+    const {getRootProps, getInputProps} = useDropzone({onDrop});
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -80,15 +96,28 @@ const AddProductForm = () => {
     }
 
     const toggleImageGalleryModal = () => {
-        toggleModal();
         setActiveIndex(0);
+        toggleModal();
     }
 
-    const toggleCropPhotoModal = (img) => {
-        console.log(img);
-        toggleModal();
+    const toggleCropPhotoModal = (img, index) => {
+        setCropImage({
+            img,
+            index
+        });
         setActiveIndex(1);
+        toggleModal();
     }
+
+    const updateProductImages = (id, mltmd_url) => {
+        const newProductImages = [...productImages];
+        newProductImages.splice(cropImage.index, 1, {
+            id,
+            mltmd_url,
+        });
+        setProductImages(newProductImages);
+    }
+
     return (
         <ProductPageContent>
             <Body>
@@ -200,15 +229,19 @@ const AddProductForm = () => {
                 modalXColor="white"
                 activeIndex={activeIndex}
             >
-                <ImageGalleryModal
-                    toggleModal={toggleModal}
-                    setSpinner={setSpinner}
-                    multiSelect
-                    useMLTMD={useMLTMD}
-                />
-                 <div className="modal-content">
-
-                 </div>
+                    <ImageGalleryModal
+                        toggleModal={toggleModal}
+                        setSpinner={setSpinner}
+                        multiSelect
+                        useMLTMD={useMLTMD}
+                    />
+                      <CropPhotoModal
+                        modalOpen={modalOpen}
+                        imageUrl={cropImage.img}
+                        toggleModal={toggleModal}
+                        setSpinner={setSpinner}
+                        updateProductImages={updateProductImages}
+                    />
             </Modal>
         </ProductPageContent>
     );

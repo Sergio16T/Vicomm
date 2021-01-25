@@ -73,7 +73,7 @@ const DashBoard = () => {
     );
 };
 
-const DashboardPage = (props) => {
+const DashboardPage = () => {
     const { userData } = useContext(Context);
 
     return (

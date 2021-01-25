@@ -37,7 +37,7 @@ const AppHeader = (props) => {
 
 
 const VerticalDotMenu = (props) => {
-    const [signOut, { data }] = useMutation(SIGN_OUT_MUTATION);
+    const [signOut] = useMutation(SIGN_OUT_MUTATION);
     const [isOpen, setIsOpen] = useState(false);
     const subMenu = useRef(null);
     const dotMenu = useRef(null);

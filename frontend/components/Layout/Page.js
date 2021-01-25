@@ -14,21 +14,21 @@ const Page = props => {
     const modalBackDrop = useRef(null);
 
     useEffect(() => {
+        const handleClick = (e) => {
+            if (e.target.contains(backDrop.current)) {
+                setIsOpen(false);
+                console.log('contains')
+                document.querySelector('body').style.overflow = '';
+            }
+            if (e.target.contains(modalBackDrop.current)) {
+                setModalOpen(false);
+                document.querySelector('body').style.overflow = '';
+            }
+        }
         document.addEventListener('click', handleClick);
         return () => document.removeEventListener('click', handleClick);
-    }, []);
+    }, [setIsOpen]);
 
-    const handleClick = (e) => {
-        if (e.target.contains(backDrop.current)) {
-            setIsOpen(false);
-            console.log('contains')
-            document.querySelector('body').style.overflow = '';
-        }
-        if (e.target.contains(modalBackDrop.current)) {
-            setModalOpen(false);
-            document.querySelector('body').style.overflow = '';
-        }
-    }
 
     const toggleSideBar = () => {
         if (!isOpen) document.querySelector('body').style.overflow = "hidden";
@@ -40,7 +40,6 @@ const Page = props => {
         else document.querySelector('body').style.overflow = "";
         setModalOpen(!modalOpen);
     }
-
 
     return (
         <StyledPage>

@@ -6,7 +6,7 @@ import { GET_USER_QUERY } from './Layout/PageProvider';
 import SignInForm from './Forms/SignInForm';
 import Router from 'next/router';
 
-const SignIn = (props) => {
+const SignIn = () => {
     const { loading, data } = useQuery(GET_USER_QUERY);
 
     if (loading) return null;

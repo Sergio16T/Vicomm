@@ -1,7 +1,7 @@
 import React from 'react';
 import App from 'next/app';
 import Page, { DefaultPageProvider } from '../components/Layout/PageProvider';
-
+import 'react-image-crop/lib/ReactCrop.scss';
 
 class MyApp extends App {
     static async getInitialProps({ Component, ctx }) {

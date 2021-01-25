@@ -23,11 +23,20 @@
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.2.0",
     "react-google-login": "^5.1.21",
+    "react-image-crop": "^8.6.6",
+    "sass": "^1.32.5",
     "smoothscroll-polyfill": "^0.4.4",
     "styled-components": "^5.1.1"
   },
   "devDependencies": {
-    "babel-plugin-module-resolver": "^4.0.0"
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "eslint": "^7.18.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0"
   },
   "//": "babel config",
   "babel": {

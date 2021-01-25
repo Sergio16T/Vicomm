@@ -1,8 +1,8 @@
 import React from 'react';
-import withApollo from '../lib/ApolloClient'; 
-import Products from '../components/Products'; 
+import withApollo from '../lib/ApolloClient';
+import Products from '../components/Products';
 
-const ProductsPage = props => {
+const ProductsPage = () => {
     return (
         <Products/>
     );

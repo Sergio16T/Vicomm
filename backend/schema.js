@@ -29,13 +29,13 @@ const typeDefs = gql`
 
     type Item {
         id: ID
-        item_title: String! 
+        item_title: String!
         item_desc: String!
         price: Int!
         crte_by_acct_key: ID!
     }
     type MultiMedia {
-        id: ID, 
+        id: ID,
         mltmd_url: String!
         mltmd_lg_url: String!
         crte_by_acct_key: ID!
@@ -44,11 +44,11 @@ const typeDefs = gql`
         message: String!
     }
     type CoverPhoto {
-        id: ID, 
-        acct_key: ID, 
-        mltmd_key: ID, 
+        id: ID,
+        acct_key: ID,
+        mltmd_key: ID,
         act_ind: Int
     }
-`; 
+`;
 
-module.exports = typeDefs; 
+module.exports = typeDefs;

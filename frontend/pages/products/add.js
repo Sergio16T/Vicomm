@@ -1,7 +1,7 @@
 import React from 'react';
 import AddProduct from '../../components/AddProduct';
 
-const AddProductPage = props => {
+const AddProductPage = () => {
     return (
         <AddProduct/>
     );

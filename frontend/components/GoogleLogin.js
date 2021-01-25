@@ -64,6 +64,7 @@ const GoogleBtn = (props) => {
 	}
 
 	const logout = (response) => {
+		console.log(response);
 		setState({
 		...state,
 		isLoggedIn: false,
