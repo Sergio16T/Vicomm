@@ -60,12 +60,12 @@ const AddProductForm = () => {
             });
             const file = await res.json();
             if (Object.prototype.hasOwnProperty.call(file, "error")) throw file.error.message;
-            const { data: { uploadImageToGallery: image }} = await uploadImageToGallery({ variables: {
-                image: file.secure_url,
-                largeImage: file.eager[0].secure_url
-             }}).catch(err => {
-                 throw err;
-             });
+            const { data: { uploadImageToGallery: image }} = await uploadImageToGallery({
+                variables: {
+                    image: file.secure_url,
+                    largeImage: file.eager[0].secure_url
+                }
+            });
             dropInput.current.value= "";
             setImages([image]);
             setLoading(false);

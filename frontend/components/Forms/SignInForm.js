@@ -31,9 +31,7 @@ const SignInForm = () => {
     const submitForm = async (e) => {
         e.preventDefault();
         try {
-            await signIn({ variables: {...state}}).catch(err=> {
-                throw err;
-            });
+            await signIn({ variables: { ...state } });
         } catch(err) {
             console.log(err)
             setState({...state, signInError: err.message });

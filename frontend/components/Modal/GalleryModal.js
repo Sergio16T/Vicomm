@@ -81,12 +81,12 @@ const UploadImageModal = (props) => {
             const file = await res.json();
 
             if (Object.prototype.hasOwnProperty.call(file, "error")) throw file.error.message;
-            await uploadImageToGallery({ variables: {
-                image: file.secure_url,
-                largeImage: file.eager[0].secure_url
-             }}).catch(err => {
-                 throw err;
-             });
+            await uploadImageToGallery({
+                variables: {
+                    image: file.secure_url,
+                    largeImage: file.eager[0].secure_url
+                }
+            });
             uploadInput.current.value= "";
             props.setSpinner(false);
         }

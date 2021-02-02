@@ -29,7 +29,7 @@ const SignUpForm = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        switch (name){
+        switch (name) {
             case "email":
                 if (state.emailError && emailRegEx.test(value)) {
                     setState({...state, [name]: value, emailError: '' });
@@ -56,13 +56,11 @@ const SignUpForm = () => {
         e.preventDefault();
         if (!state.passwordsMatch) return;
         try {
-            await signUp({variables: {...state} }).catch(err => {
-                throw err;
-            });
+            await signUp({ variables: { ...state } });
             Router.push({
                 pathname: "/dashboard"
             });
-        } catch(err) {
+        } catch (err) {
             setState({...state, signUpError: err.message });
         }
     }

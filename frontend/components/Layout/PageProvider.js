@@ -20,10 +20,10 @@ const GET_USER_QUERY = gql`
 
 const Context = React.createContext();
 
-function PageProvider(props) {
+function PageProvider({ children, pathname}) {
     const { client, loading: userLoading, error, data: userData } = useQuery(GET_USER_QUERY);
     const [isOpen, setIsOpen ] = useState(false);
-    const previousPath = usePrevious(props.pathname);
+    const previousPath = usePrevious(pathname);
     const context = {
         isOpen: isOpen,
         setIsOpen: setIsOpen,
@@ -36,11 +36,11 @@ function PageProvider(props) {
     },[]);
 
     useEffect(() => {
-        if(previousPath !== props.pathname && window.innerWidth < 800) {
+        if (previousPath !== pathname && window.innerWidth < 800) {
             document.querySelector('body').style.overflow = '';
             setIsOpen(false);
         }
-    },[props.pathname]);
+    }, [previousPath, pathname]);
 
     if (error) return <p>{error.message}</p>
     if (userLoading) return null;
@@ -59,7 +59,7 @@ function PageProvider(props) {
             user={userData.user ? userData.user : ''}
             />
             <Context.Provider value = {context}>
-                {props.children}
+                {children}
             </Context.Provider>
         </ThemeProvider>
     );
@@ -69,7 +69,7 @@ function DefaultPage(props) {
 
     useEffect(() => {
         smoothscroll.polyfill();
-    },[]);
+    }, []);
 
     return (
         <ThemeProvider theme={theme}>
@@ -77,7 +77,7 @@ function DefaultPage(props) {
             <Meta/>
                 {props.children}
         </ThemeProvider>
-    )
+    );
 }
 
 const DefaultPageProvider = WithApollo(DefaultPage);

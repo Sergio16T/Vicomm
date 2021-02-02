@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useMutation } from '@apollo/client';
-import { UPLOAD_IMG_MUTATION } from '../Modal/GalleryModal';
+import { useMutation, gql } from '@apollo/client';
+import { UPLOAD_IMG_MUTATION } from './GalleryModal';
 import styled from 'styled-components';
 import ModalHeader from './ModalHeader';
 import ReactCrop from 'react-image-crop';
@@ -11,11 +11,31 @@ const StyledCrop = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 440px;
 `;
 
 const CropPhotoModal = ({ toggleModal, imageUrl, setSpinner,updateProductImages }) => {
-    const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ['GET_IMG_GALLERY']});
-    // refetch not working need to manually update the cache
+    const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, {
+        update(cache, { data: { uploadImageToGallery } }) {
+            cache.modify({
+                fields: {
+                    getImageGallery(existingMultimedia = []) {
+                        const newImage = cache.writeFragment({
+                            data: uploadImageToGallery,
+                            fragment: gql`
+                                fragment newMedia on MultiMedia {
+                                    id
+                                    mltmd_url
+                                    type
+                                }
+                            `
+                        });
+                        return [...existingMultimedia, newImage]
+                    }
+                }
+            });
+        }
+    });
     const [crop, setCrop] = useState({
         unit: 'px',
         x: 130,
@@ -103,11 +123,11 @@ const CropPhotoModal = ({ toggleModal, imageUrl, setSpinner,updateProductImages 
                 console.log('new file upload', file)
                 if (Object.prototype.hasOwnProperty.call(file, "error")) throw file.error.message;
                 // create new record in DB
-                const { data: { uploadImageToGallery: image } } = await uploadImageToGallery({ variables: {
-                    image: file.secure_url,
-                    largeImage: file.eager[0].secure_url
-                }}).catch(err => {
-                    throw err;
+                const { data: { uploadImageToGallery: image } } = await uploadImageToGallery({
+                    variables: {
+                        image: file.secure_url,
+                        largeImage: file.eager[0].secure_url
+                    }
                 });
                 console.log('image response from server', image);
                 updateProductImages(image.id, image.mltmd_url);
