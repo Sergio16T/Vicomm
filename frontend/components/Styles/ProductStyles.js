@@ -44,7 +44,10 @@ const Form = styled.form`
     }
     .formRow, .flex-row {
         width: 100%;
-        margin: 1.5rem 0;
+        margin: 2rem 0;
+        &:first-of-type {
+            margin-top: 1.5rem;
+        }
         label {
             font-size: 2rem;
             margin-bottom: .5rem;
@@ -53,13 +56,17 @@ const Form = styled.form`
             transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             transform-origin: top left;
             pointer-events: none;
-            overflow: hidden;
+            /* overflow: hidden; */
             text-overflow: ellipsis;
             white-space: nowrap;
             color: rgba(255,255,255,0.3);
         }
         .active-content {
             transform: translateY(-58px) scale(.55);
+        }
+        .required-label, .label-error {
+            transform: translateY(-26px);
+            color: rgba(255,255,255,0.7);
         }
         input {
             font-size: 2rem;
@@ -98,7 +105,7 @@ const Form = styled.form`
         .flex-group {
             display: flex;
             margin-right: 1rem;
-            flex-basis: 72.75%
+            flex-basis: 72.75%;
         }
         .formCol {
             flex-grow: 2;
@@ -106,6 +113,9 @@ const Form = styled.form`
             position: relative;
             &:last-child {
                 margin-right: 0;
+                .row2 {
+                    max-width: 184.2px;
+                }
             }
         }
     }
@@ -167,32 +177,41 @@ const Form = styled.form`
             }
         }
     }
-   @media (max-width: 950px) {
-       .form-row, .flex-row {
-           margin: 0;
-       }
-       .mobile-row {
-           margin-bottom: 1rem;
-       }
-       .flex-row {
-           flex-direction: column;
-           .flex-group {
-                margin-right: 0;
-                flex-basis: auto;
-           }
-           .formCol {
-                margin-bottom: .75rem;
-           }
-           .mb-0 {
-               margin-bottom: 0;
-           }
-       }
-   }
-   @media (max-width: 480px) {
-        .formRow, .flex-row {
-                input, label, .input-addOn {
-                    font-size: 1.8rem;
+    @media (min-width: 971px) {
+        .flex-row {
+            .flex-group {
+                .formCol {
+                    max-width: 255.91px;
                 }
+            }
+        }
+    }
+    @media (max-width: 970px) {
+        .form-row, .flex-row {
+            margin: 0;
+        }
+        .mobile-row {
+            margin-bottom: 2rem;
+        }
+        .flex-row {
+            flex-direction: column;
+            .flex-group {
+                    margin-right: 0;
+                    flex-basis: auto;
+            }
+            .formCol {
+                    margin-bottom: .75rem;
+            }
+            .mb-0 {
+                margin-bottom: 0;
+            }
+        }
+    }
+    @media (max-width: 480px) {
+        .formRow, .flex-row {
+            input, label, .input-addOn {
+                font-size: 1.8rem;
+            }
         }
     }
 `;

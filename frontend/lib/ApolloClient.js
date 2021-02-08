@@ -10,21 +10,38 @@ const link = createHttpLink({
     credentials: 'include'
 });
 
+const cacheConfig = {
+    typePolicies: {
+        Query: {
+          fields: {
+            getImageGallery: {
+                merge(_, incoming) {
+                    /* Equivalent to what happens if there is no custom merge function.
+                    Explicitly permit replacement while silencing warning. */
+                    return incoming;
+                  },
+            }
+          }
+        }
+      }
+};
+
+const apolloProvider =  {
+    // eslint-disable-next-line
+    render: ({ Page, props }) => {
+        return (
+            <ApolloProvider client={props.apollo}>
+                <Page {...props} />
+            </ApolloProvider>
+        );
+    }
+};
 
 export default withApollo(
     ({ initialState }) => {
         return new ApolloClient({
             link,
-            cache: new InMemoryCache().restore(initialState || {}),
+            cache: new InMemoryCache(cacheConfig).restore(initialState || {}),
         });
-    },
-    {
-        render: ({ Page, props }) => {
-            return (
-                <ApolloProvider client={props.apollo}>
-                    <Page {...props} />
-                </ApolloProvider>
-            );
-        }
-    }
+    }, apolloProvider
 );

@@ -17,7 +17,6 @@ const Page = props => {
         const handleClick = (e) => {
             if (e.target.contains(backDrop.current)) {
                 setIsOpen(false);
-                console.log('contains')
                 document.querySelector('body').style.overflow = '';
             }
             if (e.target.contains(modalBackDrop.current)) {

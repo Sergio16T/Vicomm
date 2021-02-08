@@ -14,7 +14,7 @@ const StyledCrop = styled.div`
     min-height: 440px;
 `;
 
-const CropPhotoModal = ({ toggleModal, imageUrl, setSpinner,updateProductImages }) => {
+const CropPhotoModal = ({ toggleModal, imageUrl, setSpinner, updateProductImages }) => {
     const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, {
         update(cache, { data: { uploadImageToGallery } }) {
             cache.modify({

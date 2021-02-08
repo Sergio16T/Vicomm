@@ -19,7 +19,13 @@ const AddProductForm = () => {
         price: "",
         salePrice: "",
         weight: "",
-        description: ""
+        description: "",
+        errorMessages: {
+            price: "",
+            salePrice: "",
+            weight: "",
+            description: ""
+        }
     });
     const [selectedImages, setImages] = useState([]);
     const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ["GET_IMG_GALLERY"]});
@@ -79,16 +85,93 @@ const AddProductForm = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        switch(name) {
-            case "weight":
-                if (value > 1000) setState({...state, [name]: 1000});
-                else setState({...state, [name]:value});
+        switch (name) {
+            case "weight": {
+                let regEx = /^\d*\.?\d{0,2}$/;
+                if (regEx.test(value) && value <= 1000) {
+                    setState({
+                        ...state,
+                        [name]: value,
+                        errorMessages: {
+                            ...state.errorMessages,
+                            [name]: ""
+                        }
+                    });
+                } else if (!regEx.test(value) && value < 1000) {
+                    setState({
+                        ...state,
+                        [name]: value,
+                        errorMessages: {
+                            ...state.errorMessages,
+                            [name]: "Only 2 decimal points"
+                        }
+                    });
+                } else if (value > 1000) {
+                     setState({
+                        ...state,
+                        [name]: 1000,
+                        errorMessages: {
+                            ...state.errorMessages,
+                            [name]: ""
+                        }
+                    });
+                }
                 break;
+            }
+            case "price": {
+                let priceRegEx = /^\d*\.?\d{0,2}$/;
+                if (!priceRegEx.test(value)) {
+                    setState({
+                        ...state,
+                        [name]: value,
+                        errorMessages: {
+                            ...state.errorMessages,
+                            [name]: "Only 2 decimal points"
+                        }
+                    });
+                } else {
+                    setState({
+                        ...state,
+                        [name]:value,
+                        errorMessages: {
+                            ...state.errorMessages,
+                            [name]: ""
+                        }
+                    });
+                }
+                break;
+            }
+            case "salePrice": {
+                let priceRegEx = /^\d*\.?\d{0,2}$/;
+                if (!priceRegEx.test(value)) {
+                    setState({
+                        ...state,
+                        [name]: value,
+                        errorMessages: {
+                            ...state.errorMessages,
+                            [name]: "Only 2 decimal points"
+                        }
+                    });
+                } else {
+                    setState({
+                        ...state,
+                        [name]:value,
+                        errorMessages: {
+                            ...state.errorMessages,
+                            [name]: ""
+                        }
+                    });
+                }
+                break;
+            }
             default:
-            setState({...state, [name]:value});
+                setState({
+                    ...state,
+                    [name]:value
+                });
         }
-
     }
+
     const useMLTMD = (selected, cb) => {
         setImages(Object.values(selected));
         cb({});
@@ -118,6 +201,15 @@ const AddProductForm = () => {
         setProductImages(newProductImages);
     }
 
+    const {
+        errorMessages,
+        description,
+        name,
+        price,
+        salePrice,
+        weight,
+    } = state;
+
     return (
         <ProductPageContent>
             <Body>
@@ -128,42 +220,65 @@ const AddProductForm = () => {
                                 type="text"
                                 name="name"
                                 id="name"
-                                value={state.name}
+                                value={name}
                                 onChange={handleInputChange}
                                 required
                             />
-                            <label className={`${state.name ? "active-content": ""} p-label `} htmlFor="name">
+                            <label className={`${name ? "active-content": ""} p-label `} htmlFor="name">
                                 Name
                             </label>
+                            {!name &&
+                                <div className="required-label">
+                                    <i className="fas fa-exclamation-triangle"></i>&nbsp;
+                                    Name is required
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className="flex-row">
                         <div className="flex-group mobile-row">
-                            <div className="formCol">
+                            <div className="formCol row2">
                                 <input
                                     type="number"
                                     name="price"
                                     id="price"
-                                    value={state.price}
+                                    value={price}
                                     onChange={handleInputChange}
+                                    step=".01"
                                     required
                                 />
-                                <label className={`${state.price ? "active-content": ""} p-label `} htmlFor="price">
-                                    Price
+                                <label className={`${price ? "active-content": ""} p-label `} htmlFor="price">
+                                        Price
                                 </label>
+                                {!price &&
+                                    <div className="required-label">
+                                        <i className="fas fa-exclamation-triangle"></i>&nbsp;
+                                        Price is required
+                                    </div>
+                                }
+                                {errorMessages.price &&
+                                    <div className="label-error">
+                                        <i className="fas fa-exclamation-triangle"></i>&nbsp; {`${errorMessages.price}`}
+                                    </div>
+                                }
                             </div>
                             <div className="formCol">
                                 <input
                                     type="number"
                                     name="salePrice"
                                     id="salePrice"
-                                    value={state.salePrice}
+                                    value={salePrice}
                                     onChange={handleInputChange}
-                                    required
+                                    step=".01"
                                 />
-                                <label className={`${state.salePrice ? "active-content": ""} p-label `} htmlFor="salePrice">
+                                <label className={`${salePrice ? "active-content": ""} p-label `} htmlFor="salePrice">
                                     Sale Price
                                 </label>
+                                {errorMessages.salePrice &&
+                                    <div className="label-error">
+                                        <i className="fas fa-exclamation-triangle"></i>&nbsp; {`${errorMessages.salePrice}`}
+                                    </div>
+                                }
                             </div>
                         </div>
                         <div className="formCol mobile-row">
@@ -171,16 +286,22 @@ const AddProductForm = () => {
                                 type="number"
                                 name="weight"
                                 id="productWeight"
-                                value={state.weight}
+                                value={weight}
                                 onChange={handleInputChange}
                                 min="0"
                                 max="1000"
+                                step=".01"
                                 required
                             />
-                            <label className={`${state.weight ? "active-content": ""} p-label `} htmlFor="productWeight">
+                            <label className={`${weight ? "active-content" : ""} p-label row2`} htmlFor="productWeight">
                                 Weight
                             </label>
                             <span className="input-addOn">lbs.</span>
+                            {errorMessages.weight &&
+                                <div className="label-error">
+                                    <i className="fas fa-exclamation-triangle"></i>&nbsp; {`${errorMessages.weight}`}
+                                </div>
+                            }
                         </div>
 
                     </div>
@@ -216,7 +337,7 @@ const AddProductForm = () => {
                                 type="text"
                                 name="description"
                                 id="description"
-                                value={state.description}
+                                value={description}
                                 onChange={handleInputChange}
                                 required
                             />
@@ -249,3 +370,14 @@ const AddProductForm = () => {
 
 
 export default AddProductForm;
+
+// restricting input to two decimal points
+// let input = (value.indexOf(".") >= 0) ? (value.substr(0, value.indexOf(".")) + value.substr(value.indexOf("."), 3)) : value;
+// setState({
+//     ...state,
+//     [name]: input,
+//     errorMessages: {
+//         ...state.errorMessages,
+//         [name]: ""
+//     }
+// });

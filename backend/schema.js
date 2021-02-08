@@ -14,7 +14,7 @@ const typeDefs = gql`
         signOut: SuccessMessage!
         googleSignIn(firstName: String!, lastName: String!, email: String!, accessToken: String!): User!
         uploadImageToGallery(image: String!, largeImage: String!): MultiMedia!
-        deleteImages(keys: [ID]): SuccessMessage!
+        deleteImages(keys: [ID]): Keys!
         updateCoverPhoto(key: ID): CoverPhoto!
         removeCoverPhoto: SuccessMessage!
         createItem(title: String!, description: String!, price: Int!, salePrice: Int, weight: Float): Item!
@@ -51,6 +51,9 @@ const typeDefs = gql`
         acct_key: ID,
         mltmd_key: ID,
         act_ind: Int
+    }
+    type Keys {
+        keys: [ID!]!
     }
 `;
 

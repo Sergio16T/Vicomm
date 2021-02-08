@@ -24,6 +24,8 @@ module.exports = {
 
             await deleteMultimedia(key);
         }
-        return { message: "Success! Image has been deleted" };
+        return {
+            keys: args.keys
+         };
     },
 };

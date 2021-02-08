@@ -25,7 +25,7 @@ const UPLOAD_IMG_MUTATION = gql`
 const DELETE_IMGS_MUTATION = gql`
     mutation DELETE_IMGS_MUTATION($keys: [ID]) {
         deleteImages(keys: $keys) {
-            message
+            keys
         }
     }
 `;
@@ -33,7 +33,17 @@ const DELETE_IMGS_MUTATION = gql`
 const UploadImageModal = (props) => {
     const { loading, data } = useQuery(GET_IMG_GALLERY);
     const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ['GET_IMG_GALLERY']});
-    const [deleteImages] = useMutation(DELETE_IMGS_MUTATION, { refetchQueries: ['GET_IMG_GALLERY']});
+    /* replaced refetch with custom update function { refetchQueries: ['GET_IMG_GALLERY']}*/
+    const [deleteImages] = useMutation(DELETE_IMGS_MUTATION, {
+        update(cache, { data: { deleteImages } }) {
+            const { getImageGallery } = cache.readQuery({ query: GET_IMG_GALLERY });
+            const newGalleryImages = getImageGallery.filter(image => !deleteImages.keys.includes(image.id));
+            cache.writeQuery({
+                query: GET_IMG_GALLERY ,
+                data: { getImageGallery: newGalleryImages }
+            });
+        }
+    });
     const [selected, setSelected] = useState({});
     const [count, setCount] = useState(0);
     const uploadInput = useRef();
@@ -43,7 +53,7 @@ const UploadImageModal = (props) => {
     },[props.show]);
 
     const handleSelect = (image) => {
-        switch(props.multiSelect) {
+        switch (props.multiSelect) {
             case true: {
                 let selectedImages = {...selected};
                 if (image.id in selectedImages) delete selectedImages[image.id];
@@ -59,8 +69,10 @@ const UploadImageModal = (props) => {
                     delete selectedImages[image.id];
                     imageDeleted = true;
                 }
-                if (!imageDeleted) selectedImages = {};
-                if (!imageDeleted) selectedImages[image.id] = image;
+                if (!imageDeleted) {
+                    selectedImages = {};
+                    selectedImages[image.id] = image;
+                }
                 setSelected(selectedImages);
                 setCount(Object.keys(selectedImages).length);
             }
