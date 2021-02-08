@@ -28,7 +28,7 @@ const SignUpForm = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const emailRegEx = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         switch (name) {
             case "email":
                 if (state.emailError && emailRegEx.test(value)) {
@@ -72,7 +72,7 @@ const SignUpForm = () => {
     }
     const handleBlur = (e) => {
         const { name, value } = e.target;
-        const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const emailRegEx = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         switch (name) {
             case 'email':
                 if (!emailRegEx.test(value.trim())) setState({ ...state, emailError: "Please enter a valid email"});
