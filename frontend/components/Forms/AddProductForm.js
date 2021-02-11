@@ -87,23 +87,14 @@ const AddProductForm = () => {
         const { name, value } = e.target;
         switch (name) {
             case "weight": {
-                let regEx = /^\d*\.?\d{0,2}$/;
-                if (regEx.test(value) && value <= 1000) {
+                if (value <= 1000) {
+                    let regEx = /^\d*\.?\d{0,2}$/;
                     setState({
                         ...state,
                         [name]: value,
                         errorMessages: {
                             ...state.errorMessages,
-                            [name]: ""
-                        }
-                    });
-                } else if (!regEx.test(value) && value < 1000) {
-                    setState({
-                        ...state,
-                        [name]: value,
-                        errorMessages: {
-                            ...state.errorMessages,
-                            [name]: "Only 2 decimal points"
+                            [name]: regEx.test(value) ? "" : "Only 2 decimal points"
                         }
                     });
                 } else if (value > 1000) {
@@ -120,48 +111,26 @@ const AddProductForm = () => {
             }
             case "price": {
                 let priceRegEx = /^\d*\.?\d{0,2}$/;
-                if (!priceRegEx.test(value)) {
-                    setState({
-                        ...state,
-                        [name]: value,
-                        errorMessages: {
-                            ...state.errorMessages,
-                            [name]: "Only 2 decimal points"
-                        }
-                    });
-                } else {
-                    setState({
-                        ...state,
-                        [name]:value,
-                        errorMessages: {
-                            ...state.errorMessages,
-                            [name]: ""
-                        }
-                    });
-                }
+                setState({
+                    ...state,
+                    [name]: value,
+                    errorMessages: {
+                        ...state.errorMessages,
+                        [name]: !priceRegEx.test(value) ?  "Only 2 decimal points" : ""
+                    }
+                });
                 break;
             }
             case "salePrice": {
-                let priceRegEx = /^\d*\.?\d{0,2}$/;
-                if (!priceRegEx.test(value)) {
-                    setState({
-                        ...state,
-                        [name]: value,
-                        errorMessages: {
-                            ...state.errorMessages,
-                            [name]: "Only 2 decimal points"
-                        }
-                    });
-                } else {
-                    setState({
-                        ...state,
-                        [name]:value,
-                        errorMessages: {
-                            ...state.errorMessages,
-                            [name]: ""
-                        }
-                    });
-                }
+                let salePriceRegEx = /^\d*\.?\d{0,2}$/;
+                setState({
+                    ...state,
+                    [name]: value,
+                    errorMessages: {
+                        ...state.errorMessages,
+                        [name]: !salePriceRegEx.test(value) ? "Only 2 decimal points" : ""
+                    }
+                });
                 break;
             }
             default:
@@ -372,6 +341,7 @@ const AddProductForm = () => {
 export default AddProductForm;
 
 // restricting input to two decimal points
+// substr(startIndex, numberOfCharactersToExtract)
 // let input = (value.indexOf(".") >= 0) ? (value.substr(0, value.indexOf(".")) + value.substr(value.indexOf("."), 3)) : value;
 // setState({
 //     ...state,
