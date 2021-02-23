@@ -24,7 +24,7 @@ const UPDATE_COVER_PHOTO_MUTATION = gql`
     }
 `;
 
-const DashBoard = () => {
+const Dashboard = () => {
     const { modalOpen, toggleModal, setSpinner } = useContext(PageContext);
     const { loading, error, data } = useQuery(GET_COVER_PHOTO_QUERY);
     const [updateCoverPhoto] = useMutation(UPDATE_COVER_PHOTO_MUTATION, { refetchQueries: ["GET_COVER_PHOTO_QUERY"]});
@@ -81,9 +81,7 @@ const DashboardPage = () => {
             render={({ toggleModal }) => <ToggleImageGalleryBtn toggleModal={toggleModal}/>}
             text={`${userData.user.fst_nm}'s Store`}
         >
-                <DashBoard
-                    userData={userData}
-                />
+                <Dashboard/>
         </Page>
     );
 }

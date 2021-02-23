@@ -26,7 +26,7 @@ const HorizontalScrollGallery = styled.div`
             &:hover {
                 cursor: pointer;
                 .image_manager {
-                visibility: visible;
+                    visibility: visible;
                 }
             }
         }
@@ -64,7 +64,7 @@ const HorizontalScrollGallery = styled.div`
             opacity: .6;
             color: white;
             z-index: 4;
-        cursor: pointer;
+            cursor: pointer;
             &:hover {
                 cursor: pointer;
             }

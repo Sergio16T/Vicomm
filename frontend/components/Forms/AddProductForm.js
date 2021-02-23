@@ -227,7 +227,7 @@ const AddProductForm = () => {
                                 }
                                 {errorMessages.price &&
                                     <div className="label-error">
-                                        <i className="fas fa-exclamation-triangle"></i>&nbsp; {`${errorMessages.price}`}
+                                        <i className="fas fa-exclamation-triangle"></i>&nbsp; {errorMessages.price}
                                     </div>
                                 }
                             </div>
@@ -245,7 +245,7 @@ const AddProductForm = () => {
                                 </label>
                                 {errorMessages.salePrice &&
                                     <div className="label-error">
-                                        <i className="fas fa-exclamation-triangle"></i>&nbsp; {`${errorMessages.salePrice}`}
+                                        <i className="fas fa-exclamation-triangle"></i>&nbsp; {errorMessages.salePrice}
                                     </div>
                                 }
                             </div>
@@ -268,7 +268,7 @@ const AddProductForm = () => {
                             <span className="input-addOn">lbs.</span>
                             {errorMessages.weight &&
                                 <div className="label-error">
-                                    <i className="fas fa-exclamation-triangle"></i>&nbsp; {`${errorMessages.weight}`}
+                                    <i className="fas fa-exclamation-triangle"></i>&nbsp; {errorMessages.weight}
                                 </div>
                             }
                         </div>
