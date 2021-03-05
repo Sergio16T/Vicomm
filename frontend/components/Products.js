@@ -10,7 +10,7 @@ const Products = () => {
                 appBar: {
                     render,
                     renderPosition: "right",
-                    text: "Products"
+                    text: "Products",
                 },
             }}
         >

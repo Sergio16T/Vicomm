@@ -17,7 +17,7 @@ const AppHeader = (props) => {
         renderData: {
             render,
             renderPosition,
-            text
+            text,
         },
         toggleSideBar,
     } = props;
@@ -82,7 +82,7 @@ const LogoutButton = (props) => {
         await signOut();
 
         Router.push({
-            pathname: "/"
+            pathname: "/",
         });
     }
     return (

@@ -8,7 +8,7 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
     const [newImagesAdded, setImagesAdded ] = useState(false);
     const [scroll, setScroll] = useState({
         scrollWidth: null,
-        clientWidth: null
+        clientWidth: null,
     });
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
         if (newImagesAdded && !updatingImages) {
             gallery.current.scrollTo({
                 left: gallery.current.scrollWidth,
-                behavior: "smooth"
+                behavior: "smooth",
             });
             setImagesAdded(false);
         }
@@ -44,7 +44,7 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
         const scrollPosition = (gallery.current.scrollWidth * .3) + gallery.current.scrollLeft;
         gallery.current.scrollTo({
             left: scrollPosition < 200 ? 600 : scrollPosition,
-            behavior: "smooth"
+            behavior: "smooth",
         });
     }
 
@@ -53,7 +53,7 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
         const position = scrollPosition < 390 ? 0 : scrollPosition;
         gallery.current.scrollTo({
             left: position,
-            behavior: "smooth"
+            behavior: "smooth",
         });
     }
 
@@ -90,7 +90,7 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
             scrollWidth: gallery.current.scrollWidth,
             clientWidth: gallery.current.clientWidth,
             scrollLeft: gallery.current.scrollLeft,
-            percentage: (100 * gallery.current.scrollLeft)/ (gallery.current.scrollWidth - gallery.current.clientWidth)
+            percentage: (100 * gallery.current.scrollLeft)/ (gallery.current.scrollWidth - gallery.current.clientWidth),
         });
     }
 
@@ -108,7 +108,7 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
                             productImages={productImages}
                             removeImage={removeImage}
                             toggleCropPhotoModal={toggleCropPhotoModal}
-                        />
+                        />,
                         )
                         : null
                     }

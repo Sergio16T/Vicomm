@@ -15,7 +15,7 @@ const ImageGallery = (props) => {
                             onClick={() => handleSelect(image)}
                         >
                              {image.id in selected ? <div className="check-circle"><i className="fas fa-check checkIcon"></i></div> : null}
-                        </div>
+                        </div>,
                     )}
                 </div>
             :

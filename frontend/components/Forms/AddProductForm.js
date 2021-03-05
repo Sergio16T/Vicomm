@@ -26,7 +26,7 @@ const AddProductForm = (props) => {
         },
         setState,
         productImages,
-        setProductImages
+        setProductImages,
     } = props;
     const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ["GET_IMG_GALLERY"]});
     const [selectedImages, setImages] = useState([]);
@@ -34,7 +34,7 @@ const AddProductForm = (props) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [cropImage, setCropImage] = useState({
         img: null,
-        index: null
+        index: null,
     });
     const dropInput = useRef();
 
@@ -43,7 +43,7 @@ const AddProductForm = (props) => {
             setTimeout(() => {
                 setCropImage({
                     img: null,
-                    index: null
+                    index: null,
                 });
             }, 401);
         }
@@ -62,15 +62,15 @@ const AddProductForm = (props) => {
         try {
             const res = await fetch('https://api.cloudinary.com/v1_1/dddnhychw/image/upload', {
                 method: 'POST',
-                body: data
+                body: data,
             });
             const file = await res.json();
             if (Object.prototype.hasOwnProperty.call(file, "error")) throw file.error.message;
             const { data: { uploadImageToGallery: image }} = await uploadImageToGallery({
                 variables: {
                     image: file.secure_url,
-                    largeImage: file.eager[0].secure_url
-                }
+                    largeImage: file.eager[0].secure_url,
+                },
             });
             dropInput.current.value= "";
             setImages([image]);
@@ -95,8 +95,8 @@ const AddProductForm = (props) => {
                         edit: true,
                         errorMessages: {
                             ...state.errorMessages,
-                            [name]: regEx.test(value) ? "" : "Only 2 decimal points"
-                        }
+                            [name]: regEx.test(value) ? "" : "Only 2 decimal points",
+                        },
                     });
                 } else if (value > 1000) {
                      setState({
@@ -105,8 +105,8 @@ const AddProductForm = (props) => {
                         edit: true,
                         errorMessages: {
                             ...state.errorMessages,
-                            [name]: ""
-                        }
+                            [name]: "",
+                        },
                     });
                 }
                 break;
@@ -119,8 +119,8 @@ const AddProductForm = (props) => {
                     edit: true,
                     errorMessages: {
                         ...state.errorMessages,
-                        [name]: !priceRegEx.test(value) ?  "Only 2 decimal points" : ""
-                    }
+                        [name]: !priceRegEx.test(value) ?  "Only 2 decimal points" : "",
+                    },
                 });
                 break;
             }
@@ -132,8 +132,8 @@ const AddProductForm = (props) => {
                     edit: true,
                     errorMessages: {
                         ...state.errorMessages,
-                        [name]: !salePriceRegEx.test(value) ? "Only 2 decimal points" : ""
-                    }
+                        [name]: !salePriceRegEx.test(value) ? "Only 2 decimal points" : "",
+                    },
                 });
                 break;
             }
@@ -141,7 +141,7 @@ const AddProductForm = (props) => {
                 setState({
                     ...state,
                     edit: true,
-                    [name]:value
+                    [name]:value,
                 });
         }
     }
@@ -166,7 +166,7 @@ const AddProductForm = (props) => {
     const toggleCropPhotoModal = (img, index) => {
         setCropImage({
             img,
-            index
+            index,
         });
         setActiveIndex(1);
         toggleModal();
@@ -281,7 +281,7 @@ const AddProductForm = (props) => {
                     </div>
                     <div className="form-container">
                         <DropZone {...getRootProps({
-                            onClick: event => event.stopPropagation()
+                            onClick: event => event.stopPropagation(),
                         })}>
                             {loadingDots && <LoadingDots/>}
                             <i className="fas fa-camera-retro retroCam"></i>

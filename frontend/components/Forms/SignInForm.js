@@ -18,14 +18,14 @@ const SignInForm = () => {
     const [signIn] = useMutation(SIGN_IN_MUTATION, {refetchQueries: ["GET_USER_QUERY"]});
     const [state, setState] = useState({
         email: '',
-        password: ''
+        password: '',
     });
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setState({
             ...state,
-            [name]: value
+            [name]: value,
         });
     }
     const submitForm = async (e) => {

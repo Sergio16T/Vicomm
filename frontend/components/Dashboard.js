@@ -84,7 +84,7 @@ const DashboardPage = () => {
                 appBar: {
                     render,
                     renderPosition: "right",
-                    text: `${userData.user.fst_nm}'s Store`
+                    text: `${userData.user.fst_nm}'s Store`,
                 },
             }}
         >

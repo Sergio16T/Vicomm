@@ -40,9 +40,9 @@ const UploadImageModal = (props) => {
             const newGalleryImages = getImageGallery.filter(image => !deleteImages.keys.includes(image.id));
             cache.writeQuery({
                 query: GET_IMG_GALLERY ,
-                data: { getImageGallery: newGalleryImages }
+                data: { getImageGallery: newGalleryImages },
             });
-        }
+        },
     });
     const [selected, setSelected] = useState({});
     const [count, setCount] = useState(0);
@@ -88,7 +88,7 @@ const UploadImageModal = (props) => {
             props.setSpinner(true);
             const res = await fetch('https://api.cloudinary.com/v1_1/dddnhychw/image/upload', {
                 method: 'POST',
-                body: data
+                body: data,
             });
             const file = await res.json();
 
@@ -96,8 +96,8 @@ const UploadImageModal = (props) => {
             await uploadImageToGallery({
                 variables: {
                     image: file.secure_url,
-                    largeImage: file.eager[0].secure_url
-                }
+                    largeImage: file.eager[0].secure_url,
+                },
             });
             uploadInput.current.value= "";
             props.setSpinner(false);

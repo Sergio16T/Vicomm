@@ -55,7 +55,7 @@ const StyledCoverPhoto = styled.div`
     }
 
 `;
-const CoverPhoto = ({ loading, data, error, }) => {
+const CoverPhoto = ({ loading, data, error }) => {
     if (error) return (
         <StyledCoverPhoto
             error

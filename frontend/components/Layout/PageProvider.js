@@ -28,7 +28,7 @@ function PageProvider({ children, pathname}) {
         isOpen: isOpen,
         setIsOpen: setIsOpen,
         client,
-        userData
+        userData,
     }
 
     useEffect(() => {
@@ -46,7 +46,7 @@ function PageProvider({ children, pathname}) {
     if (userLoading) return null;
     if (!userData.user) {
         Router.push({
-            pathname: "/login"
+            pathname: "/login",
         });
         return null;
     }

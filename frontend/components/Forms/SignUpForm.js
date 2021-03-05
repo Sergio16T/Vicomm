@@ -23,7 +23,7 @@ const SignUpForm = () => {
         email: '',
         password: '',
         confirmPassword: '',
-        emailError: ''
+        emailError: '',
     });
 
     const handleInputChange = (e) => {
@@ -48,7 +48,7 @@ const SignUpForm = () => {
             default:
                 setState({
                     ...state,
-                    [name]: value
+                    [name]: value,
                 });
         }
     }
@@ -58,7 +58,7 @@ const SignUpForm = () => {
         try {
             await signUp({ variables: { ...state } });
             Router.push({
-                pathname: "/dashboard"
+                pathname: "/dashboard",
             });
         } catch (err) {
             setState({...state, signUpError: err.message });

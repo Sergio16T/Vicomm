@@ -28,27 +28,27 @@ const CropPhotoModal = ({ toggleModal, imageUrl, setSpinner, updateProductImages
                                     mltmd_url
                                     type
                                 }
-                            `
+                            `,
                         });
                         return [...existingMultimedia, newImage]
-                    }
-                }
+                    },
+                },
             });
-        }
+        },
     });
     const [crop, setCrop] = useState({
         unit: 'px',
         x: 130,
         y: 50,
         width: 300,
-        height: 300
+        height: 300,
     });
     const [completedCrop, setCompletedCrop] = useState({
         unit: 'px',
         x: 130,
         y: 50,
         width: 300,
-        height: 300
+        height: 300,
     });
     const [imageLoaded, setImageLoaded] = useState(false);
     const imageRef = useRef(null);
@@ -117,7 +117,7 @@ const CropPhotoModal = ({ toggleModal, imageUrl, setSpinner, updateProductImages
                 setSpinner(true);
                 const res = await fetch('https://api.cloudinary.com/v1_1/dddnhychw/image/upload', {
                     method: 'POST',
-                    body: data
+                    body: data,
                 });
                 const file = await res.json();
                 console.log('new file upload', file)
@@ -126,8 +126,8 @@ const CropPhotoModal = ({ toggleModal, imageUrl, setSpinner, updateProductImages
                 const { data: { uploadImageToGallery: image } } = await uploadImageToGallery({
                     variables: {
                         image: file.secure_url,
-                        largeImage: file.eager[0].secure_url
-                    }
+                        largeImage: file.eager[0].secure_url,
+                    },
                 });
                 console.log('image response from server', image);
                 updateProductImages(image.id, image.mltmd_url);

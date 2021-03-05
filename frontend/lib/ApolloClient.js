@@ -7,23 +7,23 @@ import { endPoint } from '../clientConfig';
 const link = createHttpLink({
     uri: endPoint,
     // uri: process.env.NEXT_PUBLIC_ENDPOINT,
-    credentials: 'include'
+    credentials: 'include',
 });
 
 const cacheConfig = {
     typePolicies: {
         Query: {
-          fields: {
-            getImageGallery: {
-                merge(_, incoming) {
-                    /* Equivalent to what happens if there is no custom merge function.
-                    Explicitly permit replacement while silencing warning. */
-                    return incoming;
-                  },
-            }
-          }
-        }
-      }
+            fields: {
+                getImageGallery: {
+                    merge(_, incoming) {
+                        /* Equivalent to what happens if there is no custom merge function.
+                        Explicitly permit replacement while silencing warning. */
+                        return incoming;
+                    },
+                },
+            },
+        },
+    },
 };
 
 const apolloProvider =  {
@@ -34,7 +34,7 @@ const apolloProvider =  {
                 <Page {...props} />
             </ApolloProvider>
         );
-    }
+    },
 };
 
 export default withApollo(
@@ -43,5 +43,5 @@ export default withApollo(
             link,
             cache: new InMemoryCache(cacheConfig).restore(initialState || {}),
         });
-    }, apolloProvider
+    }, apolloProvider,
 );

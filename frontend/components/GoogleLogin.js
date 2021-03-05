@@ -36,7 +36,7 @@ const GoogleBtn = (props) => {
     const [state, setState] = useState({
         isLoggedIn: false,
         accessToken: '',
-        email: ''
+        email: '',
     });
 
 
@@ -47,18 +47,18 @@ const GoogleBtn = (props) => {
 			...state,
 			isLoggedIn: true,
 			accessToken: response.accessToken,
-			email: response.profileObj.email
+			email: response.profileObj.email,
 		});
 		const googleSignInRes = await googleSignIn({variables: {
 			accessToken: response.accessToken,
 			email: response.profileObj.email,
 			firstName: response.profileObj.givenName,
-			lastName: response.profileObj.familyName
+			lastName: response.profileObj.familyName,
 		}});
 		console.log('res', googleSignInRes);
 		if (props.signUp) {
 			Router.push({
-				pathname: "/dashboard"
+				pathname: "/dashboard",
 			});
 		}
 	}
@@ -68,7 +68,7 @@ const GoogleBtn = (props) => {
 		setState({
 		...state,
 		isLoggedIn: false,
-		accessToken: ''
+		accessToken: '',
 		});
 	}
 

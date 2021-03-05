@@ -12,7 +12,7 @@ const SignIn = () => {
     if (loading) return null;
     if (data.user) {
         Router.push({
-            pathname: "/dashboard"
+            pathname: "/dashboard",
         });
         return null;
     }

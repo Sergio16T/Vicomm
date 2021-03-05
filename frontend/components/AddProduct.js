@@ -39,7 +39,7 @@ const AddProduct = () => {
             price: "",
             salePrice: "",
             weight: "",
-            description: ""
+            description: "",
         },
     });
     const [productImages, setProductImages] = useState([]);
@@ -50,7 +50,7 @@ const AddProduct = () => {
         weight,
         description,
         errorMessages,
-        edit
+        edit,
     } = state;
     const missingRequiredFields = !name || !price;
     const errorMessagePresent = errorMessages.price || errorMessages.salePrice || errorMessages.weight || errorMessages.description;
@@ -96,8 +96,8 @@ const AddProduct = () => {
                 price: "",
                 salePrice: "",
                 weight: "",
-                description: ""
-            }
+                description: "",
+            },
         });
         setProductImages([]);
     }
@@ -108,7 +108,7 @@ const AddProduct = () => {
                 appBar: {
                     render: renderButton,
                     renderPosition: "left",
-                    text: !edit ? "Add A Product" : ""
+                    text: !edit ? "Add A Product" : "",
                 },
             }}
         >
