@@ -6,7 +6,7 @@ import { Context } from './PageProvider';
 
 const PageContext = React.createContext();
 
-const Page = props => {
+const Page = ({ children, renderData }) => {
     const { isOpen, setIsOpen, client } = useContext(Context);
     const [modalOpen, setModalOpen] = useState(false);
     const [spinner, setSpinner] = useState(false);
@@ -44,15 +44,13 @@ const Page = props => {
         <StyledPage>
             <BackDrop isOpen={isOpen} ref={backDrop}/>
             <ModalBackDrop isOpen={modalOpen} ref={modalBackDrop}/>
-            <AppHeader
-                toggleSideBar={toggleSideBar}
-                client={client}
-                toggleModal={toggleModal}
-                render={() => props.render({ toggleModal })}
-                text={props.text}
-            />
             <PageContext.Provider value={{ modalOpen, toggleModal, setSpinner }}>
-                {props.children}
+                <AppHeader
+                    toggleSideBar={toggleSideBar}
+                    client={client}
+                    renderData={renderData.appBar}
+                />
+                {children}
             </PageContext.Provider>
             <Spinner
                 show={modalOpen}

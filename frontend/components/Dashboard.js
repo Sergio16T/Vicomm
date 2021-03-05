@@ -64,6 +64,7 @@ const Dashboard = () => {
                 modalXColor="white"
             >
                 <ImageGalleryModal
+                    show={modalOpen}
                     toggleModal={toggleModal}
                     setSpinner={setSpinner}
                     useMLTMD={uploadCoverPhoto}
@@ -75,11 +76,17 @@ const Dashboard = () => {
 
 const DashboardPage = () => {
     const { userData } = useContext(Context);
+    const render = () => <ToggleImageGalleryBtn/>;
 
     return (
         <Page
-            render={({ toggleModal }) => <ToggleImageGalleryBtn toggleModal={toggleModal}/>}
-            text={`${userData.user.fst_nm}'s Store`}
+            renderData = {{
+                appBar: {
+                    render,
+                    renderPosition: "right",
+                    text: `${userData.user.fst_nm}'s Store`
+                },
+            }}
         >
                 <Dashboard/>
         </Page>

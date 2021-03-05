@@ -17,7 +17,7 @@ const typeDefs = gql`
         deleteImages(keys: [ID]): Keys!
         updateCoverPhoto(key: ID): CoverPhoto!
         removeCoverPhoto: SuccessMessage!
-        createItem(title: String!, description: String!, price: Int!, salePrice: Int, weight: Float): Item!
+        createItem(name: String!, price: Float!, salePrice: Float, weight: Float, description: String, productImages: [ProductImage]): SuccessMessage
     }
 
     type User {
@@ -37,21 +37,30 @@ const typeDefs = gql`
         item_weight: Float
         crte_by_acct_key: ID!
     }
+
     type MultiMedia {
         id: ID,
         mltmd_url: String!
         mltmd_lg_url: String!
         crte_by_acct_key: ID!
     }
+
+    input ProductImage {
+        id: ID,
+        mltmd_url: String
+    }
+
     type SuccessMessage {
         message: String!
     }
+
     type CoverPhoto {
         id: ID,
         acct_key: ID,
         mltmd_key: ID,
         act_ind: Int
     }
+
     type Keys {
         keys: [ID!]!
     }

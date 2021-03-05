@@ -38,6 +38,17 @@ const Form = styled.form`
     font-family: 'Lato';
     width: 100%;
     max-width: 720px;
+    /* Change the white to any color ;) */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active  {
+        caret-color: white;
+        -webkit-text-fill-color: white;
+        -webkit-box-shadow: 0 0 0px 1000px #221b43 inset;
+        box-shadow: 0 0 0px 1000px #221b43 inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
     .formCol, .flex-group {
         height: 70px;
         box-sizing: border-box;

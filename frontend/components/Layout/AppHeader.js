@@ -11,33 +11,40 @@ const SIGN_OUT_MUTATION = gql`
     }
 `;
 
-
 const AppHeader = (props) => {
-    const { text } = props;
+    const {
+        client,
+        renderData: {
+            render,
+            renderPosition,
+            text
+        },
+        toggleSideBar,
+    } = props;
     return (
         <StyledHeader>
             <div className="nav-left">
-                <div id="hamburger" onClick={props.toggleSideBar}>
+                <div id="hamburger" onClick={toggleSideBar}>
                     <div></div>
                     <div></div>
                     <div></div>
                 </div>
                 <span id="userName">{text}</span>
+                {renderPosition === "left" && render()}
             </div>
             <div className="nav-right">
-                {props.render()}
-                <VerticalDotMenu
-                    client={props.client}
-                />
+                {renderPosition === "right" && render()}
+                <VerticalDotMenu>
+                    <LogoutButton
+                        client={client}
+                    />
+                </VerticalDotMenu>
             </div>
         </StyledHeader>
     );
 }
 
-
-
-const VerticalDotMenu = (props) => {
-    const [signOut] = useMutation(SIGN_OUT_MUTATION);
+const VerticalDotMenu = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
     const subMenu = useRef(null);
     const dotMenu = useRef(null);
@@ -53,6 +60,21 @@ const VerticalDotMenu = (props) => {
         }
     }
 
+    return (
+        <StyledMenu onClick={() => setIsOpen(true)} ref={dotMenu}>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <SubMenu isOpen={isOpen} ref={subMenu}>
+                {children}
+            </SubMenu>
+        </StyledMenu>
+    );
+}
+
+const LogoutButton = (props) => {
+    const [signOut] = useMutation(SIGN_OUT_MUTATION);
+
     const logOut = async (e) => {
         e.stopPropagation();
         e.preventDefault();
@@ -64,16 +86,11 @@ const VerticalDotMenu = (props) => {
         });
     }
     return (
-        <StyledMenu onClick={() => setIsOpen(true)} ref={dotMenu}>
-            <div className="dot"></div>
-            <div className="dot"></div>
-            <div className="dot"></div>
-            <SubMenu isOpen={isOpen} ref={subMenu}>
-                <span>
-                    <button className="logOutBtn" onClick={logOut}> Log Out </button>
-                </span>
-            </SubMenu>
-        </StyledMenu>
-    );
+        <span>
+            <button className="logOutBtn" onClick={logOut}> Log Out </button>
+        </span>
+    )
 }
+
 export default AppHeader;
+export { VerticalDotMenu };

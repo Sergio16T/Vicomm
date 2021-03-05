@@ -12,25 +12,25 @@ import ScrollGallery from '../ScrollGallery';
 import { PageContext } from '../Layout/Page';
 
 // refactor selectedImages and productImages to use useReducer hook
-const AddProductForm = () => {
+const AddProductForm = (props) => {
     const { toggleModal, modalOpen, setSpinner} = useContext(PageContext);
-    const [state, setState] = useState({
-        name: "",
-        price: "",
-        salePrice: "",
-        weight: "",
-        description: "",
-        errorMessages: {
-            price: "",
-            salePrice: "",
-            weight: "",
-            description: ""
-        }
-    });
-    const [selectedImages, setImages] = useState([]);
+    const {
+        state,
+        state: {
+            errorMessages,
+            description,
+            name,
+            price,
+            salePrice,
+            weight,
+        },
+        setState,
+        productImages,
+        setProductImages
+    } = props;
     const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ["GET_IMG_GALLERY"]});
+    const [selectedImages, setImages] = useState([]);
     const [ loadingDots, setLoading ] = useState(false);
-    const [productImages, setProductImages] = useState([]);
     const [activeIndex, setActiveIndex] = useState(0);
     const [cropImage, setCropImage] = useState({
         img: null,
@@ -79,7 +79,7 @@ const AddProductForm = () => {
             console.log(err);
             setLoading(false);
         }
-    }, [uploadImageToGallery]);
+    }, [uploadImageToGallery, setImages]);
 
     const {getRootProps, getInputProps} = useDropzone({onDrop});
 
@@ -92,6 +92,7 @@ const AddProductForm = () => {
                     setState({
                         ...state,
                         [name]: value,
+                        edit: true,
                         errorMessages: {
                             ...state.errorMessages,
                             [name]: regEx.test(value) ? "" : "Only 2 decimal points"
@@ -101,6 +102,7 @@ const AddProductForm = () => {
                      setState({
                         ...state,
                         [name]: 1000,
+                        edit: true,
                         errorMessages: {
                             ...state.errorMessages,
                             [name]: ""
@@ -114,6 +116,7 @@ const AddProductForm = () => {
                 setState({
                     ...state,
                     [name]: value,
+                    edit: true,
                     errorMessages: {
                         ...state.errorMessages,
                         [name]: !priceRegEx.test(value) ?  "Only 2 decimal points" : ""
@@ -126,6 +129,7 @@ const AddProductForm = () => {
                 setState({
                     ...state,
                     [name]: value,
+                    edit: true,
                     errorMessages: {
                         ...state.errorMessages,
                         [name]: !salePriceRegEx.test(value) ? "Only 2 decimal points" : ""
@@ -136,8 +140,15 @@ const AddProductForm = () => {
             default:
                 setState({
                     ...state,
+                    edit: true,
                     [name]:value
                 });
+        }
+    }
+
+    const handleKeyDown = (e) => {
+        if (e.keyCode === 69) {
+            e.preventDefault();
         }
     }
 
@@ -169,15 +180,6 @@ const AddProductForm = () => {
         });
         setProductImages(newProductImages);
     }
-
-    const {
-        errorMessages,
-        description,
-        name,
-        price,
-        salePrice,
-        weight,
-    } = state;
 
     return (
         <ProductPageContent>
@@ -213,6 +215,7 @@ const AddProductForm = () => {
                                     id="price"
                                     value={price}
                                     onChange={handleInputChange}
+                                    onKeyDown={handleKeyDown}
                                     step=".01"
                                     required
                                 />
@@ -238,6 +241,7 @@ const AddProductForm = () => {
                                     id="salePrice"
                                     value={salePrice}
                                     onChange={handleInputChange}
+                                    onKeyDown={handleKeyDown}
                                     step=".01"
                                 />
                                 <label className={`${salePrice ? "active-content": ""} p-label `} htmlFor="salePrice">
@@ -257,6 +261,7 @@ const AddProductForm = () => {
                                 id="productWeight"
                                 value={weight}
                                 onChange={handleInputChange}
+                                onKeyDown={handleKeyDown}
                                 min="0"
                                 max="1000"
                                 step=".01"
@@ -320,6 +325,7 @@ const AddProductForm = () => {
                 activeIndex={activeIndex}
             >
                     <ImageGalleryModal
+                        show={modalOpen}
                         toggleModal={toggleModal}
                         setSpinner={setSpinner}
                         multiSelect
