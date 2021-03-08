@@ -1,5 +1,5 @@
-const { getAccountMultiMedia  } = require('../../services/multimedia');
-const { getCoverPhoto  } = require('../../services/coverphoto');
+const { getAccountMultiMedia  } = require('../../data-access/multimedia');
+const { getCoverPhoto  } = require('../../data-access/coverphoto');
 
 module.exports = {
     getImageGallery: async(parent, args, context, info) => {
@@ -9,5 +9,5 @@ module.exports = {
     getCoverPhoto: async(parent, args, context, info) => {
         const coverPhoto = await getCoverPhoto(context.req.user.id);
         return coverPhoto;
-    }
+    },
 }

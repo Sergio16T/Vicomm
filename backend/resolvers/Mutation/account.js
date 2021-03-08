@@ -4,7 +4,7 @@ const {
     getAccountById,
     getAccountWithEmail,
     createNewAccount,
-} = require('../../services/account');
+} = require('../../data-access/account');
 
 module.exports = {
     async signUp(parent, args, context, info) {
@@ -24,21 +24,21 @@ module.exports = {
             email,
             password,
             crte_by_acct_key: 1,
-            act_ind: 1
+            act_ind: 1,
         };
 
         const { insertId } = await createNewAccount(newAccountParams);
 
         const user = await getAccountById(insertId);
 
-        const token = jwt.sign({ id: user.id}, process.env.jwtsecret);
+        const token = jwt.sign({ id: user.id }, process.env.jwtsecret);
         context.res.cookie("token", token, {
             httpOnly: true,
-            maxAge:  1000 * 60 * 60 * 24 * 365
+            maxAge:  1000 * 60 * 60 * 24 * 365,
         });
         return user;
     },
-    async signIn(parent,args, context, info) {
+    async signIn(parent, args, context, info) {
         const email = args.email.toLowerCase();
 
         const user = await getAccountWithEmail(email);
@@ -50,11 +50,11 @@ module.exports = {
         if (!validPassword) {
             throw new Error('Invalid password');
         }
-        const token  = jwt.sign({ id: user.id}, process.env.jwtsecret);
+        const token  = jwt.sign({ id: user.id }, process.env.jwtsecret);
         // console.log('token', token)
         context.res.cookie("token", token, {
             httpOnly: true,
-            maxAge: 1000 * 60 * 60 * 24 * 365
+            maxAge: 1000 * 60 * 60 * 24 * 365,
         });
         console.log('logging in');
         return user;
@@ -62,28 +62,28 @@ module.exports = {
     async googleSignIn(parent, args, context, info) {
         const email = args.email.toLowerCase();
 
-        const user = await getAccountWithEmail(email);
+        let user = await getAccountWithEmail(email);
         // check if user already present with that email..
         // with this authToken is it best practice to use this to grab USER? in that case I need to update the record to have google_auth_tkn
         if (!user) {
-           // create new account
+            // create new account
             const newAccountParams = {
                 firstName: args.firstName,
                 lastName: args.lastName,
                 email,
                 password: null,
                 crte_by_acct_key: 1,
-                act_ind: 1
+                act_ind: 1,
             };
 
             await createNewAccount(newAccountParams);
 
             user = await getAccountWithEmail(email);
         }
-        const token  = jwt.sign({ id: user.id}, process.env.jwtsecret);
+        const token  = jwt.sign({ id: user.id }, process.env.jwtsecret);
         context.res.cookie("token", token, {
             httpOnly: true,
-            maxAge: 1000 * 60 * 60 * 24 * 365
+            maxAge: 1000 * 60 * 60 * 24 * 365,
         });
         console.log('googleLogIn');
         return user;
@@ -91,6 +91,6 @@ module.exports = {
     signOut(parent, args, context, info) {
         console.log('signout');
         context.res.clearCookie("token");
-        return { message: "GoodBye!"}
+        return { message: "GoodBye!" }
     },
 };

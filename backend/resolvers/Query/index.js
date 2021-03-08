@@ -3,5 +3,5 @@ const multimedia = require('./multimedia');
 
 module.exports = {
     ...user,
-    ...multimedia
+    ...multimedia,
 };

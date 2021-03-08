@@ -2,7 +2,7 @@ const {
     createNewMultimedia,
     deleteMultimedia,
     getMultimediaById,
-} = require('../../services/multimedia');
+} = require('../../data-access/multimedia');
 
 module.exports = {
     async uploadImageToGallery(parent, args, context, info) {
@@ -25,7 +25,7 @@ module.exports = {
             await deleteMultimedia(key);
         }
         return {
-            keys: args.keys
-         };
+            keys: args.keys,
+        };
     },
 };

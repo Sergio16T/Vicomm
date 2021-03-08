@@ -38,7 +38,7 @@ module.exports = {
         const {
             accountKey,
             multimediaKey,
-            createByAccountKey
+            createByAccountKey,
         } = params;
 
         const query = SQL `
@@ -90,5 +90,5 @@ module.exports = {
         const result = await db.query(query).catch(err => { throw err; });
 
         return result;
-    }
+    },
 }

@@ -1,7 +1,7 @@
 const {
     getAllAccounts,
     getAccountById,
-} = require('../../services/account');
+} = require('../../data-access/account');
 
 module.exports = {
     users: async (parent, args, context, info) => {

@@ -59,7 +59,7 @@ module.exports = {
             email,
             password,
             crte_by_acct_key,
-            act_ind
+            act_ind,
         } = params;
 
         let query = SQL`
@@ -128,5 +128,5 @@ module.exports = {
         });
 
         return result;
-    }
+    },
 };

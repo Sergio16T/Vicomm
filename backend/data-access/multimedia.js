@@ -59,5 +59,8 @@ module.exports = {
         `;
         const mediaGallery = await db.query(query).catch(err => { throw err; });
         return mediaGallery;
-    }
+    },
+    createMultimediaXref: async () => {
+
+    },
 };
