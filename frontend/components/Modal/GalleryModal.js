@@ -32,7 +32,7 @@ const DELETE_IMGS_MUTATION = gql`
 
 const UploadImageModal = (props) => {
     const { loading, data } = useQuery(GET_IMG_GALLERY);
-    const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ['GET_IMG_GALLERY']});
+    const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ['GET_IMG_GALLERY'] });
     /* replaced refetch with custom update function { refetchQueries: ['GET_IMG_GALLERY']}*/
     const [deleteImages] = useMutation(DELETE_IMGS_MUTATION, {
         update(cache, { data: { deleteImages } }) {
@@ -55,7 +55,7 @@ const UploadImageModal = (props) => {
     const handleSelect = (image) => {
         switch (props.multiSelect) {
             case true: {
-                let selectedImages = {...selected};
+                let selectedImages = { ...selected };
                 if (image.id in selectedImages) delete selectedImages[image.id];
                 else selectedImages[image.id] = image;
                 setSelected(selectedImages);
@@ -63,7 +63,7 @@ const UploadImageModal = (props) => {
                 break;
             }
             default: {
-                let selectedImages = {...selected};
+                let selectedImages = { ...selected };
                 let imageDeleted = false;
                 if (image.id in selectedImages) {
                     delete selectedImages[image.id];
@@ -110,7 +110,7 @@ const UploadImageModal = (props) => {
     const deleteMultimedia = async () => {
         props.setSpinner(true);
         setTimeout( async () => {
-            await deleteImages({ variables: { keys: Object.keys(selected) }});
+            await deleteImages({ variables: { keys: Object.keys(selected) } });
             setSelected({});
             props.setSpinner(false);
         }, 500);

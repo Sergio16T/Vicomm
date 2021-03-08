@@ -129,4 +129,4 @@ const ModalSpinner = (props) => {
     )
 }
 
-export { Spinner, ModalSpinner};
+export { Spinner, ModalSpinner };

@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Layout/Header';
 import SignUpForm from './Forms/SignUpForm';
-import { Body} from './Styles/FormStyles';
+import { Body } from './Styles/FormStyles';
 import { SignUpPage, SignUpMessage } from './Styles/SignUpStyles';
 
 const SignUp = () => {

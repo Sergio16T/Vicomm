@@ -15,7 +15,7 @@ const SIGN_IN_MUTATION = gql`
 `;
 
 const SignInForm = () => {
-    const [signIn] = useMutation(SIGN_IN_MUTATION, {refetchQueries: ["GET_USER_QUERY"]});
+    const [signIn] = useMutation(SIGN_IN_MUTATION, { refetchQueries: ["GET_USER_QUERY"] });
     const [state, setState] = useState({
         email: '',
         password: '',
@@ -34,7 +34,7 @@ const SignInForm = () => {
             await signIn({ variables: { ...state } });
         } catch(err) {
             console.log(err)
-            setState({...state, signInError: err.message });
+            setState({ ...state, signInError: err.message });
         }
     }
     return (

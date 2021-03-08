@@ -81,4 +81,4 @@ const StyledPage = styled.div`
     position: relative;
 `;
 
-export { theme, GlobalStyle, BackDrop, ModalBackDrop, StyledPage}
+export { theme, GlobalStyle, BackDrop, ModalBackDrop, StyledPage }

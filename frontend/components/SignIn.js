@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import Link from 'next/link';
-import { SignInPage} from './Styles/SignInStyles';
+import { SignInPage } from './Styles/SignInStyles';
 import { GET_USER_QUERY } from './Layout/PageProvider';
 import SignInForm from './Forms/SignInForm';
 import Router from 'next/router';

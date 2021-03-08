@@ -61,4 +61,4 @@ const Form = styled.form`
 
 `;
 
-export { Body, Form};
+export { Body, Form };

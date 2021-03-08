@@ -12,7 +12,7 @@ const REMOVE_COVER_PHOTO_MUTATION = gql`
 `;
 
 const RemoveCoverPhotoBtn = ({ toggleModal }) => {
-    const [removeCoverPhoto] = useMutation(REMOVE_COVER_PHOTO_MUTATION, { refetchQueries: ["GET_COVER_PHOTO_QUERY"]});
+    const [removeCoverPhoto] = useMutation(REMOVE_COVER_PHOTO_MUTATION, { refetchQueries: ["GET_COVER_PHOTO_QUERY"] });
 
     const deleteCoverPhoto = async () => {
         await removeCoverPhoto();

@@ -27,12 +27,12 @@ const UPDATE_COVER_PHOTO_MUTATION = gql`
 const Dashboard = () => {
     const { modalOpen, toggleModal, setSpinner } = useContext(PageContext);
     const { loading, error, data } = useQuery(GET_COVER_PHOTO_QUERY);
-    const [updateCoverPhoto] = useMutation(UPDATE_COVER_PHOTO_MUTATION, { refetchQueries: ["GET_COVER_PHOTO_QUERY"]});
+    const [updateCoverPhoto] = useMutation(UPDATE_COVER_PHOTO_MUTATION, { refetchQueries: ["GET_COVER_PHOTO_QUERY"] });
 
     const uploadCoverPhoto = async (selected, cb) => {
         const [image] = Object.values(selected);
         const MLTMD_KEY = parseInt(image.id);
-        await updateCoverPhoto({ variables: { key: MLTMD_KEY }}).catch(err => { throw err; });
+        await updateCoverPhoto({ variables: { key: MLTMD_KEY } }).catch(err => { throw err; });
         cb({});
         toggleModal();
     }

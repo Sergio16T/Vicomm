@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef, useContext, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import {useDropzone} from 'react-dropzone'
+import { useDropzone } from 'react-dropzone'
 import { UPLOAD_IMG_MUTATION } from '../Modal/GalleryModal';
 import { ProductPageContent, Body, Form } from '../Styles/ProductStyles';
 import Modal from '../Modal/Modal';
@@ -13,7 +13,7 @@ import { PageContext } from '../Layout/Page';
 
 // refactor selectedImages and productImages to use useReducer hook
 const AddProductForm = (props) => {
-    const { toggleModal, modalOpen, setSpinner} = useContext(PageContext);
+    const { toggleModal, modalOpen, setSpinner } = useContext(PageContext);
     const {
         state,
         state: {
@@ -28,7 +28,7 @@ const AddProductForm = (props) => {
         productImages,
         setProductImages,
     } = props;
-    const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ["GET_IMG_GALLERY"]});
+    const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, { refetchQueries: ["GET_IMG_GALLERY"] });
     const [selectedImages, setImages] = useState([]);
     const [ loadingDots, setLoading ] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -66,7 +66,7 @@ const AddProductForm = (props) => {
             });
             const file = await res.json();
             if (Object.prototype.hasOwnProperty.call(file, "error")) throw file.error.message;
-            const { data: { uploadImageToGallery: image }} = await uploadImageToGallery({
+            const { data: { uploadImageToGallery: image } } = await uploadImageToGallery({
                 variables: {
                     image: file.secure_url,
                     largeImage: file.eager[0].secure_url,
@@ -81,7 +81,7 @@ const AddProductForm = (props) => {
         }
     }, [uploadImageToGallery, setImages]);
 
-    const {getRootProps, getInputProps} = useDropzone({onDrop});
+    const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;

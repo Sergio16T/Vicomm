@@ -62,7 +62,7 @@ const AddProduct = () => {
             salePrice: parseFloat(salePrice),
             weight: parseFloat(weight),
             description,
-            productImages: productImages.map(image => ({id: image.id, mltmd_url: image.mltmd_url})),
+            productImages: productImages.map(image => ({ id: image.id, mltmd_url: image.mltmd_url })),
         }
         const result = await createItem({ variables: data }).catch(err => {
             console.log(err.message)

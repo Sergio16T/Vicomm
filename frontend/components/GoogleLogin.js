@@ -33,7 +33,7 @@ const GoogleContainer = styled.div`
 `;
 
 const GoogleBtn = (props) => {
-    const [googleSignIn] = useMutation(GOOGLE_LOGIN_MUTATION, {refetchQueries: ["GET_USER_QUERY"]});
+    const [googleSignIn] = useMutation(GOOGLE_LOGIN_MUTATION, { refetchQueries: ["GET_USER_QUERY"] });
     const [state, setState] = useState({
         isLoggedIn: false,
         accessToken: '',
@@ -50,12 +50,12 @@ const GoogleBtn = (props) => {
             accessToken: response.accessToken,
             email: response.profileObj.email,
         });
-        const googleSignInRes = await googleSignIn({variables: {
+        const googleSignInRes = await googleSignIn({ variables: {
             accessToken: response.accessToken,
             email: response.profileObj.email,
             firstName: response.profileObj.givenName,
             lastName: response.profileObj.familyName,
-        }});
+        } });
         console.log('res', googleSignInRes);
         if (props.signUp) {
             Router.push({

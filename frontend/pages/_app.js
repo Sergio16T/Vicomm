@@ -10,7 +10,7 @@ class MyApp extends App {
             pageProps = await Component.getInitialProps(ctx); // crawl the pages fetch that data then return that data to this.props
         }
         pageProps.query = ctx.query; // this exposes the query to the user
-        return { pageProps}; //when you return here in getInitalProps it exposes it in props..
+        return { pageProps }; //when you return here in getInitalProps it exposes it in props..
     }
     render() {
         const { Component, pageProps, router } = this.props;

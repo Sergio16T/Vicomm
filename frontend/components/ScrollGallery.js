@@ -122,7 +122,7 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
 const GalleryCard = ({ card, index,  moveImageLeft, productImages, moveImageRight, removeImage, toggleCropPhotoModal }) => {
     return (
         <div className="card-container">
-            <div key={index} className="card" style={{backgroundImage: `url(${card.mltmd_url})`}}></div>
+            <div key={index} className="card" style={{ backgroundImage: `url(${card.mltmd_url})` }}></div>
             <div className="image_manager">
                 <button type="button" className={`${index === 0 ? "invisible" : ""} rp-button`} onClick={() => moveImageLeft(index)} disabled={index === 0}>
                     <i className="fas fa-angle-left manager_icon"></i>

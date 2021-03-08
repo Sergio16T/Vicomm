@@ -11,7 +11,7 @@ const ImageGallery = (props) => {
                         <div
                             key={image.id}
                             className={`${image.id in selected ? "selected" : ""} gallery-img`}
-                            style={{backgroundImage: `url(${image.mltmd_url})`}}
+                            style={{ backgroundImage: `url(${image.mltmd_url})` }}
                             onClick={() => handleSelect(image)}
                         >
                             {image.id in selected ? <div className="check-circle"><i className="fas fa-check checkIcon"></i></div> : null}
