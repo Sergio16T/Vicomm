@@ -40,7 +40,7 @@ const SignInForm = () => {
     return (
         <SignInFormWrapper>
             <SignInMessage>
-            <h1>Hi, Welcome Back!</h1>
+                <h1>Hi, Welcome Back!</h1>
             </SignInMessage>
             {state.signInError &&
                 <div className='error-message'>

@@ -98,20 +98,20 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
         <HorizontalScrollGallery onlyCard={productImages.length === 1}>
             <div className="gallery" ref={gallery} onScroll={updateScrollPosition}>
                 <span className={`${scroll.scrollWidth === scroll.clientWidth ? "d-none" : scroll.percentage === 0 ? "d-none": ""} arrow-left`} onClick={handleScrollLeft}><i className="fas fa-angle-left icon"></i></span>
-                    {productImages.length ? productImages.map((card,index) =>
-                        <GalleryCard
-                            key={index}
-                            card={card}
-                            index={index}
-                            moveImageLeft={moveImageLeft}
-                            moveImageRight={moveImageRight}
-                            productImages={productImages}
-                            removeImage={removeImage}
-                            toggleCropPhotoModal={toggleCropPhotoModal}
-                        />,
-                        )
-                        : null
-                    }
+                {productImages.length ? productImages.map((card, index) =>
+                    <GalleryCard
+                        key={index}
+                        card={card}
+                        index={index}
+                        moveImageLeft={moveImageLeft}
+                        moveImageRight={moveImageRight}
+                        productImages={productImages}
+                        removeImage={removeImage}
+                        toggleCropPhotoModal={toggleCropPhotoModal}
+                    />,
+                )
+                    : null
+                }
                 <span className={`${scroll.scrollWidth === scroll.clientWidth ? "d-none" : scroll.percentage === 100 ? "d-none": ""} arrow-right`} onClick={handleScrollRight}><i className="fas fa-angle-right icon"></i></span>
             </div>
         </HorizontalScrollGallery>
@@ -127,25 +127,25 @@ const GalleryCard = ({ card, index,  moveImageLeft, productImages, moveImageRigh
                 <button type="button" className={`${index === 0 ? "invisible" : ""} rp-button`} onClick={() => moveImageLeft(index)} disabled={index === 0}>
                     <i className="fas fa-angle-left manager_icon"></i>
                     <TooltipInfo
-                    text="Move left"
+                        text="Move left"
                     />
                 </button>
                 <button type="button" className="rp-button" onClick={() => toggleCropPhotoModal(card.mltmd_url, index)}>
                     <i className="fas fa-pencil-alt manager_icon"></i>
                     <TooltipInfo
-                    text="Edit image"
+                        text="Edit image"
                     />
                 </button>
                 <button type="button" className="rp-button" onClick={() => removeImage(index)}>
                     <span className="span-x">&times;</span>
                     <TooltipInfo
-                    text="Remove image"
+                        text="Remove image"
                     />
                 </button>
                 <button type="button" className={`${index === productImages.length - 1 ? "invisible" : ""} rp-button`} onClick={() => moveImageRight(index)} disabled={index === productImages.length -1}>
                     <i className="fas fa-angle-right manager_icon"></i>
                     <TooltipInfo
-                    text="Move right"
+                        text="Move right"
                     />
                 </button>
             </div>

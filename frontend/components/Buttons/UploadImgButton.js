@@ -2,7 +2,7 @@ import React from 'react';
 import useWindowWidth from '../../lib/Hooks/useWindowWidth';
 
 const UploadImgButton = ({ uploadFile, uploadInput }) => {
-    const { width } = useWindowWidth();
+    const width = useWindowWidth();
 
     return (
         <>

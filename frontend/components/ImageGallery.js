@@ -14,11 +14,11 @@ const ImageGallery = (props) => {
                             style={{backgroundImage: `url(${image.mltmd_url})`}}
                             onClick={() => handleSelect(image)}
                         >
-                             {image.id in selected ? <div className="check-circle"><i className="fas fa-check checkIcon"></i></div> : null}
+                            {image.id in selected ? <div className="check-circle"><i className="fas fa-check checkIcon"></i></div> : null}
                         </div>,
                     )}
                 </div>
-            :
+                :
                 <div className="no-img-message">
                     <p>{"You don't have any images"}</p>
                 </div>

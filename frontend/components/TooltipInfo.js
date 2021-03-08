@@ -1,11 +1,11 @@
-import React from 'react'; 
+import React from 'react';
 
 
 const TooltipInfo = (props) => {
     return (
-       <div className="tooltiptext">
-           {props.text}
+        <div className="tooltiptext">
+            {props.text}
         </div>
-    ); 
+    );
 }
-export default TooltipInfo; 
+export default TooltipInfo;

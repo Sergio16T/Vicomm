@@ -88,7 +88,7 @@ const DashboardPage = () => {
                 },
             }}
         >
-                <Dashboard/>
+            <Dashboard/>
         </Page>
     );
 }

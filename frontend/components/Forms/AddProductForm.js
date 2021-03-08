@@ -99,7 +99,7 @@ const AddProductForm = (props) => {
                         },
                     });
                 } else if (value > 1000) {
-                     setState({
+                    setState({
                         ...state,
                         [name]: 1000,
                         edit: true,
@@ -324,20 +324,20 @@ const AddProductForm = (props) => {
                 modalXColor="white"
                 activeIndex={activeIndex}
             >
-                    <ImageGalleryModal
-                        show={modalOpen}
-                        toggleModal={toggleModal}
-                        setSpinner={setSpinner}
-                        multiSelect
-                        useMLTMD={useMLTMD}
-                    />
-                      <CropPhotoModal
-                        modalOpen={modalOpen}
-                        imageUrl={cropImage.img}
-                        toggleModal={toggleModal}
-                        setSpinner={setSpinner}
-                        updateProductImages={updateProductImages}
-                    />
+                <ImageGalleryModal
+                    show={modalOpen}
+                    toggleModal={toggleModal}
+                    setSpinner={setSpinner}
+                    multiSelect
+                    useMLTMD={useMLTMD}
+                />
+                <CropPhotoModal
+                    modalOpen={modalOpen}
+                    imageUrl={cropImage.img}
+                    toggleModal={toggleModal}
+                    setSpinner={setSpinner}
+                    updateProductImages={updateProductImages}
+                />
             </Modal>
         </ProductPageContent>
     );

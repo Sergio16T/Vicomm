@@ -82,17 +82,19 @@ const SignUpForm = () => {
                 break;
             case 'password':
                 if (state.confirmPassword) confirmPasswordMatch();
-            break;
+                break;
+            default:
+                throw new Error(`Unrecognized input name: ${name}`);
         }
 
     }
     return (
         <SignUpFormWrapper>
-               {state.signUpError &&
-                    <div className='error-message'>
-                        <p>{state.signUpError}</p>
-                    </div>
-                }
+            {state.signUpError &&
+                <div className='error-message'>
+                    <p>{state.signUpError}</p>
+                </div>
+            }
             <Form onSubmit={submitForm}>
                 <div className="formRow">
                     <label htmlFor="firstName">
@@ -165,7 +167,7 @@ const SignUpForm = () => {
                 <div className="OAuthLineBreak">
                     <span className="OAuthProvider_lineBreak"></span>
                     <span id="OAuth_or_text">or </span>
-                <span className="OAuthProvider_lineBreak"></span>
+                    <span className="OAuthProvider_lineBreak"></span>
                 </div>
                 <GoogleLogin
                     buttonText="Sign Up with Google"

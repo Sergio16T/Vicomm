@@ -112,13 +112,13 @@ const AddProduct = () => {
                 },
             }}
         >
-                <AddProductForm
-                    state={state}
-                    setState={setState}
-                    productImages={productImages}
-                    setProductImages={setProductImages}
+            <AddProductForm
+                state={state}
+                setState={setState}
+                productImages={productImages}
+                setProductImages={setProductImages}
 
-                />
+            />
         </Page>
     );
 };

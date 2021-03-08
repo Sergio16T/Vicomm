@@ -11,7 +11,7 @@ const ModalImgSelectedHeader = ({ count, deleteMultimedia, useMLTMD, selected, s
                 <StyledFaIcon onClick={deleteMultimedia} selected>
                     <i className="fas fa-trash"></i>
                     <TooltipInfo
-                    text={`Delete Selected Image${multiSelect ? "s" : ""}`}
+                        text={`Delete Selected Image${multiSelect ? "s" : ""}`}
                     />
                 </StyledFaIcon>
                 <Button

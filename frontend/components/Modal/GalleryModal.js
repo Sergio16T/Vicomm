@@ -39,7 +39,7 @@ const UploadImageModal = (props) => {
             const { getImageGallery } = cache.readQuery({ query: GET_IMG_GALLERY });
             const newGalleryImages = getImageGallery.filter(image => !deleteImages.keys.includes(image.id));
             cache.writeQuery({
-                query: GET_IMG_GALLERY ,
+                query: GET_IMG_GALLERY,
                 data: { getImageGallery: newGalleryImages },
             });
         },
@@ -50,7 +50,7 @@ const UploadImageModal = (props) => {
 
     useEffect(() => {
         !props.show && setSelected({});
-    },[props.show]);
+    }, [props.show]);
 
     const handleSelect = (image) => {
         switch (props.multiSelect) {
@@ -118,34 +118,36 @@ const UploadImageModal = (props) => {
     }
     return (
         <>
-                {!Object.keys(selected).length ?
-                    <UploadImgHeader
-                        uploadInput={uploadInput}
-                        uploadFile={uploadFile}
-                        toggleModal={props.toggleModal}
-                        multiSelect={props.multiSelect}
-                    />
+            {!Object.keys(selected).length ?
+                <UploadImgHeader
+                    uploadInput={uploadInput}
+                    uploadFile={uploadFile}
+                    toggleModal={props.toggleModal}
+                    multiSelect={props.multiSelect}
+                />
                 :
-                    <ImgSelectedHeader
-                        count={count}
-                        deleteMultimedia={deleteMultimedia}
-                        useMLTMD={props.useMLTMD}
-                        setSelected={setSelected}
-                        selected={selected}
-                        multiSelect={props.multiSelect}
-                    />
-                }
+                <ImgSelectedHeader
+                    count={count}
+                    deleteMultimedia={deleteMultimedia}
+                    useMLTMD={props.useMLTMD}
+                    setSelected={setSelected}
+                    selected={selected}
+                    multiSelect={props.multiSelect}
+                />
+            }
 
-                <div className="modal-content">
-                    {!loading && data ?
-                        <ImageGallery
-                            multiMedia ={data.getImageGallery}
-                            //  multiMedia ={[]}
-                            handleSelect={handleSelect}
-                            selected={selected}
-                         />
-                    : null}
-                </div>
+            <div className="modal-content">
+                {!loading && data ?
+                    <ImageGallery
+                        multiMedia ={data.getImageGallery}
+                        //  multiMedia ={[]}
+                        handleSelect={handleSelect}
+                        selected={selected}
+                    />
+                    :
+                    null
+                }
+            </div>
         </>
     );
 }

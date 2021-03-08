@@ -15,7 +15,7 @@ const StyledModal = styled.div`
     opacity: ${props => props.show ? 1 : 0};
     visibility: ${props => props.show ? "visible" : "hidden"};
     box-shadow: ${props => props.theme.bs};
-    background: ${props => `linear-gradient(to Bottom, transparent 60px, white 0%)`};
+    background: linear-gradient(to Bottom, transparent 60px, white 0%);
     transition: .4s ease;
     z-index: 121;
     border-radius: 6px;

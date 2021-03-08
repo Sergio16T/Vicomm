@@ -31,8 +31,9 @@ const GoogleContainer = styled.div`
 		font-size: 1.4rem !important;
 	}
 `;
+
 const GoogleBtn = (props) => {
-	const [googleSignIn] = useMutation(GOOGLE_LOGIN_MUTATION, {refetchQueries: ["GET_USER_QUERY"]});
+    const [googleSignIn] = useMutation(GOOGLE_LOGIN_MUTATION, {refetchQueries: ["GET_USER_QUERY"]});
     const [state, setState] = useState({
         isLoggedIn: false,
         accessToken: '',
@@ -40,70 +41,69 @@ const GoogleBtn = (props) => {
     });
 
 
-	const login = async (response) => {
-		console.log('response', response);
-		if (!response.accessToken) return;
-		setState({
-			...state,
-			isLoggedIn: true,
-			accessToken: response.accessToken,
-			email: response.profileObj.email,
-		});
-		const googleSignInRes = await googleSignIn({variables: {
-			accessToken: response.accessToken,
-			email: response.profileObj.email,
-			firstName: response.profileObj.givenName,
-			lastName: response.profileObj.familyName,
-		}});
-		console.log('res', googleSignInRes);
-		if (props.signUp) {
-			Router.push({
-				pathname: "/dashboard",
-			});
-		}
-	}
+    const login = async (response) => {
+        console.log('response', response);
+        if (!response.accessToken) return;
+        setState({
+            ...state,
+            isLoggedIn: true,
+            accessToken: response.accessToken,
+            email: response.profileObj.email,
+        });
+        const googleSignInRes = await googleSignIn({variables: {
+            accessToken: response.accessToken,
+            email: response.profileObj.email,
+            firstName: response.profileObj.givenName,
+            lastName: response.profileObj.familyName,
+        }});
+        console.log('res', googleSignInRes);
+        if (props.signUp) {
+            Router.push({
+                pathname: "/dashboard",
+            });
+        }
+    }
 
-	const logout = (response) => {
-		console.log(response);
-		setState({
-		...state,
-		isLoggedIn: false,
-		accessToken: '',
-		});
-	}
+    const logout = (response) => {
+        console.log(response);
+        setState({
+            ...state,
+            isLoggedIn: false,
+            accessToken: '',
+        });
+    }
 
-	const handleLoginFailure = (response) => {
-		console.log(response);
-	}
+    const handleLoginFailure = (response) => {
+        console.log(response);
+    }
 
-	const handleLogoutFailure =  (response) => {
-		console.log(response);
-	}
+    const handleLogoutFailure =  (response) => {
+        console.log(response);
+    }
     return (
-		<div>
-			{state.isLoggedIn ?
-				<GoogleContainer>
-					<GoogleLogout
-						clientId={CLIENT_ID}
-						buttonText='Logout'
-						onLogoutSuccess={logout}
-						onFailure={handleLogoutFailure}
-					/>
-				</GoogleContainer>
-				:
-
-				<GoogleContainer>
-					<GoogleLogin
-						clientId={CLIENT_ID}
-						buttonText={props.buttonText}
-						onSuccess={login}
-						onFailure={handleLoginFailure}
-						cookiePolicy={'single_host_origin'}
-						responseType='code,token'
-					/>
-				</GoogleContainer>
-			}
-		</div>
+        <div>
+            {state.isLoggedIn ?
+                <GoogleContainer>
+                    <GoogleLogout
+                        clientId={CLIENT_ID}
+                        buttonText='Logout'
+                        onLogoutSuccess={logout}
+                        onFailure={handleLogoutFailure}
+                    />
+                </GoogleContainer>
+                :
+                <GoogleContainer>
+                    <GoogleLogin
+                        clientId={CLIENT_ID}
+                        buttonText={props.buttonText}
+                        onSuccess={login}
+                        onFailure={handleLoginFailure}
+                        cookiePolicy={'single_host_origin'}
+                        responseType='code,token'
+                    />
+                </GoogleContainer>
+            }
+        </div>
     );
 }
 

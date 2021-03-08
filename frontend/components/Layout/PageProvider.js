@@ -20,20 +20,20 @@ const GET_USER_QUERY = gql`
 
 const Context = React.createContext();
 
-function PageProvider({ children, pathname}) {
+function PageProvider({ children, pathname }) {
     const { client, loading: userLoading, error, data: userData } = useQuery(GET_USER_QUERY);
     const [isOpen, setIsOpen ] = useState(false);
     const previousPath = usePrevious(pathname);
     const context = {
-        isOpen: isOpen,
-        setIsOpen: setIsOpen,
+        isOpen,
+        setIsOpen,
         client,
         userData,
-    }
+    };
 
     useEffect(() => {
         smoothscroll.polyfill();
-    },[]);
+    }, []);
 
     useEffect(() => {
         if (previousPath !== pathname && window.innerWidth < 800) {
@@ -42,7 +42,7 @@ function PageProvider({ children, pathname}) {
         }
     }, [previousPath, pathname]);
 
-    if (error) return <p>{error.message}</p>
+    if (error) return <p>{error.message}</p>;
     if (userLoading) return null;
     if (!userData.user) {
         Router.push({
@@ -55,8 +55,8 @@ function PageProvider({ children, pathname}) {
             <GlobalStyle/>
             <Meta/>
             <SideBar
-            isOpen={isOpen}
-            user={userData.user ? userData.user : ''}
+                isOpen={isOpen}
+                user={userData.user ? userData.user : ''}
             />
             <Context.Provider value = {context}>
                 {children}
@@ -75,7 +75,7 @@ function DefaultPage(props) {
         <ThemeProvider theme={theme}>
             <GlobalStyle/>
             <Meta/>
-                {props.children}
+            {props.children}
         </ThemeProvider>
     );
 }

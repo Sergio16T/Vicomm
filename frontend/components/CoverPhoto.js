@@ -59,11 +59,12 @@ const CoverPhoto = ({ loading, data, error }) => {
     if (error) return (
         <StyledCoverPhoto
             error
-            image="https://res.cloudinary.com/dddnhychw/image/upload/v1611182958/Web-Images/undraw_warning_cyit_arabdv.svg">
-                <div className="error-container">
-                    <i className="fas fa-exclamation-triangle" id="alert-icon"></i>
-                    <h2>{error.message}</h2>
-                </div>
+            image="https://res.cloudinary.com/dddnhychw/image/upload/v1611182958/Web-Images/undraw_warning_cyit_arabdv.svg"
+        >
+            <div className="error-container">
+                <i className="fas fa-exclamation-triangle" id="alert-icon"></i>
+                <h2>{error.message}</h2>
+            </div>
         </StyledCoverPhoto>
     );
     return (

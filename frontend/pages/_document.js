@@ -9,18 +9,18 @@ export default class MyDocument extends Document {
         try {
             ctx.renderPage = () =>
                 originalRenderPage({
-                enhanceApp: (App) => (props) =>
-                    sheet.collectStyles(<App {...props} />),
+                    enhanceApp: (App) => (props) =>
+                        sheet.collectStyles(<App {...props} />),
                 })
 
             const initialProps = await Document.getInitialProps(ctx)
             return {
                 ...initialProps,
                 styles: (
-                <>
-                    {initialProps.styles}
-                    {sheet.getStyleElement()}
-                </>
+                    <>
+                        {initialProps.styles}
+                        {sheet.getStyleElement()}
+                    </>
                 ),
             }
         } finally {
@@ -32,10 +32,10 @@ export default class MyDocument extends Document {
             <Html>
                 <Head />
                 <body>
-                <Main />
-                <NextScript />
-                <script src="https://kit.fontawesome.com/b0ebdd2ca1.js"></script>
-                <script src="https://apis.google.com/js/platform.js" async defer></script>
+                    <Main />
+                    <NextScript />
+                    <script src="https://kit.fontawesome.com/b0ebdd2ca1.js"></script>
+                    <script src="https://apis.google.com/js/platform.js" async defer></script>
                 </body>
             </Html>
         );

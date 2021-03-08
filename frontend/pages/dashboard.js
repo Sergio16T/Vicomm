@@ -1,9 +1,9 @@
-import withApollo from '../lib/ApolloClient'; 
-import Dashboard from '../components/Dashboard'; 
+import withApollo from '../lib/ApolloClient';
+import Dashboard from '../components/Dashboard';
 
 const DashboardPage = () => {
     return (
-       <Dashboard/>
+        <Dashboard/>
     );
 };
 
