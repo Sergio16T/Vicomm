@@ -7,8 +7,8 @@ import styled from 'styled-components';
 
 
 const GOOGLE_LOGIN_MUTATION = gql`
-    mutation GOOGLE_LOGIN_MUTATION($firstName: String!, $lastName: String!, $email: String!, $accessToken: String!) {
-        googleSignIn(firstName: $firstName, lastName: $lastName, email: $email, accessToken: $accessToken) {
+    mutation GOOGLE_LOGIN_MUTATION($tokenId: String!) {
+        googleSignIn(tokenId: $tokenId) {
             fst_nm,
             email
         }
@@ -50,12 +50,7 @@ const GoogleBtn = (props) => {
             accessToken: response.accessToken,
             email: response.profileObj.email,
         });
-        const googleSignInRes = await googleSignIn({ variables: {
-            accessToken: response.accessToken,
-            email: response.profileObj.email,
-            firstName: response.profileObj.givenName,
-            lastName: response.profileObj.familyName,
-        } });
+        const googleSignInRes = await googleSignIn({ variables: { tokenId: response.tokenId } });
         console.log('res', googleSignInRes);
         if (props.signUp) {
             Router.push({

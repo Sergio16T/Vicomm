@@ -5,6 +5,9 @@ const {
     getAccountWithEmail,
     createNewAccount,
 } = require('../../data-access/account');
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 
 module.exports = {
     async signUp(parent, args, context, info) {
@@ -60,16 +63,29 @@ module.exports = {
         return user;
     },
     async googleSignIn(parent, args, context, info) {
-        const email = args.email.toLowerCase();
+        const { tokenId } = args;
 
+        const ticket = await client.verifyIdToken({
+            idToken: tokenId,
+            audience: process.env.CLIENT_ID,
+        });
+
+        let {
+            given_name,
+            family_name,
+            email,
+        } = ticket.getPayload();
+
+        email = email.toLowerCase();
+
+        // check if account with email exists
         let user = await getAccountWithEmail(email);
-        // check if user already present with that email..
-        // with this authToken is it best practice to use this to grab USER? in that case I need to update the record to have google_auth_tkn
+
         if (!user) {
             // create new account
             const newAccountParams = {
-                firstName: args.firstName,
-                lastName: args.lastName,
+                firstName: given_name,
+                lastName: family_name,
                 email,
                 password: null,
                 crte_by_acct_key: 1,

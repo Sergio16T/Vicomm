@@ -26,8 +26,8 @@ module.exports = {
                 act_ind = ${1}
         `;
 
-        const { insertId } = await db.query(query).catch(err => { throw err; });
+        const result = await db.query(query).catch(err => { throw err; });
 
-        return insertId;
+        return result;
     },
 }

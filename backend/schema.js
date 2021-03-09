@@ -12,7 +12,7 @@ const typeDefs = gql`
         signUp(email: String!, firstName: String!, lastName: String!, password: String!): User!
         signIn(email: String!, password: String!): User!
         signOut: SuccessMessage!
-        googleSignIn(firstName: String!, lastName: String!, email: String!, accessToken: String!): User!
+        googleSignIn(tokenId: String!): User!
         uploadImageToGallery(image: String!, largeImage: String!): MultiMedia!
         deleteImages(keys: [ID]): Keys!
         updateCoverPhoto(key: ID): CoverPhoto!

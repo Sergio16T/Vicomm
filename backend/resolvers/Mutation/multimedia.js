@@ -12,6 +12,7 @@ module.exports = {
             image: args.image,
             largeImage: args.largeImage,
         };
+
         const { insertId } = await createNewMultimedia(newMediaParams);
 
         const multimedia = await getMultimediaById(insertId);
