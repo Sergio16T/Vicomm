@@ -3,6 +3,7 @@ import { useMutation, gql } from '@apollo/client';
 import AddProductForm from './Forms/AddProductForm';
 import Page from './Layout/Page';
 import styled from 'styled-components';
+import Router from 'next/router';
 
 const CREATE_ITEM_MUTATION = gql`
     mutation CREATE_ITEM_MUTATION(
@@ -21,7 +22,8 @@ const CREATE_ITEM_MUTATION = gql`
             description: $description,
             productImages: $productImages
         ) {
-            message
+            id,
+            item_uid
         }
     }
 `;
@@ -61,13 +63,19 @@ const AddProduct = () => {
             price: parseFloat(price),
             salePrice: parseFloat(salePrice),
             weight: parseFloat(weight),
-            description,
+            description: description ? description : null,
             productImages: productImages.map(image => ({ id: image.id, mltmd_url: image.mltmd_url })),
         }
         const result = await createItem({ variables: data }).catch(err => {
-            console.log(err.message)
-        })
-        console.log(result)
+            console.log(err.message);
+            // TO DO: Error handle
+        });
+        console.log(result);
+        Router.push({
+            pathname: '/product/[id]',
+            query: { id: result.item_uid },
+        });
+        // replace URL with product/:uid
     }
 
     const renderButton = () => {

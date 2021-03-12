@@ -61,6 +61,27 @@ module.exports = {
         return mediaGallery;
     },
     createMultimediaXref: async (params) => {
+        const {
+            createByAccountKey,
+            multimediaKey,
+            sourceTableKey,
+            sourceTableName,
+        } = params;
 
+        let query = SQL`
+            INSERT INTO
+                mltmd_xref
+            SET
+                mltmd_key = ${multimediaKey},
+                src_tbl_key = ${sourceTableKey},
+                src_tbl_nm = ${sourceTableName},
+                crte_tm = NOW(),
+                crte_by_acct_key = ${createByAccountKey},
+                act_ind = ${1}
+        `;
+
+        const result = await db.query(query).catch(err => { throw err; });
+
+        return result;
     },
 };

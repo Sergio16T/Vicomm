@@ -91,7 +91,7 @@ module.exports = {
 
         return result;
     },
-
+    // TO DO ~ createNewAccountWithGoogleAuth: can be deleted
     createNewAccountWithGoogleAuth: async (params) => {
         const {
             accessToken,

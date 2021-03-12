@@ -17,7 +17,7 @@ const typeDefs = gql`
         deleteImages(keys: [ID]): Keys!
         updateCoverPhoto(key: ID): CoverPhoto!
         removeCoverPhoto: SuccessMessage!
-        createItem(name: String!, price: Float!, salePrice: Float, weight: Float, description: String, productImages: [ProductImage]): SuccessMessage
+        createItem(name: String!, price: Float!, salePrice: Float, weight: Float, description: String, productImages: [ProductImage]): Item!
     }
 
     type User {
@@ -30,6 +30,7 @@ const typeDefs = gql`
 
     type Item {
         id: ID
+        item_uid: String!
         item_title: String!
         item_desc: String!
         price: Int!

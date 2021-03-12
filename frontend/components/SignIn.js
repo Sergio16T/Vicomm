@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import Link from 'next/link';
 import { SignInPage } from './Styles/SignInStyles';
@@ -8,6 +8,10 @@ import Router from 'next/router';
 
 const SignIn = () => {
     const { loading, data } = useQuery(GET_USER_QUERY);
+
+    useEffect(() => {
+        Router.prefetch("/dashboard");
+    }, []);
 
     if (loading) return null;
     if (data.user) {
