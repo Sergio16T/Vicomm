@@ -22,11 +22,11 @@ const GET_ITEM_QUERY = gql`
     }
 `;
 
-const ProductPage = ({ data }) => {
-    return <Product data={data} />;
+const ProductPage = ({ data, query }) => {
+    return <Product data={data} queryParams={query}/>;
 }
 
-export async function getServerSideProps({ params: { uid } }) {
+export async function getServerSideProps({ query: { uid } }) {
     const { data } = await apolloClient.query({
         query: GET_ITEM_QUERY,
         variables: { uid },

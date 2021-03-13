@@ -78,8 +78,11 @@ module.exports = {
                 productItem.item_uid = ${uid}
                 AND productItem.act_ind = ${1}
         `;
+
         let [data] = await db.query(countQuery).catch(err => { throw err; });
+
         const { count } = data;
+
         if (!count) return [];
 
         let query = SQL`

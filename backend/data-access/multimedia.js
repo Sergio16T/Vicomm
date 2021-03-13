@@ -11,7 +11,9 @@ module.exports = {
         WHERE
             id = ${id};
         `;
+
         const [multimedia] = await db.query(query).catch(err => { throw err; });
+
         return multimedia;
     },
     createNewMultimedia: async (params) => {
@@ -43,6 +45,7 @@ module.exports = {
             WHERE
                 id = ${key}
         `;
+
         const result = await db.query(query).catch(err => { throw err });
 
         return result;
@@ -57,7 +60,9 @@ module.exports = {
                 crte_by_acct_key = ${id}
                 AND act_ind = ${1}
         `;
+
         const mediaGallery = await db.query(query).catch(err => { throw err; });
+
         return mediaGallery;
     },
     createMultimediaXref: async (params) => {

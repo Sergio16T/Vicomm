@@ -71,7 +71,8 @@ const AddProduct = () => {
             // TO DO: Error handle
         });
         Router.push({
-            pathname: `/product/${item_uid}`,
+            pathname: `/product/detail`,
+            query: { uid: item_uid, new: 'Y'  },
         });
     }
 

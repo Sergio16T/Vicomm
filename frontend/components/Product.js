@@ -75,22 +75,10 @@ const Product = ({ data: { getItem: item } }) => {
     }
 
     const cancel = () => {
-        setState({
-            edit: false,
-            name: "",
-            price: "",
-            salePrice: "",
-            weight: "",
-            description: "",
-            errorMessages: {
-                price: "",
-                salePrice: "",
-                weight: "",
-                description: "",
-            },
-        });
-        setProductImages([]);
+        setState(initialState);
+        setProductImages(item.multimedia);
     }
+
     return (
         <Page
             renderData = {{
