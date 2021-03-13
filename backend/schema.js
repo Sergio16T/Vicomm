@@ -6,6 +6,7 @@ const typeDefs = gql`
         user: User
         getImageGallery: [MultiMedia]
         getCoverPhoto: MultiMedia
+        getItem(uid: String!): Item
     }
 
     type Mutation {
@@ -18,6 +19,7 @@ const typeDefs = gql`
         updateCoverPhoto(key: ID): CoverPhoto!
         removeCoverPhoto: SuccessMessage!
         createItem(name: String!, price: Float!, salePrice: Float, weight: Float, description: String, productImages: [ProductImage]): Item!
+        updateItem: Item
     }
 
     type User {
@@ -29,14 +31,15 @@ const typeDefs = gql`
     }
 
     type Item {
-        id: ID
+        id: ID!
         item_uid: String!
         item_title: String!
-        item_desc: String!
+        item_desc: String
         price: Int!
         sale_price: Int
         item_weight: Float
-        crte_by_acct_key: ID!
+        crte_by_acct_key: ID
+        multimedia: [MultiMedia]
     }
 
     type MultiMedia {

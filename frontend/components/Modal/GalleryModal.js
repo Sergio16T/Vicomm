@@ -104,6 +104,7 @@ const UploadImageModal = (props) => {
         }
         catch (err) {
             console.log(err);
+            uploadInput.current.value= "";
             props.setSpinner(false);
         }
     }

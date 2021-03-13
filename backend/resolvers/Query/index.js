@@ -1,7 +1,9 @@
 const user = require('./user');
 const multimedia = require('./multimedia');
+const item = require('./item');
 
 module.exports = {
-    ...user,
+    ...item,
     ...multimedia,
+    ...user,
 };

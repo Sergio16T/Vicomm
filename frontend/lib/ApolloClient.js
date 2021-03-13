@@ -37,11 +37,17 @@ const apolloProvider =  {
     },
 };
 
+const apolloClient = new ApolloClient({
+    link,
+    // cache: new InMemoryCache(cacheConfig).restore(initialState || {}),
+    cache: new InMemoryCache(cacheConfig),
+});
+
 export default withApollo(
-    ({ initialState }) => {
-        return new ApolloClient({
-            link,
-            cache: new InMemoryCache(cacheConfig).restore(initialState || {}),
-        });
+    // ({ initialState }) => {
+    () => {
+        return apolloClient;
     }, apolloProvider,
 );
+
+export { apolloClient };

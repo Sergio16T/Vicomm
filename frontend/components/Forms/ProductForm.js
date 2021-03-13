@@ -12,7 +12,7 @@ import ScrollGallery from '../ScrollGallery';
 import { PageContext } from '../Layout/Page';
 
 // refactor selectedImages and productImages to use useReducer hook
-const AddProductForm = (props) => {
+const ProductForm = (props) => {
     const { toggleModal, modalOpen, setSpinner } = useContext(PageContext);
     const {
         state,
@@ -344,7 +344,7 @@ const AddProductForm = (props) => {
 }
 
 
-export default AddProductForm;
+export default ProductForm;
 
 // restricting input to two decimal points
 // substr(startIndex, numberOfCharactersToExtract)

@@ -16,6 +16,7 @@ module.exports = {
         // 2) create multimedia xref records to point images to product item
         const { productImages } = args;
         for (let i = 0; i < productImages.length; i++) {
+            // need to add a display count to these images so mltmd_xref needs a display count table value
             await createMultimediaXref({
                 createByAccountKey: context.req.user.id,
                 multimediaKey: productImages[i].id,
@@ -26,6 +27,12 @@ module.exports = {
         // 3) query for product item
         const [item] = await getItem(insertId);
         // 4) return product item
-        return item;
+        return {
+            ...item,
+            multimedia: productImages,
+        };
+    },
+    updateItem: async (parent, args, context, info) => {
+
     },
 }

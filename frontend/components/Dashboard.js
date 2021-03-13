@@ -48,7 +48,7 @@ const Dashboard = () => {
 
             </div>
             <div className="feature-section">
-                <Link href="/products/add">
+                <Link href="/product/add">
                     <div className="feature-suggestion">
                         <h3>Add a Product And Start Selling</h3>
                         <span>Add Photos, Details, and Variants.</span>

@@ -21,7 +21,7 @@ const StyledAddButton = styled.button`
 
 const AddProductButton = () => {
     return (
-        <Link href="/products/add">
+        <Link href="/product/add">
             <StyledAddButton>
                 <i className="fas fa-plus-circle plusIcon"></i>
                 <span>Add</span>
