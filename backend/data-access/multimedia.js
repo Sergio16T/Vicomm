@@ -59,6 +59,10 @@ module.exports = {
             WHERE
                 crte_by_acct_key = ${id}
                 AND act_ind = ${1}
+            ORDER BY
+                crte_tm DESC
+            # LIMIT
+                # 0, 30
         `;
 
         const mediaGallery = await db.query(query).catch(err => { throw err; });

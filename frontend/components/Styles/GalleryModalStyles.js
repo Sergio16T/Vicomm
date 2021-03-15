@@ -3,11 +3,11 @@ import styled from 'styled-components';
 //move styles for header into it's own styled component
 const StyledModal = styled.div`
     position: fixed;
-    width: 60vw;
-    max-width: 700px;
+    width: 70vw;
+    max-width: 800px;
     overflow-y: scroll;
     overflow-x: hidden;
-    min-height: 500px;
+    min-height: ${props => props.minHeight};
     margin: auto;
     top: 100px;
     left: 0;
@@ -47,7 +47,7 @@ const StyledModal = styled.div`
             padding: 0 1rem;
             padding-left: 2rem;
             margin: 0;
-            color:white;
+            color: white;
         }
     }
     #uploadImgBtn {
@@ -62,7 +62,7 @@ const StyledModal = styled.div`
         cursor: pointer;
     }
     .plusIcon {
-            padding-right: .5rem;
+        padding-right: .5rem;
     }
     .d-flex {
         display: flex;

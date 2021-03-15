@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import { PageContent } from './Styles/DashboardStyles';
-import Modal from './Modal/Modal';
 import ImageGalleryModal from './Modal/GalleryModal';
 import CoverPhoto from './CoverPhoto';
-import Page, { PageContext }  from './Layout/Page';
+import Page from './Layout/Page';
 import Link from 'next/link';
 import { Context } from './Layout/PageProvider';
 import ToggleImageGalleryBtn from './Buttons/ToggleImageGalleryBtn';
+import useModal from '../lib/Hooks/useModal';
 
 const GET_COVER_PHOTO_QUERY = gql`
     query GET_COVER_PHOTO_QUERY {
@@ -24,8 +24,7 @@ const UPDATE_COVER_PHOTO_MUTATION = gql`
     }
 `;
 
-const Dashboard = () => {
-    const { modalOpen, toggleModal, setSpinner } = useContext(PageContext);
+const Dashboard = ({ modalOpen, setModalOpen, toggleModal }) => {
     const { loading, error, data } = useQuery(GET_COVER_PHOTO_QUERY);
     const [updateCoverPhoto] = useMutation(UPDATE_COVER_PHOTO_MUTATION, { refetchQueries: ["GET_COVER_PHOTO_QUERY"] });
 
@@ -59,24 +58,21 @@ const Dashboard = () => {
                     <span> Give your site a personal touch by uploading your own logo!</span>
                 </div>
             </div>
-            <Modal
+            <ImageGalleryModal
                 show={modalOpen}
-                modalXColor="white"
-            >
-                <ImageGalleryModal
-                    show={modalOpen}
-                    toggleModal={toggleModal}
-                    setSpinner={setSpinner}
-                    useMLTMD={uploadCoverPhoto}
-                />
-            </Modal>
+                toggleModal={toggleModal}
+                setModalOpen={setModalOpen}
+                useMLTMD={uploadCoverPhoto}
+            />
         </PageContent>
     );
 };
 
 const DashboardPage = () => {
     const { userData } = useContext(Context);
-    const render = () => <ToggleImageGalleryBtn/>;
+    const { modalOpen, setModalOpen, toggleModal } = useModal();
+
+    const render = () => <ToggleImageGalleryBtn toggleModal={toggleModal}/>;
 
     return (
         <Page
@@ -88,7 +84,11 @@ const DashboardPage = () => {
                 },
             }}
         >
-            <Dashboard/>
+            <Dashboard
+                modalOpen={modalOpen}
+                toggleModal={toggleModal}
+                setModalOpen={setModalOpen}
+            />
         </Page>
     );
 }

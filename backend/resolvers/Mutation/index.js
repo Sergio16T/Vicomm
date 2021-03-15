@@ -5,7 +5,7 @@ const item = require('./item');
 
 module.exports = {
     ...account,
-    ...multimedia,
     ...coverPhoto,
     ...item,
+    ...multimedia,
 };

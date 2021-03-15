@@ -3,6 +3,7 @@ import { useQuery, useMutation, gql } from '@apollo/client';
 import ImageGallery from '../ImageGallery';
 import ImgSelectedHeader from './ModalSelectedImagesHeader';
 import UploadImgHeader from './ModalUploadImgHeader';
+import Modal from './Modal';
 
 const GET_IMG_GALLERY = gql`
     query GET_IMG_GALLERY{
@@ -47,6 +48,7 @@ const UploadImageModal = (props) => {
     const [selected, setSelected] = useState({});
     const [count, setCount] = useState(0);
     const uploadInput = useRef();
+    const [spinner, setSpinner] = useState(false);
 
     useEffect(() => {
         !props.show && setSelected({});
@@ -85,7 +87,7 @@ const UploadImageModal = (props) => {
         data.append('file', files[0]);
         data.append('upload_preset', 'Vicomm');
         try {
-            props.setSpinner(true);
+            setSpinner(true);
             const res = await fetch('https://api.cloudinary.com/v1_1/dddnhychw/image/upload', {
                 method: 'POST',
                 body: data,
@@ -100,25 +102,30 @@ const UploadImageModal = (props) => {
                 },
             });
             uploadInput.current.value= "";
-            props.setSpinner(false);
+            setSpinner(false);
         }
         catch (err) {
             console.log(err);
             uploadInput.current.value= "";
-            props.setSpinner(false);
+            setSpinner(false);
         }
     }
     const deleteMultimedia = async () => {
-        props.setSpinner(true);
+        setSpinner(true);
         setTimeout( async () => {
             await deleteImages({ variables: { keys: Object.keys(selected) } });
             setSelected({});
-            props.setSpinner(false);
+            setSpinner(false);
         }, 500);
 
     }
     return (
-        <>
+        <Modal
+            setModalOpen={props.setModalOpen}
+            spinner={spinner}
+            show={props.show}
+            style={{ xColor: "white", minHeight: "80vh" }}
+        >
             {!Object.keys(selected).length ?
                 <UploadImgHeader
                     uploadInput={uploadInput}
@@ -149,7 +156,7 @@ const UploadImageModal = (props) => {
                     null
                 }
             </div>
-        </>
+        </Modal>
     );
 }
 

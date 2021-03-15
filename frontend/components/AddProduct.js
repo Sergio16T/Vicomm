@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { useMutation, gql } from '@apollo/client';
 import AddProductForm from './Forms/ProductForm';
 import SaveProductButton from './Buttons/SaveProductButton';
 import Page from './Layout/Page';
-import Router from 'next/router';
 
 const CREATE_ITEM_MUTATION = gql`
     mutation CREATE_ITEM_MUTATION(
@@ -30,6 +30,7 @@ const CREATE_ITEM_MUTATION = gql`
 
 const AddProduct = () => {
     const [createItem] = useMutation(CREATE_ITEM_MUTATION);
+    const router = useRouter();
     const [state, setState] = useState({
         edit: false,
         name: "",
@@ -57,7 +58,8 @@ const AddProduct = () => {
     const missingRequiredFields = !name || !price;
     const errorMessagePresent = errorMessages.price || errorMessages.salePrice || errorMessages.weight || errorMessages.description;
 
-    const submitForm = async () => {
+    const submitForm = async (e) => {
+        const { id } = e.target;
         const data = {
             name,
             price: parseFloat(price),
@@ -70,10 +72,27 @@ const AddProduct = () => {
             console.log(err.message);
             // TO DO: Error handle
         });
-        Router.push({
-            pathname: `/product/detail`,
-            query: { uid: item_uid, new: 'Y'  },
-        });
+
+        switch (id) {
+            case "save-return-to-list": {
+                router.push({
+                    pathname: "/products",
+                });
+                break;
+            }
+            case "save-create-new": {
+                resetForm();
+                // toggle successAlert true state value to display success alert with option to view new product
+                break;
+            }
+            default: {
+                // instead of adding new query param just check on the client if create time is within the last 10 minutes to determine whether to show alert or not
+                router.push({
+                    pathname: "/product/detail",
+                    query: { uid: item_uid, new: "Y" },
+                });
+            }
+        }
     }
 
     const renderButton = () => {
@@ -83,14 +102,14 @@ const AddProduct = () => {
         }
         return (
             <SaveProductButton
-                onClick={submitForm}
+                submitForm={submitForm}
                 disabled={disabled}
-                cancel={cancel}
+                cancel={resetForm}
             />
         );
     }
 
-    const cancel = () => {
+    const resetForm = () => {
         setState({
             edit: false,
             name: "",

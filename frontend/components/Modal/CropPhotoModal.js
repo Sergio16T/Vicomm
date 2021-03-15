@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import ModalHeader from './ModalHeader';
 import ReactCrop from 'react-image-crop';
 import PrimaryButton from '../Buttons/PrimaryButton';
+import Modal from './Modal';
 
 const StyledCrop = styled.div`
     display: flex;
@@ -12,9 +13,12 @@ const StyledCrop = styled.div`
     justify-content: center;
     align-items: center;
     min-height: 440px;
+    .ReactCrop {
+        max-height: 400px;
+    }
 `;
 
-const CropPhotoModal = ({ toggleModal, imageUrl, setSpinner, updateProductImages }) => {
+const CropPhotoModal = ({ imageUrl, setModalOpen, show, toggleModal, updateProductImages }) => {
     const [uploadImageToGallery] = useMutation(UPLOAD_IMG_MUTATION, {
         update(cache, { data: { uploadImageToGallery } }) {
             cache.modify({
@@ -30,7 +34,7 @@ const CropPhotoModal = ({ toggleModal, imageUrl, setSpinner, updateProductImages
                                 }
                             `,
                         });
-                        return [...existingMultimedia, newImage]
+                        return [...existingMultimedia].unshift(newImage);
                     },
                 },
             });
@@ -52,6 +56,7 @@ const CropPhotoModal = ({ toggleModal, imageUrl, setSpinner, updateProductImages
     });
     const [imageLoaded, setImageLoaded] = useState(false);
     const imageRef = useRef(null);
+    const [spinner, setSpinner] = useState(false);
 
     useEffect(() => {
         imageRef.current = null;
@@ -143,7 +148,12 @@ const CropPhotoModal = ({ toggleModal, imageUrl, setSpinner, updateProductImages
     }
 
     return (
-        <>
+        <Modal
+            style={{ xColor: "white", minHeight: "500px" }}
+            setModalOpen={setModalOpen}
+            spinner={spinner}
+            show={show}
+        >
             <ModalHeader
                 header="Image Editor"
                 toggleModal={toggleModal}
@@ -162,7 +172,7 @@ const CropPhotoModal = ({ toggleModal, imageUrl, setSpinner, updateProductImages
                     </StyledCrop>
                 }
             </div>
-        </>
+        </Modal>
     );
 };
 

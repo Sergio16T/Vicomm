@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+// Same as Gallery Modal but without the uploadImageBtn Styles
 const StyledModal = styled.div`
     position: fixed;
     width: 60vw;
@@ -46,11 +47,11 @@ const StyledModal = styled.div`
             padding: 0 1rem;
             padding-left: 2rem;
             margin: 0;
-            color:white;
+            color: white;
         }
     }
     .plusIcon {
-            padding-right: .5rem;
+        padding-right: .5rem;
     }
     .d-flex {
         display: flex;

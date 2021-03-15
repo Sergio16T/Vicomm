@@ -38,7 +38,6 @@ const typeDefs = gql`
         price: Int!
         sale_price: Int
         item_weight: Float
-        crte_by_acct_key: ID
         multimedia: [MultiMedia]
     }
 
@@ -46,7 +45,6 @@ const typeDefs = gql`
         id: ID,
         mltmd_url: String!
         mltmd_lg_url: String!
-        crte_by_acct_key: ID!
     }
 
     input ProductImage {

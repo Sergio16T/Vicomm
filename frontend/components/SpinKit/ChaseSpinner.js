@@ -3,11 +3,11 @@ import styled from 'styled-components';
 
 const StyledChaseSpinner = styled.div`
     position: fixed;
-    width: 60vw;
-    max-width: 700px;
+    width: 70vw;
+    max-width: 800px;
     overflow-y: scroll;
     overflow-x: hidden;
-    min-height: 500px;
+    min-height: ${props => props.minHeight};;
     margin: auto;
     top: 100px;
     left: 0;
@@ -32,7 +32,7 @@ const StyledChaseSpinner = styled.div`
         justify-content: center;
         align-items: center;
         z-index: 3;
-        min-height: 500px;
+        min-height: ${props => props.minHeight};;
     }
     .sk-chase {
         width: 50px;
@@ -100,7 +100,11 @@ const StyledChaseSpinner = styled.div`
 
 const ChaseSpinner = (props) => {
     return (
-        <StyledChaseSpinner spinner={props.spinner} show={props.show}>
+        <StyledChaseSpinner
+            spinner={props.spinner}
+            show={props.show}
+            minHeight={props.minHeight}
+        >
             <div id="backDrop">
                 <div className="sk-chase">
                     <div className="sk-chase-dot"></div>
