@@ -4,6 +4,7 @@ import { useMutation, gql } from '@apollo/client';
 import AddProductForm from './Forms/ProductForm';
 import SaveProductButton from './Buttons/SaveProductButton';
 import Page from './Layout/Page';
+import { ProductPageContent, Body } from './Styles/ProductStyles';
 
 const CREATE_ITEM_MUTATION = gql`
     mutation CREATE_ITEM_MUTATION(
@@ -60,6 +61,7 @@ const AddProduct = () => {
 
     const submitForm = async (e) => {
         const { id } = e.target;
+        // Update $ to cents
         const data = {
             name,
             price: parseFloat(price),
@@ -137,13 +139,17 @@ const AddProduct = () => {
                 },
             }}
         >
-            <AddProductForm
-                state={state}
-                setState={setState}
-                productImages={productImages}
-                setProductImages={setProductImages}
+            <ProductPageContent>
+                <Body>
+                    <AddProductForm
+                        state={state}
+                        setState={setState}
+                        productImages={productImages}
+                        setProductImages={setProductImages}
 
-            />
+                    />
+                </Body>
+            </ProductPageContent>
         </Page>
     );
 };

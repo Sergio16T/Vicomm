@@ -6,7 +6,7 @@ const ProductPageContent = styled.div`
     padding-bottom: 100px;
     width: 100%;
     box-sizing: border-box;
-    background: linear-gradient(#221b43 440px, white 440px);
+    background: linear-gradient(#221b43 470px, white 470px);
     @media (max-width: 800px) {
         padding: 100px 0 100px 0;
     }

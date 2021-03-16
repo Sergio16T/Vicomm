@@ -58,7 +58,8 @@ module.exports = {
                 AND act_ind = ${1}
         `;
 
-        let result = await db.query(query).catch(err => { throw err; });
+        let [result] = await db.query(query).catch(err => { throw err; });
+        result.crte_tm = result.crte_tm.toISOString();
 
         return result;
     },

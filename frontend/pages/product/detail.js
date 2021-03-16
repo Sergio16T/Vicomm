@@ -14,6 +14,7 @@ const GET_ITEM_QUERY = gql`
             item_weight,
             price,
             sale_price,
+            crte_tm,
             multimedia {
                 id,
                 mltmd_url,

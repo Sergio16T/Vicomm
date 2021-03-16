@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect, Fragment  } from 'react';
 import { useMutation } from '@apollo/client';
 import { useDropzone } from 'react-dropzone'
 import { UPLOAD_IMG_MUTATION } from '../Modal/GalleryModal';
-import { ProductPageContent, Body, Form } from '../Styles/ProductStyles';
+import { Form } from '../Styles/ProductStyles';
 import ImageGalleryModal from '../Modal/GalleryModal';
 import CropPhotoModal from '../Modal/CropPhotoModal';
 import DropZone from '../Styles/DropZoneStyles';
@@ -174,143 +174,141 @@ const ProductForm = (props) => {
     }
 
     return (
-        <ProductPageContent>
-            <Body>
-                <Form>
-                    <div className="flex-row mobile-row">
-                        <div className="formCol mb-0">
-                            <input
-                                type="text"
-                                name="name"
-                                id="name"
-                                value={name}
-                                onChange={handleInputChange}
-                                required
-                            />
-                            <label className={`${name ? "active-content": ""} p-label `} htmlFor="name">
-                                Name
-                            </label>
-                            {!name &&
-                                <div className="required-label">
-                                    <i className="fas fa-exclamation-triangle"></i>&nbsp;
-                                    Name is required
-                                </div>
-                            }
-                        </div>
+        <Fragment>
+            <Form>
+                <div className="flex-row mobile-row">
+                    <div className="formCol mb-0">
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            value={name}
+                            onChange={handleInputChange}
+                            required
+                        />
+                        <label className={`${name ? "active-content": ""} p-label `} htmlFor="name">
+                            Name
+                        </label>
+                        {!name &&
+                            <div className="required-label">
+                                <i className="fas fa-exclamation-triangle"></i>&nbsp;
+                                Name is required
+                            </div>
+                        }
                     </div>
-                    <div className="flex-row">
-                        <div className="flex-group mobile-row">
-                            <div className="formCol row2">
-                                <input
-                                    type="number"
-                                    name="price"
-                                    id="price"
-                                    value={price}
-                                    onChange={handleInputChange}
-                                    onKeyDown={handleKeyDown}
-                                    step=".01"
-                                    required
-                                />
-                                <label className={`${price ? "active-content": ""} p-label `} htmlFor="price">
-                                        Price
-                                </label>
-                                {!price &&
-                                    <div className="required-label">
-                                        <i className="fas fa-exclamation-triangle"></i>&nbsp;
-                                        Price is required
-                                    </div>
-                                }
-                                {errorMessages.price &&
-                                    <div className="label-error">
-                                        <i className="fas fa-exclamation-triangle"></i>&nbsp; {errorMessages.price}
-                                    </div>
-                                }
-                            </div>
-                            <div className="formCol">
-                                <input
-                                    type="number"
-                                    name="salePrice"
-                                    id="salePrice"
-                                    value={salePrice}
-                                    onChange={handleInputChange}
-                                    onKeyDown={handleKeyDown}
-                                    step=".01"
-                                />
-                                <label className={`${salePrice ? "active-content": ""} p-label `} htmlFor="salePrice">
-                                    Sale Price
-                                </label>
-                                {errorMessages.salePrice &&
-                                    <div className="label-error">
-                                        <i className="fas fa-exclamation-triangle"></i>&nbsp; {errorMessages.salePrice}
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                        <div className="formCol mobile-row">
+                </div>
+                <div className="flex-row">
+                    <div className="flex-group mobile-row">
+                        <div className="formCol row2">
                             <input
                                 type="number"
-                                name="weight"
-                                id="productWeight"
-                                value={weight}
+                                name="price"
+                                id="price"
+                                value={price}
                                 onChange={handleInputChange}
                                 onKeyDown={handleKeyDown}
-                                min="0"
-                                max="1000"
                                 step=".01"
                                 required
                             />
-                            <label className={`${weight ? "active-content" : ""} p-label row2`} htmlFor="productWeight">
-                                Weight
+                            <label className={`${price ? "active-content": ""} p-label `} htmlFor="price">
+                                    Price
                             </label>
-                            <span className="input-addOn">lbs.</span>
-                            {errorMessages.weight &&
+                            {!price &&
+                                <div className="required-label">
+                                    <i className="fas fa-exclamation-triangle"></i>&nbsp;
+                                    Price is required
+                                </div>
+                            }
+                            {errorMessages.price &&
                                 <div className="label-error">
-                                    <i className="fas fa-exclamation-triangle"></i>&nbsp; {errorMessages.weight}
+                                    <i className="fas fa-exclamation-triangle"></i>&nbsp; {errorMessages.price}
                                 </div>
                             }
                         </div>
-
-                    </div>
-                    <div className="form-container">
-                        <DropZone {...getRootProps({
-                            onClick: event => event.stopPropagation(),
-                        })}>
-                            {loadingDots && <LoadingDots/>}
-                            <i className="fas fa-camera-retro retroCam"></i>
-                            <p id="dragNdrop-p">Drag & Drop To Upload</p>
-                            <div className="line-break-container">
-                                <span className="lineBreak"></span>
-                                <span id="or-text">or </span>
-                                <span className="lineBreak"></span>
-                            </div>
-                            <button type="button" className="browse-btn" onClick={toggleGalleryModal}><i className="fas fa-images imgIcon"></i>Browse Gallery</button>
-                            <input {...getInputProps()} ref={dropInput}/>
-                        </DropZone>
-                    </div>
-                    <ScrollGallery
-                        selectedImages={selectedImages}
-                        setImages={setImages}
-                        productImages={productImages}
-                        setProductImages={setProductImages}
-                        toggleCropPhotoModal={selectImageToCrop}
-                    />
-                    <div className="descriptionRow">
-                        <div className="desc-form-row">
-                            <label htmlFor="description">
-                                    Description
-                            </label>
-                            <textarea
-                                type="text"
-                                name="description"
-                                id="description"
-                                value={description}
+                        <div className="formCol">
+                            <input
+                                type="number"
+                                name="salePrice"
+                                id="salePrice"
+                                value={salePrice}
                                 onChange={handleInputChange}
-                                required
+                                onKeyDown={handleKeyDown}
+                                step=".01"
                             />
+                            <label className={`${salePrice ? "active-content": ""} p-label `} htmlFor="salePrice">
+                                Sale Price
+                            </label>
+                            {errorMessages.salePrice &&
+                                <div className="label-error">
+                                    <i className="fas fa-exclamation-triangle"></i>&nbsp; {errorMessages.salePrice}
+                                </div>
+                            }
                         </div>
                     </div>
-                </Form>
-            </Body>
+                    <div className="formCol mobile-row">
+                        <input
+                            type="number"
+                            name="weight"
+                            id="productWeight"
+                            value={weight}
+                            onChange={handleInputChange}
+                            onKeyDown={handleKeyDown}
+                            min="0"
+                            max="1000"
+                            step=".01"
+                            required
+                        />
+                        <label className={`${weight ? "active-content" : ""} p-label row2`} htmlFor="productWeight">
+                            Weight
+                        </label>
+                        <span className="input-addOn">lbs.</span>
+                        {errorMessages.weight &&
+                            <div className="label-error">
+                                <i className="fas fa-exclamation-triangle"></i>&nbsp; {errorMessages.weight}
+                            </div>
+                        }
+                    </div>
+
+                </div>
+                <div className="form-container">
+                    <DropZone {...getRootProps({
+                        onClick: event => event.stopPropagation(),
+                    })}>
+                        {loadingDots && <LoadingDots/>}
+                        <i className="fas fa-camera-retro retroCam"></i>
+                        <p id="dragNdrop-p">Drag & Drop To Upload</p>
+                        <div className="line-break-container">
+                            <span className="lineBreak"></span>
+                            <span id="or-text">or </span>
+                            <span className="lineBreak"></span>
+                        </div>
+                        <button type="button" className="browse-btn" onClick={toggleGalleryModal}><i className="fas fa-images imgIcon"></i>Browse Gallery</button>
+                        <input {...getInputProps()} ref={dropInput}/>
+                    </DropZone>
+                </div>
+                <ScrollGallery
+                    selectedImages={selectedImages}
+                    setImages={setImages}
+                    productImages={productImages}
+                    setProductImages={setProductImages}
+                    toggleCropPhotoModal={selectImageToCrop}
+                />
+                <div className="descriptionRow">
+                    <div className="desc-form-row">
+                        <label htmlFor="description">
+                                Description
+                        </label>
+                        <textarea
+                            type="text"
+                            name="description"
+                            id="description"
+                            value={description}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
+                </div>
+            </Form>
             <ImageGalleryModal
                 show={galleryModalOpen}
                 toggleModal={toggleGalleryModal}
@@ -325,7 +323,7 @@ const ProductForm = (props) => {
                 setModalOpen={setCropModalOpen}
                 updateProductImages={updateProductImages}
             />
-        </ProductPageContent>
+        </Fragment>
     );
 }
 

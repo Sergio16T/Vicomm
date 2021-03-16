@@ -39,6 +39,7 @@ const typeDefs = gql`
         sale_price: Int
         item_weight: Float
         multimedia: [MultiMedia]
+        crte_tm: String
     }
 
     type MultiMedia {
