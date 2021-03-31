@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { Spinner } from '../SpinKit/Spinner';
 
 const SaveProductButtonContainer = styled.div`
     display: flex;
     margin-left: 15px;
     .saveButtonContainer {
         display: flex;
-        position:relative;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
         .submenu {
             position: absolute;
             width: calc(100%  + 45px);
@@ -39,6 +42,9 @@ const SaveProductButtonContainer = styled.div`
         text-transform: uppercase;
     }
     #save-button {
+        margin: 0;
+        position: relative;
+        overflow: hidden;
         outline: none;
         border: 0;
         border-top-left-radius: 6px;
@@ -93,7 +99,7 @@ const SaveProductButtonContainer = styled.div`
     }
 `;
 
-const SaveProductButton = ({ disabled, cancel, submitForm }) => {
+const SaveProductButton = ({ cancel, disabled, loading, submitForm }) => {
     const [isOpen, setIsOpen] = useState(false);
     const submenu = useRef();
     const caretMenu = useRef();
@@ -116,7 +122,7 @@ const SaveProductButton = ({ disabled, cancel, submitForm }) => {
         <SaveProductButtonContainer disabled={disabled}>
             <div className="saveButtonContainer">
                 <button type="button" id="save-button" onClick={submitForm}>
-                    Save
+                    {loading ? <Spinner style={{ width: "18px", height: "18px" }} spinner={true}/> : "Save"}
                 </button>
                 <div ref={caretMenu} className="dropdown-menu" onClick={() => setIsOpen(!isOpen)}>
                     <i className="fas fa-caret-down"></i>

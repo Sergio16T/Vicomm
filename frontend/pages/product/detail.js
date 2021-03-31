@@ -18,6 +18,7 @@ const GET_ITEM_QUERY = gql`
             multimedia {
                 id,
                 mltmd_url,
+                multimedia_xref_id,
             }
         }
     }
@@ -31,6 +32,7 @@ export async function getServerSideProps({ query: { uid } }) {
     const { data } = await apolloClient.query({
         query: GET_ITEM_QUERY,
         variables: { uid },
+        fetchPolicy:  "no-cache",
     });
     return { props: { data } };
 }

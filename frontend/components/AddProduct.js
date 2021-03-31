@@ -30,7 +30,7 @@ const CREATE_ITEM_MUTATION = gql`
 `;
 
 const AddProduct = () => {
-    const [createItem] = useMutation(CREATE_ITEM_MUTATION);
+    const [createItem, { loading }] = useMutation(CREATE_ITEM_MUTATION);
     const router = useRouter();
     const [state, setState] = useState({
         edit: false,
@@ -56,8 +56,7 @@ const AddProduct = () => {
         errorMessages,
         edit,
     } = state;
-    const missingRequiredFields = !name || !price;
-    const errorMessagePresent = errorMessages.price || errorMessages.salePrice || errorMessages.weight || errorMessages.description;
+
 
     const submitForm = async (e) => {
         const { id } = e.target;
@@ -68,7 +67,7 @@ const AddProduct = () => {
             salePrice: parseFloat(salePrice),
             weight: parseFloat(weight),
             description: description ? description : null,
-            productImages: productImages.map(image => ({ id: image.id, mltmd_url: image.mltmd_url })),
+            productImages: productImages.map((image, index) => ({ id: image.id, multimediaUrl: image.mltmd_url, displayCount: index + 1 })),
         }
         const { data: { createItem: { item_uid } } } = await createItem({ variables: data }).catch(err => {
             console.log(err.message);
@@ -91,14 +90,17 @@ const AddProduct = () => {
                 // instead of adding new query param just check on the client if create time is within the last 10 minutes to determine whether to show alert or not
                 router.push({
                     pathname: "/product/detail",
-                    query: { uid: item_uid, new: "Y" },
+                    query: { uid: item_uid },
                 });
             }
         }
     }
 
     const renderButton = () => {
+        const missingRequiredFields = !name || !price;
+        const errorMessagePresent = errorMessages.price || errorMessages.salePrice || errorMessages.weight || errorMessages.description;
         const disabled = missingRequiredFields || errorMessagePresent;
+
         if (!edit) {
             return null
         }
@@ -107,6 +109,7 @@ const AddProduct = () => {
                 submitForm={submitForm}
                 disabled={disabled}
                 cancel={resetForm}
+                loading={loading}
             />
         );
     }

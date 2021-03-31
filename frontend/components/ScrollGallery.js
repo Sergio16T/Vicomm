@@ -21,8 +21,6 @@ const ScrollGallery = ({ selectedImages, setImages, productImages, setProductIma
                 setImagesAdded(true);
             }
             setImages([]);
-        } else {
-            setProductImages(productImages);
         }
     }, [selectedImages, productImages, setProductImages, setImages]);
 

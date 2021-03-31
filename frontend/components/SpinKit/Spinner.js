@@ -19,8 +19,8 @@ const StyledSpinner = styled.div`
     }
     #loading {
       display: inline-block;
-      width: 60px;
-      height: 60px;
+      width: ${props => props.width};
+      height: ${props => props.height};
       border: 3px solid rgba(255,255,255,.3);
       border-radius: 50%;
       border-top-color: #fff;
@@ -39,9 +39,9 @@ const StyledSpinner = styled.div`
 }
 `;
 
-const Spinner = (props) => {
+const Spinner = ({ spinner, style }) => {
     return (
-        <StyledSpinner spinner={props.spinner}>
+        <StyledSpinner spinner={spinner} height={style.height} width={style.width}>
             <div id="backDrop">
                 <div id="loading"></div>
             </div>

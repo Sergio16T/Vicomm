@@ -5,11 +5,27 @@ import SaveProductButton from './Buttons/SaveProductButton';
 import Page from './Layout/Page';
 import { ProductPageContent, Body } from './Styles/ProductStyles';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
-// TO DO
 const UPDATE_ITEM_MUTATION = gql`
-    mutation UPDATE_ITEM_MUTATION {
-        updateItem {
+    mutation UPDATE_ITEM_MUTATION(
+        $id: ID!,
+        $name: String!,
+        $price: Float!,
+        $salePrice: Float,
+        $weight: Float,
+        $productImages: [ProductImage],
+        $description: String,
+    ) {
+        updateItem(
+            id: $id,
+            name: $name,
+            price: $price,
+            salePrice: $salePrice,
+            weight: $weight,
+            description: $description,
+            productImages: $productImages
+        ) {
             id
         }
     }
@@ -17,6 +33,7 @@ const UPDATE_ITEM_MUTATION = gql`
 
 
 const Product = ({ data: { getItem: item } }) => {
+    const router = useRouter();
     const initialState = {
         edit: false,
         name: item.item_title,
@@ -31,7 +48,7 @@ const Product = ({ data: { getItem: item } }) => {
             description: "",
         },
     };
-    const [updateItem] = useMutation(UPDATE_ITEM_MUTATION);
+    const [updateItem, { loading }] = useMutation(UPDATE_ITEM_MUTATION);
     const [state, setState] = useState(initialState);
     const [productImages, setProductImages] = useState(item.multimedia);
     const {
@@ -45,25 +62,37 @@ const Product = ({ data: { getItem: item } }) => {
     } = state;
     const missingRequiredFields = !name || !price;
     const errorMessagePresent = errorMessages.price || errorMessages.salePrice || errorMessages.weight || errorMessages.description;
-    const createTime = new Date(item.crte_tm);
-    const tenMinutesAgo = new Date(Date.now() - 600000);
+    const createTime = new Date(item.crte_tm).getTime();
+    const tenMinutesAgo = new Date(Date.now() - 600000).getTime();
     const createdWithinPast10Minutes = createTime > tenMinutesAgo;
 
     const submitForm = async () => {
         // Update $ to cents
         const data = {
+            id: item.id,
             name,
             price: parseFloat(price),
             salePrice: parseFloat(salePrice),
             weight: parseFloat(weight),
             description: description ? description : null,
-            productImages: productImages.map(image => ({ id: image.id, mltmd_url: image.mltmd_url })),
+            productImages: productImages.map((image, index) => ({
+                id: image.id,
+                multimediaUrl: image.mltmd_url,
+                displayCount: index + 1,
+                multimediaXrefId: image.multimedia_xref_id ? image.multimedia_xref_id : null,
+            })),
         }
-        const result = await updateItem({ variables: data }).catch(err => {
+        await updateItem({ variables: data }).catch(err => {
             console.log(err.message);
             // TO DO: Error handle
         });
-        console.log(result);
+        // Force getServerSideProps to refresh
+        router.replace(router.asPath);
+
+        setState({
+            ...state,
+            edit: false,
+        });
     }
 
     const renderButton = () => {
@@ -73,9 +102,10 @@ const Product = ({ data: { getItem: item } }) => {
         }
         return (
             <SaveProductButton
-                onClick={submitForm}
+                submitForm={submitForm}
                 disabled={disabled}
                 cancel={cancel}
+                loading={loading}
             />
         );
     }
@@ -85,6 +115,13 @@ const Product = ({ data: { getItem: item } }) => {
         setProductImages(item.multimedia);
     }
 
+    const updateProductImages = (multimedia) => {
+        setProductImages(multimedia);
+        setState({
+            ...state,
+            edit: true,
+        });
+    }
     return (
         <Page
             renderData = {{
@@ -104,7 +141,7 @@ const Product = ({ data: { getItem: item } }) => {
                         state={state}
                         setState={setState}
                         productImages={productImages}
-                        setProductImages={setProductImages}
+                        setProductImages={updateProductImages}
                     />
                 </Body>
             </ProductPageContent>
@@ -113,6 +150,7 @@ const Product = ({ data: { getItem: item } }) => {
 };
 
 const StyledAlert = styled.div`
+    box-sizing: border-box;
     padding: 1rem 1.5rem;
     background-color: white;
     border-radius: 4px;
@@ -144,7 +182,7 @@ const StyledAlert = styled.div`
         display: inline-block;
     }
 `;
-
+// Potentially Create a Toast Alert Instead
 const NewProductAlert = () => {
     return (
         <StyledAlert>

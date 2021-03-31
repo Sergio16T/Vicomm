@@ -19,9 +19,10 @@ const typeDefs = gql`
         updateCoverPhoto(key: ID): CoverPhoto!
         removeCoverPhoto: SuccessMessage!
         createItem(name: String!, price: Float!, salePrice: Float, weight: Float, description: String, productImages: [ProductImage]): Item!
-        updateItem: Item
+        updateItem(id: ID!, name: String!, price: Float!, salePrice: Float, weight: Float, description: String, productImages: [ProductImage]): Item
     }
 
+    # update schema to not expose my DB schema table names
     type User {
         id: ID
         fst_nm: String!
@@ -46,11 +47,14 @@ const typeDefs = gql`
         id: ID,
         mltmd_url: String!
         mltmd_lg_url: String!
+        multimedia_xref_id: ID,
     }
 
     input ProductImage {
         id: ID,
-        mltmd_url: String
+        multimediaUrl: String
+        multimediaXrefId: ID,
+        displayCount: Int
     }
 
     type SuccessMessage {

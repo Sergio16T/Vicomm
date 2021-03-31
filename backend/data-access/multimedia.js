@@ -72,6 +72,7 @@ module.exports = {
     createMultimediaXref: async (params) => {
         const {
             createByAccountKey,
+            displayCount,
             multimediaKey,
             sourceTableKey,
             sourceTableName,
@@ -84,9 +85,46 @@ module.exports = {
                 mltmd_key = ${multimediaKey},
                 src_tbl_key = ${sourceTableKey},
                 src_tbl_nm = ${sourceTableName},
+                display_count = ${displayCount},
                 crte_tm = NOW(),
                 crte_by_acct_key = ${createByAccountKey},
                 act_ind = ${1}
+        `;
+
+        const result = await db.query(query).catch(err => { throw err; });
+
+        return result;
+    },
+    updateMultimediaXrefDisplayCount: async (params) => {
+        const {
+            multimediaXrefId,
+            displayCount,
+            lastUpdateByAccountKey,
+        } = params;
+
+        let query = SQL`
+        UPDATE
+            mltmd_xref
+        SET
+            display_count = ${displayCount},
+            lst_updt_tm = NOW(),
+            lst_updt_by_acct_key = ${lastUpdateByAccountKey}
+        where
+            id = ${multimediaXrefId}
+            AND act_ind = ${1}
+        `;
+
+        const result = await db.query(query).catch(err => { throw err; });
+
+        return result;
+    },
+
+    deleteMultimediaXref: async (id) => {
+        let query = SQL`
+            DELETE FROM
+                mltmd_xref
+            WHERE
+                id = ${id};
         `;
 
         const result = await db.query(query).catch(err => { throw err; });
