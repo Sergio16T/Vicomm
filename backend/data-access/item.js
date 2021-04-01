@@ -2,7 +2,7 @@ const db = require('../db');
 const SQL = require('sql-template-strings');
 
 module.exports = {
-    createItem: async (params) => {
+    createItem: async (params, connection) => {
         const {
             createByAccountKey,
             description,
@@ -28,11 +28,53 @@ module.exports = {
                 act_ind = ${1}
         `;
 
-        const result = await db.query(query).catch(err => { throw err; });
+        if (!connection) {
+            const result = await db.query(query).catch(err => { throw err; });
+            return result;
+        } else {
+            const result = await connection.query(query).catch(err => { throw err; });
+            return result;
+        }
+    },
+    getProductItems: async (params) => {
+        const {
+            accountKey,
+            skip,
+            numPerPage,
+        } = params;
+
+        let query = SQL`
+            SELECT
+                productItem.id,
+                productItem.item_uid,
+                productItem.item_title,
+                productItem.price,
+                productItem.sale_price,
+                productItem.item_weight,
+                media.mltmd_url
+            FROM
+                item productItem
+                LEFT OUTER JOIN mltmd_xref mediaXref
+                    ON mediaXref.src_tbl_key = productItem.id
+                    AND mediaXref.display_count = ${1}
+                    AND mediaXref.act_ind = ${1}
+                LEFT OUTER JOIN mltmd media
+                    ON media.id = mediaXref.mltmd_key
+                    AND media.act_ind= ${1}
+            WHERE
+                productItem.crte_by_acct_key = ${accountKey}
+                AND productItem.act_ind = ${1}
+            LIMIT ${skip}, ${numPerPage};
+        `;
+
+        const result = await db.query(query).catch(err => {
+            console.log(err);
+            throw err;
+        });
 
         return result;
     },
-    getItem: async (id) => {
+    getItem: async (id, connection) => {
         let query = SQL`
             SELECT
                 *
@@ -43,9 +85,13 @@ module.exports = {
                 AND act_ind = ${1}
         `;
 
-        let result = await db.query(query).catch(err => { throw err; });
-
-        return result;
+        if (!connection) {
+            let result = await db.query(query).catch(err => { throw err; });
+            return result;
+        } else {
+            let result = await connection.query(query).catch(err => { throw err; });
+            return result;
+        }
     },
     getItemDetailsByUID: async (uid) => {
         let query = SQL`

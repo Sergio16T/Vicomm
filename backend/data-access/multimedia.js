@@ -69,7 +69,7 @@ module.exports = {
 
         return mediaGallery;
     },
-    createMultimediaXref: async (params) => {
+    createMultimediaXref: async (params, connection) => {
         const {
             createByAccountKey,
             displayCount,
@@ -91,9 +91,13 @@ module.exports = {
                 act_ind = ${1}
         `;
 
-        const result = await db.query(query).catch(err => { throw err; });
-
-        return result;
+        if (!connection) {
+            const result = await db.query(query).catch(err => { throw err; });
+            return result;
+        } else {
+            const result = await connection.query(query).catch(err => { throw err; });
+            return result;
+        }
     },
     updateMultimediaXrefDisplayCount: async (params) => {
         const {

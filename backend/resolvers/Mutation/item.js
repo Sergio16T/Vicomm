@@ -2,36 +2,59 @@ const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const { createItem, getItem, updateItem, getItemMultimediaById } = require('../../data-access/item');
 const { createMultimediaXref, updateMultimediaXrefDisplayCount, deleteMultimediaXref } = require('../../data-access/multimedia');
+const { startTransaction, rollBack, commitChanges } = require('../../data-access/utilities');
 
 module.exports = {
     createItem: async (parent, args, context, info) => {
+        let item;
+        let connection;
+        const { productImages } = args;
+
         const randomBytesPromiseified = promisify(randomBytes);
         const uid = (await randomBytesPromiseified(24)).toString('hex');
-        // 1) create product item record
-        const { insertId } = await createItem({
-            ...args,
-            uniqueId: uid,
-            createByAccountKey: context.req.user.id,
-        });
-        // 2) create multimedia xref records to point images to product item
-        const { productImages } = args;
-        for (let i = 0; i < productImages.length; i++) {
-            // need to add a display count to these images so mltmd_xref needs a display count table value
-            await createMultimediaXref({
+
+        try {
+            // 0) Get MYSQL connection and start transaction
+            connection = await startTransaction();
+            // 1) create product item record
+            const { insertId } = await createItem({
+                ...args,
+                uniqueId: uid,
                 createByAccountKey: context.req.user.id,
-                displayCount: productImages[i].displayCount,
-                multimediaKey: productImages[i].id,
-                sourceTableKey: insertId,
-                sourceTableName: 'item',
-            });
+            }, connection);
+            // 2) create multimedia xref records to point images to product item
+            for (let i = 0; i < productImages.length; i++) {
+                // if (i === 1) {
+                //     console.log('A: Test Roll Back!');
+                //     throw new Error('Testing Roll Back!');
+                // }
+
+                await createMultimediaXref({
+                    createByAccountKey: context.req.user.id,
+                    displayCount: productImages[i].displayCount,
+                    multimediaKey: productImages[i].id,
+                    sourceTableKey: insertId,
+                    sourceTableName: 'item',
+                }, connection);
+            }
+            // 3) query for product item
+            [item] = await getItem(insertId, connection);
+
+            //4) commit DB changes
+            await commitChanges(connection);
+
+            // 5) return product item
+            return {
+                ...item,
+                multimedia: productImages,
+            };
+        } catch (err) {
+            console.log(err);
+            await rollBack(connection);
+            throw err;
+        } finally {
+            await connection.release();
         }
-        // 3) query for product item
-        const [item] = await getItem(insertId);
-        // 4) return product item
-        return {
-            ...item,
-            multimedia: productImages,
-        };
     },
     updateItem: async (parent, args, context, info) => {
         const { productImages } = args;
