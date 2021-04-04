@@ -10,7 +10,7 @@ module.exports = {
         };
     },
     getProductItems: async (parent, args, context, info) => {
-        const numPerPage = 20;
+        const numPerPage = 10;
         const productItems = await getProductItems({
             accountKey: context.req.user.id,
             skip: args.page * numPerPage - numPerPage,

@@ -57,6 +57,8 @@ const SaveProductButtonContainer = styled.div`
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
         opacity: ${props => props.disabled ? 0.4 : 1};
         pointer-events: ${props => props.disabled ? "none": "auto"};
+        height: 100%;
+        width: 82.25px;
         &:focus {
             outline: none;
         }

@@ -1,27 +1,32 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 import Page from './Layout/Page';
+import { ProductPageContent, Body } from './Styles/ProductStyles';
 import AddProductButton from './Buttons/AddProductButton';
+import ProductTable from './Table/ProductTable';
 
 const GET_PRODUCT_ITEMS_QUERY = gql`
     query GET_PRODUCT_ITEMS_QUERY($page: Int!) {
         getProductItems(page: $page) {
-            id,
-            item_uid,
-            item_title,
-            item_desc,
-            price,
-            sale_price,
-            item_weight,
-            mltmd_url,
+            result {
+                id,
+                item_uid,
+                item_title,
+                item_desc,
+                price,
+                sale_price,
+                item_weight,
+                mltmd_url,
+            },
+            count,
         }
     }
 `;
 
-const Products = () => {
-    const { data } = useQuery(GET_PRODUCT_ITEMS_QUERY, {
+const Products = ({ query: { page } }) => {
+    const { data, loading } = useQuery(GET_PRODUCT_ITEMS_QUERY, {
         variables: {
-            page: 1,
+            page: parseInt(page),
         },
     });
     console.log(data);
@@ -36,7 +41,16 @@ const Products = () => {
                 },
             }}
         >
-            <div></div>
+            <ProductPageContent>
+                <Body>
+                    <ProductTable
+                        loading={loading}
+                        productItems={data ? data.getProductItems.result : null}
+                        count={data ? data.getProductItems.count : null}
+                    />
+                </Body>
+            </ProductPageContent>
+
         </Page>
 
     );

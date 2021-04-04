@@ -43,6 +43,37 @@ module.exports = {
             numPerPage,
         } = params;
 
+        let countQuery = SQL`
+        SELECT
+            count(productItem.id) as count
+        FROM
+            item productItem
+            LEFT OUTER JOIN mltmd_xref mediaXref
+                ON mediaXref.src_tbl_key = productItem.id
+                AND mediaXref.display_count = ${1}
+                AND mediaXref.act_ind = ${1}
+            LEFT OUTER JOIN mltmd media
+                ON media.id = mediaXref.mltmd_key
+                AND media.act_ind= ${1}
+        WHERE
+            productItem.crte_by_acct_key = ${accountKey}
+            AND productItem.act_ind = ${1}
+        `;
+
+        const [data] = await db.query(countQuery).catch(err => {
+            console.log(err);
+            throw err;
+        });
+
+        const { count } = data;
+
+        if (!count) {
+            return {
+                result: [],
+                count,
+            }
+        }
+
         let query = SQL`
             SELECT
                 productItem.id,
@@ -72,7 +103,10 @@ module.exports = {
             throw err;
         });
 
-        return result;
+        return {
+            result,
+            count,
+        };
     },
     getItem: async (id, connection) => {
         let query = SQL`

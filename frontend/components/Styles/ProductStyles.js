@@ -17,7 +17,7 @@ const Body = styled.div`
     display: flex;
     flex-direction: column;
     justify-content:center;
-    padding: 1rem 2rem;
+    padding: 1rem 3rem;
     align-items: center;
     /* background-color: #F2F2F2;  */
     /* margin: 0 auto;  */

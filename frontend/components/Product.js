@@ -48,6 +48,7 @@ const Product = ({ data: { getItem: item } }) => {
             description: "",
         },
     };
+    // TO DO - write update function to update the cache for GET_PRODUCT_ITEMS_QUERY
     const [updateItem, { loading }] = useMutation(UPDATE_ITEM_MUTATION);
     const [state, setState] = useState(initialState);
     const [productImages, setProductImages] = useState(item.multimedia);
@@ -66,7 +67,8 @@ const Product = ({ data: { getItem: item } }) => {
     const tenMinutesAgo = new Date(Date.now() - 600000).getTime();
     const createdWithinPast10Minutes = createTime > tenMinutesAgo;
 
-    const submitForm = async () => {
+    const submitForm = async (e) => {
+        const { id } = e.target;
         // Update $ to cents
         const data = {
             id: item.id,
@@ -86,13 +88,31 @@ const Product = ({ data: { getItem: item } }) => {
             console.log(err.message);
             // TO DO: Error handle
         });
-        // Force getServerSideProps to refresh
-        router.replace(router.asPath);
 
-        setState({
-            ...state,
-            edit: false,
-        });
+        switch (id) {
+            case "save-return-to-list": {
+                router.push({
+                    pathname: "/products",
+                    query: { page: 1 },
+                });
+                break;
+            }
+            case "save-create-new": {
+                router.push({
+                    pathname: "/product/add",
+                });
+                // toggle successAlert true state value to display success alert with option to view new product
+                break;
+            }
+            default: {
+                // Force getServerSideProps to refresh
+                router.replace(router.asPath);
+                setState({
+                    ...state,
+                    edit: false,
+                });
+            }
+        }
     }
 
     const renderButton = () => {

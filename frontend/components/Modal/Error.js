@@ -65,7 +65,7 @@ const StyledError = styled.div`
             border: 1px solid #4285f4;
             cursor: pointer;
             padding: 1rem;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             color: white;
             border-radius: 6px;
         }

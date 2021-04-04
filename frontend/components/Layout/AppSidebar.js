@@ -20,7 +20,7 @@ const SideBar = (props) => {
                                 text="Home"
                             />
                             <MenuItem
-                                link="/products"
+                                link="/products?page=1"
                                 id="productIcon"
                                 faIcon="fas fa-tag"
                                 text="Products"

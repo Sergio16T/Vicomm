@@ -78,6 +78,7 @@ const AddProduct = () => {
                 case "save-return-to-list": {
                     router.push({
                         pathname: "/products",
+                        query: { page: 1 },
                     });
                     break;
                 }

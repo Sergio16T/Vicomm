@@ -7,7 +7,7 @@ const typeDefs = gql`
         getImageGallery: [MultiMedia]
         getCoverPhoto: MultiMedia
         getItem(uid: String!): Item
-        getProductItems(page: Int!): [ProductItem]
+        getProductItems(page: Int!): ProductItemsResponse
     }
 
     type Mutation {
@@ -42,6 +42,11 @@ const typeDefs = gql`
         item_weight: Float
         multimedia: [MultiMedia]
         crte_tm: String
+    }
+
+    type ProductItemsResponse {
+        result: [ProductItem]
+        count: Int!
     }
 
     type ProductItem { # relationship to item with additional fields may be a good idea to create an interface
