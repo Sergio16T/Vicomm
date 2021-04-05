@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
@@ -15,27 +15,43 @@ const StyledPagination = styled.div`
         &:last-of-type {
             margin-left: 10px;
         }
+        &:focus {
+            outline: none;
+        }
+    }
+    span {
+        min-width: 57.16px;
     }
 `;
 
-const Pagination = ({ basepath, count, numberPerPage }) => {
+const Pagination = ({ basepath, count, fetchMore, numberPerPage }) => {
     const router = useRouter();
     const page = parseInt(router.query.page);
-    const numberOfPages = Math.ceil(count/numberPerPage);
+    let numberOfPages = Math.ceil(count/numberPerPage);
+    numberOfPages = numberOfPages === 0 ? 1 : numberOfPages;
+
+    useEffect(() => {
+        fetchMore({
+            variables: {
+                page: page,
+            },
+        });
+    }, [page, fetchMore]);
 
     const goToNextPage = () => {
         router.push({
             pathname: basepath,
             query: { page: page + 1 },
-        });
+        }, undefined, { shallow: true });
     }
 
     const goToPreviousPage = () => {
         router.push({
             pathname: basepath,
             query: { page: page - 1 },
-        });
+        }, undefined, { shallow: true });
     }
+
     return (
         <StyledPagination>
             <button

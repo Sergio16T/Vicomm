@@ -48,7 +48,10 @@ const Product = ({ data: { getItem: item } }) => {
             description: "",
         },
     };
-    // TO DO - write update function to update the cache for GET_PRODUCT_ITEMS_QUERY
+
+    /* TO DO - write update function to update the cache for GET_PRODUCT_ITEMS_QUERY.
+    Check if item ID in the cached result and replace with updated item if present */
+
     const [updateItem, { loading }] = useMutation(UPDATE_ITEM_MUTATION);
     const [state, setState] = useState(initialState);
     const [productImages, setProductImages] = useState(item.multimedia);

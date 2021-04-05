@@ -30,6 +30,9 @@ const CREATE_ITEM_MUTATION = gql`
     }
 `;
 
+/* get aggregate count of product items in a query to be able to determine
+if updating cache is necessary after creating item (READ QUERY to see if last page already cached) */
+
 const AddProduct = () => {
     const [createItem, { loading }] = useMutation(CREATE_ITEM_MUTATION);
     const router = useRouter();

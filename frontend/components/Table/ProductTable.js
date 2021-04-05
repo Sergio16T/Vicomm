@@ -95,7 +95,7 @@ const StyledTable = styled.div`
             margin-left: auto;
         }
     }
-    @media (max-width: 700px) {
+    @media (max-width: 1000px) {
         .table-footer {
             div {
                 margin-left: 0;
@@ -105,7 +105,7 @@ const StyledTable = styled.div`
 `;
 
 
-const ProductTable = ({ count, loading, productItems }) => {
+const ProductTable = ({ count, fetchMore, loading, productItems }) => {
     return (
         <StyledTable rowCount={productItems ? productItems.length : 0} numberPerPage={10}>
             <div className="table">
@@ -150,6 +150,7 @@ const ProductTable = ({ count, loading, productItems }) => {
                         basepath="/products"
                         numberPerPage={10}
                         count={count}
+                        fetchMore={fetchMore}
                     />
                 </div>
             </div>

@@ -21,6 +21,12 @@ const cacheConfig = {
                         return incoming;
                     },
                 },
+                getProductItems: {
+                    keyArgs: false,
+                    merge(existing = [], incoming) {
+                        return { ...existing, ...incoming };
+                    },
+                },
             },
         },
     },
