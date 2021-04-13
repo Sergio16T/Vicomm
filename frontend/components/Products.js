@@ -4,6 +4,8 @@ import Page from './Layout/Page';
 import { ProductPageContent, Body } from './Styles/ProductStyles';
 import AddProductButton from './Buttons/AddProductButton';
 import ProductTable from './Table/ProductTable';
+import ErrorMessage from './Modal/Error';
+import { useRouter } from 'next/router';
 
 const GET_PRODUCT_ITEMS_QUERY = gql`
     query GET_PRODUCT_ITEMS_QUERY($page: Int!) {
@@ -24,13 +26,21 @@ const GET_PRODUCT_ITEMS_QUERY = gql`
 `;
 
 const Products = ({ query: { page } }) => {
-    const { data, loading, fetchMore } = useQuery(GET_PRODUCT_ITEMS_QUERY, {
+    const { data, loading, fetchMore, error } = useQuery(GET_PRODUCT_ITEMS_QUERY, {
         variables: {
             page: parseInt(page),
         },
+        errorPolicy: 'all', // `all` - Both data and error.graphQLErrors are populated, enabling you to render both partial results and error information.
     });
+    const router = useRouter();
 
     const render = () => <AddProductButton/>;
+
+    const reset = () => {
+        router.push({
+            pathname: "/dashboard",
+        });
+    }
 
     return (
         <Page
@@ -43,6 +53,11 @@ const Products = ({ query: { page } }) => {
             }}
         >
             <ProductPageContent>
+                <ErrorMessage
+                    error={error}
+                    reset={reset}
+                    text="Back to dashboard"
+                />
                 <Body>
                     <ProductTable
                         fetchMore={fetchMore}
@@ -52,9 +67,7 @@ const Products = ({ query: { page } }) => {
                     />
                 </Body>
             </ProductPageContent>
-
         </Page>
-
     );
 };
 

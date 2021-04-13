@@ -1,5 +1,5 @@
 import React from 'react';
-import WithApollo from '../lib/ApolloClient';
+import withApollo from '../lib/ApolloClient';
 import SignIn from '../components/SignIn';
 
 const Login = () => {
@@ -8,4 +8,4 @@ const Login = () => {
     );
 }
 
-export default WithApollo(Login);
+export default withApollo(Login);

@@ -158,6 +158,7 @@ const AddProduct = () => {
                 <ErrorMessage
                     reset={reset}
                     error={error}
+                    text="Try Again"
                 />
                 <Body>
                     <AddProductForm

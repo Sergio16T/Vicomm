@@ -1,4 +1,3 @@
-import withApollo from '../lib/ApolloClient';
 import Dashboard from '../components/Dashboard';
 
 const DashboardPage = () => {
@@ -7,4 +6,4 @@ const DashboardPage = () => {
     );
 };
 
-export default withApollo(DashboardPage);
+export default DashboardPage;

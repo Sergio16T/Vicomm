@@ -1,9 +1,9 @@
 import Home from '../components/Home';
-import WithApollo from '../lib/ApolloClient';
+import withApollo from '../lib/ApolloClient';
 
 const HomePage = () => {
     return (
         <Home/>
     );
 }
-export default WithApollo(HomePage)
+export default withApollo(HomePage)

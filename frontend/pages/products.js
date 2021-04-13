@@ -1,5 +1,4 @@
 import React from 'react';
-import withApollo from '../lib/ApolloClient';
 import Products from '../components/Products';
 
 const ProductsPage = ({ query }) => {
@@ -9,4 +8,4 @@ const ProductsPage = ({ query }) => {
 };
 
 
-export default withApollo(ProductsPage);
+export default ProductsPage;

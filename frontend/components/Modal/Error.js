@@ -90,7 +90,7 @@ const StyledError = styled.div`
 
 `;
 
-const ErrorMessage = ({ error, reset }) => {
+const ErrorMessage = ({ error, reset, text }) => {
 
     useEffect(() => {
         if (error) {
@@ -115,7 +115,7 @@ const ErrorMessage = ({ error, reset }) => {
                         </div>
                     </div>
                     <div className="error-footer">
-                        <button onClick={reset}>Try Again</button>
+                        <button onClick={reset}>{text}</button>
                     </div>
                 </StyledError>
             </>
