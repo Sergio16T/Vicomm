@@ -113,7 +113,6 @@ const CropPhotoModal = ({ imageUrl, setModalOpen, show, toggleModal, updateProdu
                     return;
                 }
                 blob.name = "Cropped Photo";
-
                 const newImage = new File([blob], blob.name, { type: blob.type });
                 const data = new FormData();
                 data.append('file', newImage);
@@ -125,8 +124,10 @@ const CropPhotoModal = ({ imageUrl, setModalOpen, show, toggleModal, updateProdu
                     body: data,
                 });
                 const file = await res.json();
-                console.log('new file upload', file)
-                if (Object.prototype.hasOwnProperty.call(file, "error")) throw file.error.message;
+
+                if (Object.prototype.hasOwnProperty.call(file, "error")) {
+                    throw file.error.message;
+                }
                 // create new record in DB
                 const { data: { uploadImageToGallery: image } } = await uploadImageToGallery({
                     variables: {
@@ -134,7 +135,7 @@ const CropPhotoModal = ({ imageUrl, setModalOpen, show, toggleModal, updateProdu
                         largeImage: file.eager[0].secure_url,
                     },
                 });
-                console.log('image response from server', image);
+
                 updateProductImages(image.id, image.mltmd_url);
                 toggleModal();
                 setSpinner(false);

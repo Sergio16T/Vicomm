@@ -27,8 +27,7 @@ const StyledPagination = styled.div`
 const Pagination = ({ basepath, count, fetchMore, numberPerPage }) => {
     const router = useRouter();
     const page = parseInt(router.query.page);
-    let numberOfPages = Math.ceil(count/numberPerPage);
-    numberOfPages = numberOfPages === 0 ? 1 : numberOfPages;
+    let numberOfPages = Math.ceil(count/numberPerPage) || 1;
 
     useEffect(() => {
         fetchMore({

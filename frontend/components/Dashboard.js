@@ -31,7 +31,7 @@ const Dashboard = ({ modalOpen, setModalOpen, toggleModal }) => {
     const uploadCoverPhoto = async (selected, cb) => {
         const [image] = Object.values(selected);
         const MLTMD_KEY = parseInt(image.id);
-        await updateCoverPhoto({ variables: { key: MLTMD_KEY } }).catch(err => { throw err; });
+        await updateCoverPhoto({ variables: { key: MLTMD_KEY } });
         cb({});
         toggleModal();
     }

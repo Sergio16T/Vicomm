@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 const SignUpPage = styled.div`
-    /* padding-top: 100px;  */
-    /* height: 100%;  */
     background: rgba(0, 0, 0, 0.02);
     padding: 100px 0;
     .OAuthLineBreak {
@@ -22,14 +20,13 @@ const SignUpPage = styled.div`
 `;
 
 const SignUpFormWrapper = styled.div`
-    padding: 2rem;
+    box-sizing: border-box;
+    padding: 2rem 3rem;
     border-radius: 6px;
     background: white;
     border: 1px solid #f5f5f5;
     display: flex;
     justify-content: center;
-    /* max-width: 800px;
-    width: 90%;  */
     position: relative;
     width: 55%;
     margin: 0 auto;
@@ -47,6 +44,10 @@ const SignUpFormWrapper = styled.div`
         }
     @media (max-width: 900px) {
         width: 85%;
+        padding: 2rem;
+    }
+    @media (max-width: 480px) {
+        width: 95%;
     }
 `;
 

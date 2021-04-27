@@ -43,7 +43,9 @@ const GoogleBtn = (props) => {
 
     const login = async (response) => {
         console.log('response', response);
-        if (!response.accessToken) return;
+        if (!response.accessToken) {
+            return;
+        }
         setState({
             ...state,
             isLoggedIn: true,

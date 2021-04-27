@@ -55,30 +55,26 @@ const UploadImageModal = (props) => {
     }, [props.show]);
 
     const handleSelect = (image) => {
-        switch (props.multiSelect) {
-            case true: {
-                let selectedImages = { ...selected };
-                if (image.id in selectedImages) delete selectedImages[image.id];
-                else selectedImages[image.id] = image;
-                setSelected(selectedImages);
-                setCount(Object.keys(selectedImages).length);
-                break;
-            }
-            default: {
-                let selectedImages = { ...selected };
-                let imageDeleted = false;
-                if (image.id in selectedImages) {
-                    delete selectedImages[image.id];
-                    imageDeleted = true;
-                }
-                if (!imageDeleted) {
-                    selectedImages = {};
-                    selectedImages[image.id] = image;
-                }
-                setSelected(selectedImages);
-                setCount(Object.keys(selectedImages).length);
-            }
+        let selectedImages = { ...selected };
+        if (image.id in selectedImages) {
+            delete selectedImages[image.id];
+        } else {
+            selectedImages = {};
+            selectedImages[image.id] = image;
         }
+        setSelected(selectedImages);
+        setCount(Object.keys(selectedImages).length);
+    }
+
+    const handleMultiSelect = (image) => {
+        let selectedImages = { ...selected };
+        if (image.id in selectedImages) {
+            delete selectedImages[image.id];
+        } else {
+            selectedImages[image.id] = image;
+        }
+        setSelected(selectedImages);
+        setCount(Object.keys(selectedImages).length);
     }
 
     const uploadFile = async (e) => {
@@ -94,7 +90,9 @@ const UploadImageModal = (props) => {
             });
             const file = await res.json();
 
-            if (Object.prototype.hasOwnProperty.call(file, "error")) throw file.error.message;
+            if (Object.prototype.hasOwnProperty.call(file, "error")) {
+                throw file.error.message;
+            }
             await uploadImageToGallery({
                 variables: {
                     image: file.secure_url,
@@ -149,7 +147,7 @@ const UploadImageModal = (props) => {
                     <ImageGallery
                         multiMedia ={data.getImageGallery}
                         //  multiMedia ={[]}
-                        handleSelect={handleSelect}
+                        handleSelect={props.multiSelect ? handleMultiSelect : handleSelect}
                         selected={selected}
                     />
                     :
