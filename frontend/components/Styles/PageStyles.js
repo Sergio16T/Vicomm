@@ -36,6 +36,9 @@ const GlobalStyle = createGlobalStyle`
 		text-decoration: none;
 		color: black;
 	}
+    a, button {
+        -webkit-tap-highlight-color: transparent;
+    }
     .rp-button {
         outline: none;
         border:none;

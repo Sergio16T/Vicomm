@@ -72,3 +72,4 @@ const Products = ({ query: { page } }) => {
 };
 
 export default Products;
+export { GET_PRODUCT_ITEMS_QUERY };

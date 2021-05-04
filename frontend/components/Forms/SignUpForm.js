@@ -32,18 +32,45 @@ const SignUpForm = () => {
         switch (name) {
             case "email":
                 if (state.emailError && emailRegEx.test(value)) {
-                    setState({ ...state, [name]: value, emailError: '' });
+                    setState({
+                        ...state,
+                        [name]: value,
+                        emailError: '',
+                    });
                 } else {
-                    setState({ ...state, [name]: value });
+                    setState({
+                        ...state,
+                        [name]: value,
+                    });
                 }
                 break;
             case "confirmPassword":
-                if (state.passwordError && value === state.password) setState({ ...state, [name]: value, passwordError: '' });
-                else setState({ ...state, [name]: value });
+                if (state.passwordError && value === state.password) {
+                    setState({
+                        ...state,
+                        [name]: value,
+                        passwordError: '',
+                    });
+                } else {
+                    setState({
+                        ...state,
+                        [name]: value,
+                    });
+                }
                 break;
             case "password" :
-                if (state.passwordError && value === state.confirmPassword) setState({ ...state, [name]: value, passwordError: '' });
-                else setState({ ...state, [name]: value });
+                if (state.passwordError && value === state.confirmPassword) {
+                    setState({
+                        ...state,
+                        [name]: value,
+                        passwordError: '',
+                    });
+                } else {
+                    setState({
+                        ...state,
+                        [name]: value,
+                    });
+                }
                 break;
             default:
                 setState({
@@ -52,6 +79,7 @@ const SignUpForm = () => {
                 });
         }
     }
+
     const submitForm = async (e) => {
         e.preventDefault();
         if (!state.passwordsMatch) return;
@@ -61,33 +89,51 @@ const SignUpForm = () => {
                 pathname: "/dashboard",
             });
         } catch (err) {
-            setState({ ...state, signUpError: err.message });
+            setState({
+                ...state,
+                signUpError: err.message,
+            });
         }
     }
+
     const confirmPasswordMatch = () => {
         const { password, confirmPassword } = state;
-        const match = password === confirmPassword ? true : false;
+        const match = password === confirmPassword;
         const passwordError = match ? '' : 'Passwords do not match'
-        setState({ ...state, passwordsMatch: match, passwordError });
+        setState({
+            ...state,
+            passwordsMatch: match,
+            passwordError,
+        });
     }
+
     const handleBlur = (e) => {
         const { name, value } = e.target;
         const emailRegEx = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         switch (name) {
             case 'email':
-                if (!emailRegEx.test(value.trim())) setState({ ...state, emailError: "Please enter a valid email" });
+                if (!emailRegEx.test(value.trim())) {
+                    setState({
+                        ...state,
+                        emailError: "Please enter a valid email",
+                    });
+                }
                 break;
             case 'confirmPassword':
-                if (state.password) confirmPasswordMatch();
+                if (state.password) {
+                    confirmPasswordMatch();
+                }
                 break;
             case 'password':
-                if (state.confirmPassword) confirmPasswordMatch();
+                if (state.confirmPassword) {
+                    confirmPasswordMatch();
+                }
                 break;
             default:
                 throw new Error(`Unrecognized input name: ${name}`);
         }
-
     }
+
     return (
         <SignUpFormWrapper>
             {state.signUpError &&

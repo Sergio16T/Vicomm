@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation, gql, useQuery } from '@apollo/client';
 import AddProductForm from './Forms/ProductForm';
 import SaveProductButton from './Buttons/SaveProductButton';
 import Page from './Layout/Page';
 import { ProductPageContent, Body } from './Styles/ProductStyles';
 import ErrorMessage from './Modal/Error';
+import { GET_PRODUCT_ITEMS_QUERY } from './Products';
+
+const PRODUCT_ITEMS_AGGREGATE_QUERY = gql`
+    query PRODUCT_ITEMS_AGGREGATE_QUERY{
+        productItemsAggregate {
+            count
+        }
+    }
+`;
 
 const CREATE_ITEM_MUTATION = gql`
     mutation CREATE_ITEM_MUTATION(
@@ -30,11 +39,17 @@ const CREATE_ITEM_MUTATION = gql`
     }
 `;
 
-/* get aggregate count of product items in a query to be able to determine
-if updating cache is necessary after creating item (READ QUERY to see if last page already cached) */
-
 const AddProduct = () => {
-    const [createItem, { loading }] = useMutation(CREATE_ITEM_MUTATION);
+    // data given default value of object with count 0
+    const { data: { count } = { count: 0 } } = useQuery(PRODUCT_ITEMS_AGGREGATE_QUERY);
+    const [createItem, { loading }] = useMutation(CREATE_ITEM_MUTATION, {
+        refetchQueries: [{
+            query: GET_PRODUCT_ITEMS_QUERY,
+            variables: { page: Math.ceil((count + 1)/10) || 1 },
+        }, {
+            query: PRODUCT_ITEMS_AGGREGATE_QUERY,
+        }],
+    });
     const router = useRouter();
     const [state, setState] = useState({
         edit: false,

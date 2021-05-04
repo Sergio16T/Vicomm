@@ -108,6 +108,9 @@ module.exports = {
 
         const [item] = await getItem(args.id);
 
-        return item;
+        return {
+            ...item,
+            mltmd_url: productImages[0].multimediaUrl || null,
+        };
     },
 }

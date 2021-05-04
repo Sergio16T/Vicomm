@@ -36,13 +36,7 @@ module.exports = {
             return result;
         }
     },
-    getProductItems: async (params) => {
-        const {
-            accountKey,
-            skip,
-            numPerPage,
-        } = params;
-
+    getProductItemsCount: async (accountKey) => {
         let countQuery = SQL`
         SELECT
             count(productItem.id) as count
@@ -65,14 +59,14 @@ module.exports = {
             throw err;
         });
 
-        const { count } = data;
-
-        if (!count) {
-            return {
-                result: [],
-                count,
-            }
-        }
+        return data;
+    },
+    getProductItems: async (params) => {
+        const {
+            accountKey,
+            skip,
+            numPerPage,
+        } = params;
 
         let query = SQL`
             SELECT
@@ -103,10 +97,7 @@ module.exports = {
             throw err;
         });
 
-        return {
-            result,
-            count,
-        };
+        return result;
     },
     getItem: async (id, connection) => {
         let query = SQL`

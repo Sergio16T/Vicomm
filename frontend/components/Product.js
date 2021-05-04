@@ -26,7 +26,14 @@ const UPDATE_ITEM_MUTATION = gql`
             description: $description,
             productImages: $productImages
         ) {
-            id
+            id,
+            item_uid,
+            item_title,
+            item_desc,
+            price,
+            sale_price,
+            item_weight,
+            mltmd_url,
         }
     }
 `;
@@ -49,10 +56,43 @@ const Product = ({ data: { getItem: item } }) => {
         },
     };
 
-    /* TO DO - write update function to update the cache for GET_PRODUCT_ITEMS_QUERY.
-    Check if item ID in the cached result and replace with updated item if present */
-
-    const [updateItem, { loading }] = useMutation(UPDATE_ITEM_MUTATION);
+    const [updateItem, { loading }] = useMutation(UPDATE_ITEM_MUTATION, {
+        update(cache, { data: { updateItem } }) {
+            const itemInCache = cache.readFragment({
+                id: `ProductItem:${updateItem.id}`,
+                fragment:  gql`
+                    fragment NewProductItem on ProductItem {
+                        id
+                        item_uid
+                        item_title
+                        item_desc
+                        price
+                        sale_price
+                        item_weight
+                        mltmd_url
+                    }
+              `,
+            });
+            if (itemInCache) {
+                cache.writeFragment({
+                    id: `ProductItem:${updateItem.id}`,
+                    fragment:  gql`
+                        fragment NewProductItem on ProductItem {
+                            id
+                            item_uid
+                            item_title
+                            item_desc
+                            price
+                            sale_price
+                            item_weight
+                            mltmd_url
+                        }
+                    `,
+                    data: updateItem,
+                });
+            }
+        },
+    });
     const [state, setState] = useState(initialState);
     const [productImages, setProductImages] = useState(item.multimedia);
     const {

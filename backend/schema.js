@@ -8,6 +8,7 @@ const typeDefs = gql`
         getCoverPhoto: MultiMedia
         getItem(uid: String!): Item
         getProductItems(page: Int!): ProductItemsResponse
+        productItemsAggregate: AggregateItem
     }
 
     type Mutation {
@@ -20,7 +21,7 @@ const typeDefs = gql`
         updateCoverPhoto(key: ID): CoverPhoto!
         removeCoverPhoto: SuccessMessage!
         createItem(name: String!, price: Float!, salePrice: Float, weight: Float, description: String, productImages: [ProductImage]): Item!
-        updateItem(id: ID!, name: String!, price: Float!, salePrice: Float, weight: Float, description: String, productImages: [ProductImage]): Item
+        updateItem(id: ID!, name: String!, price: Float!, salePrice: Float, weight: Float, description: String, productImages: [ProductImage]): ProductItem!
     }
 
     # update schema to not expose my DB schema table names
@@ -87,6 +88,10 @@ const typeDefs = gql`
 
     type Keys {
         keys: [ID!]!
+    }
+
+    type AggregateItem {
+        count: Int!
     }
 `;
 
