@@ -84,8 +84,8 @@ const AddProduct = () => {
             // Update $ to cents
             const data = {
                 name,
-                price: parseFloat(price),
-                salePrice: parseFloat(salePrice),
+                price: parseFloat(price) * 100,
+                salePrice: parseFloat(salePrice) * 100,
                 weight: parseFloat(weight),
                 description: description ? description : null,
                 productImages: productImages.map((image, index) => ({ id: image.id, multimediaUrl: image.mltmd_url, displayCount: index + 1 })),

@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Pagination from './Pagination';
 import StyledTable from '../Styles/ProductTableStyles';
+import formatMoney from '../../lib/formatMoney';
 
 const ProductTable = ({ count, fetchMore, loading, productItems }) => {
     return (
@@ -40,10 +41,10 @@ const ProductTable = ({ count, fetchMore, loading, productItems }) => {
                                         {item.item_title}
                                     </div>
                                     <div className="d-flex px-2 w-80">
-                                        {item.price}
+                                        {formatMoney(item.price)}
                                     </div>
                                     <div className="d-flex px-2 w-120">
-                                        {item.sale_price}
+                                        {item.sale_price ? formatMoney(item.sale_price) : item.sale_price}
                                     </div>
                                     <div className="d-flex px-2 w-80">
                                         {item.item_weight ? `${item.item_weight} ${item.item_weight === 1 ? 'lb' : 'lbs'}` : ''}

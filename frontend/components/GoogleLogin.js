@@ -71,7 +71,11 @@ const GoogleBtn = (props) => {
     }
 
     const handleLoginFailure = (response) => {
-        console.log(response);
+        console.log(response.details);
+        props.setError({
+            ...props.state,
+            signInError: `${response.details} To sign in with google, enable cookies in chrome > settings > cookies and other site data.`,
+        })
     }
 
     const handleLogoutFailure =  (response) => {

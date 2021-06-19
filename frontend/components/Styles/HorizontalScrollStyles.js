@@ -121,6 +121,7 @@ const HorizontalScrollGallery = styled.div`
             display: none;
         }
     }
+    // This is the tooltip bubble
     .tooltiptext {
             font-size: .9rem;
             visibility: hidden;
@@ -138,6 +139,7 @@ const HorizontalScrollGallery = styled.div`
             transform: scale(0);
             transition: transform .3s cubic-bezier(0.075, 0.82, 0.165, 1);
     }
+    // This is the tooltip arrow
     .tooltiptext::after {
         content: " ";
         position: absolute;

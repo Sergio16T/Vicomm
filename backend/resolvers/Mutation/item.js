@@ -110,7 +110,7 @@ module.exports = {
 
         return {
             ...item,
-            mltmd_url: productImages[0].multimediaUrl || null,
+            mltmd_url: productImages.length ? productImages[0].multimediaUrl : null,
         };
     },
 }

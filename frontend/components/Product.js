@@ -44,8 +44,8 @@ const Product = ({ data: { getItem: item } }) => {
     const initialState = {
         edit: false,
         name: item.item_title,
-        price: item.price,
-        salePrice: item.sale_price ? item.sale_price : '',
+        price: (item.price / 100).toFixed(2),
+        salePrice: item.sale_price ? (item.sale_price / 100).toFixed(2) : '',
         description: item.item_desc ? item.item_desc : '',
         weight: item.item_weight ? item.item_weight : '',
         errorMessages: {
@@ -61,34 +61,34 @@ const Product = ({ data: { getItem: item } }) => {
             const itemInCache = cache.readFragment({
                 id: `ProductItem:${updateItem.id}`,
                 fragment:  gql`
-                    fragment NewProductItem on ProductItem {
+                    fragment Item on ProductItem {
                         id
-                        item_uid
-                        item_title
-                        item_desc
-                        price
-                        sale_price
-                        item_weight
-                        mltmd_url
                     }
               `,
             });
             if (itemInCache) {
-                cache.writeFragment({
-                    id: `ProductItem:${updateItem.id}`,
-                    fragment:  gql`
-                        fragment NewProductItem on ProductItem {
-                            id
-                            item_uid
-                            item_title
-                            item_desc
-                            price
-                            sale_price
-                            item_weight
-                            mltmd_url
-                        }
-                    `,
-                    data: updateItem,
+                cache.modify({
+                    id: cache.identify(updateItem), // Could also use `ProductItem:${updateItem.id}` for id
+                    fields: {
+                        item_title() {
+                            return updateItem.item_title;
+                        },
+                        item_desc() {
+                            return updateItem.item_desc;
+                        },
+                        price() {
+                            return updateItem.price;
+                        },
+                        sale_price() {
+                            return updateItem.sale_price;
+                        },
+                        item_weight() {
+                            return updateItem.item_weight;
+                        },
+                        mltmd_url() {
+                            return updateItem.mltmd_url;
+                        },
+                    },
                 });
             }
         },
@@ -104,8 +104,6 @@ const Product = ({ data: { getItem: item } }) => {
         errorMessages,
         edit,
     } = state;
-    const missingRequiredFields = !name || !price;
-    const errorMessagePresent = errorMessages.price || errorMessages.salePrice || errorMessages.weight || errorMessages.description;
     const createTime = new Date(item.crte_tm).getTime();
     const tenMinutesAgo = new Date(Date.now() - 600000).getTime();
     const createdWithinPast10Minutes = createTime > tenMinutesAgo;
@@ -116,8 +114,8 @@ const Product = ({ data: { getItem: item } }) => {
         const data = {
             id: item.id,
             name,
-            price: parseFloat(price),
-            salePrice: parseFloat(salePrice),
+            price: parseFloat(price) * 100,
+            salePrice: parseFloat(salePrice) * 100,
             weight: parseFloat(weight),
             description: description ? description : null,
             productImages: productImages.map((image, index) => ({
@@ -134,6 +132,7 @@ const Product = ({ data: { getItem: item } }) => {
 
         switch (id) {
             case "save-return-to-list": {
+                // update to return to page with the product
                 router.push({
                     pathname: "/products",
                     query: { page: 1 },
@@ -159,7 +158,10 @@ const Product = ({ data: { getItem: item } }) => {
     }
 
     const renderButton = () => {
+        const missingRequiredFields = !name || !price;
+        const errorMessagePresent = errorMessages.price || errorMessages.salePrice || errorMessages.weight || errorMessages.description;
         const disabled = missingRequiredFields || errorMessagePresent;
+
         if (!edit) {
             return null
         }
@@ -256,6 +258,42 @@ const NewProductAlert = () => {
 }
 export default Product;
 
+
+// Previous Way of Updating Cache after update mutation
+// As of Apollo 3.3 this won't work anymore with missing fields so use cache.modify instead
+// const itemInCache = cache.readFragment({
+//     id: `ProductItem:${updateItem.id}`,
+//     fragment:  gql`
+//         fragment Item on ProductItem {
+//             id
+//             item_uid
+//             item_title
+//             item_desc
+//             price
+//             sale_price
+//             item_weight
+//             mltmd_url
+//         }
+//   `,
+// });
+// if (itemInCache) {
+//     cache.writeFragment({
+//         id: `ProductItem:${updateItem.id}`,
+//         fragment:  gql`
+//             fragment Item on ProductItem {
+//                 id
+//                 item_uid
+//                 item_title
+//                 item_desc
+//                 price
+//                 sale_price
+//                 item_weight
+//                 mltmd_url
+//             }
+//         `,
+//         data: updateItem,
+//     });
+// }
 
 // const createTime = format(new Date(item.crte_tm), 'MMMM dd, yyyy h:mm a');
 // tenMinutesAgo = format(tenMinutesAgo, 'MMMM dd, yyyy h:mm a')

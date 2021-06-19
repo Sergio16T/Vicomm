@@ -12,13 +12,21 @@ class MyApp extends App {
         pageProps.query = ctx.query; // this exposes the query to the user
         return { pageProps }; //when you return here in getInitalProps it exposes it in props..
     }
+
     render() {
-        const { Component, pageProps, router } = this.props;
-        if (router.pathname === "/" || router.pathname === "/login" || router.pathname ==="/signup")  return (
-            <DefaultPageProvider>
-                <Component {...pageProps}/>
-            </DefaultPageProvider>
-        );
+        const {
+            Component,
+            pageProps,
+            router,
+        } = this.props;
+
+        if (router.pathname === "/" || router.pathname === "/login" || router.pathname === "/signup")  {
+            return (
+                <DefaultPageProvider>
+                    <Component {...pageProps}/>
+                </DefaultPageProvider>
+            );
+        }
         return (
             <Page {...router}>
                 <Component {...pageProps}/>

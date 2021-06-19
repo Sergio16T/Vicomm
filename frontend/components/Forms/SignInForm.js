@@ -47,7 +47,7 @@ const SignInForm = () => {
                     <p>{state.signInError}</p>
                 </div>
             }
-            <Form onSubmit={submitForm}>
+            <Form onSubmit={submitForm} testid="sign-in-form">
                 <div className="formRow">
                     <label htmlFor="firstName">
                         Email
@@ -81,7 +81,11 @@ const SignInForm = () => {
                 <span id="OAuth_or_text">or </span>
                 <span className="OAuthProvider_lineBreak"></span>
             </div>
-            <GoogleLogin buttonText="Sign in with Google"/>
+            <GoogleLogin
+                buttonText="Sign in with Google"
+                setError={setState}
+                state={state}
+            />
         </SignInFormWrapper>
     );
 };

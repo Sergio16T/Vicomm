@@ -9,7 +9,9 @@ const Body = styled.div`
     /* margin: 0 auto;  */
 `;
 
-const Form = styled.form`
+const Form = styled.form.attrs((props) => ({
+    'data-testid': props.testid,
+}))`
     position: relative;
     font-family: 'Lato';
     width: 100%;
