@@ -9,7 +9,7 @@
     "client": "cd ../frontend && npm run dev",
     "start": "concurrently \"npm run dev\" \"npm run client\"",
     "production": "concurrently \"npm run prod\" \"cd ../frontend && npm run start\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/*.test.js"
   },
   "author": "",
   "license": "ISC",
@@ -29,9 +29,12 @@
     "sql-template-strings": "^2.2.2"
   },
   "devDependencies": {
+    "chai": "^4.3.4",
     "concurrently": "^5.2.0",
     "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1"
+    "eslint-plugin-import": "^2.22.1",
+    "mocha": "^9.1.2",
+    "sinon": "^11.1.2"
   }
 }

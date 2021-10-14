@@ -50,6 +50,18 @@ const typeDefs = gql`
         count: Int!
     }
 
+    # BEGIN IN PROGRESS POTENTIAL NEW ERROR RESPONSE & UNION
+    # Investigate creating ErrorResponse type
+    # type ErrorResponse {
+    #     message: String!
+    #     status: Int!
+    # }
+
+    # Update Get Product Items Query to use union
+    # union ProductItemsResult = ProductItemsResponse | ErrorResponse
+
+    # END IN PROGRESS POTENTIAL NEW ERROR RESPONSE & UNION
+
     type ProductItem { # relationship to item with additional fields may be a good idea to create an interface
         id: ID!
         item_uid: String!

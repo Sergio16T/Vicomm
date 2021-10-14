@@ -1,16 +1,22 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {
-    getAccountById,
-    getAccountWithEmail,
-    createNewAccount,
-} = require('../../data-access/account');
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 
 module.exports = {
     async signUp(parent, args, context, info) {
+        const {
+            dataSources: {
+                accountAPI: {
+                    createNewAccount,
+                    getAccountWithEmail,
+                    getAccountById,
+                },
+            },
+            res,
+        } = context;
+
         const email = args.email.toLowerCase();
         const password = await bcrypt.hash(args.password, 10);
 
@@ -35,7 +41,7 @@ module.exports = {
         const user = await getAccountById(insertId);
 
         const token = jwt.sign({ id: user.id }, process.env.jwtsecret);
-        context.res.cookie("token", token, {
+        res.cookie("token", token, {
             httpOnly: true,
             maxAge:  1000 * 60 * 60 * 24 * 365,
         });
@@ -43,6 +49,15 @@ module.exports = {
         return user;
     },
     async signIn(parent, args, context, info) {
+        const {
+            dataSources: {
+                accountAPI: {
+                    getAccountWithEmail,
+                },
+            },
+            res,
+        } = context;
+
         const email = args.email.toLowerCase();
         const user = await getAccountWithEmail(email);
         if (!user) {
@@ -54,9 +69,9 @@ module.exports = {
             throw new Error('Invalid password');
         }
 
-        const token  = jwt.sign({ id: user.id }, process.env.jwtsecret);
+        const token = jwt.sign({ id: user.id }, process.env.jwtsecret);
 
-        context.res.cookie("token", token, {
+        res.cookie("token", token, {
             httpOnly: true,
             maxAge: 1000 * 60 * 60 * 24 * 365,
         });
@@ -65,6 +80,15 @@ module.exports = {
         return user;
     },
     async googleSignIn(parent, args, context, info) {
+        const {
+            dataSources: {
+                accountAPI: {
+                    createNewAccount,
+                    getAccountWithEmail,
+                },
+            },
+            res,
+        } = context;
         const { tokenId } = args;
 
         const ticket = await client.verifyIdToken({
@@ -101,7 +125,7 @@ module.exports = {
 
         const token  = jwt.sign({ id: user.id }, process.env.jwtsecret);
 
-        context.res.cookie("token", token, {
+        res.cookie("token", token, {
             httpOnly: true,
             maxAge: 1000 * 60 * 60 * 24 * 365,
         });

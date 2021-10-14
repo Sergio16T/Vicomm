@@ -42,13 +42,6 @@ module.exports = {
             count(productItem.id) as count
         FROM
             item productItem
-            LEFT OUTER JOIN mltmd_xref mediaXref
-                ON mediaXref.src_tbl_key = productItem.id
-                AND mediaXref.display_count = ${1}
-                AND mediaXref.act_ind = ${1}
-            LEFT OUTER JOIN mltmd media
-                ON media.id = mediaXref.mltmd_key
-                AND media.act_ind= ${1}
         WHERE
             productItem.crte_by_acct_key = ${accountKey}
             AND productItem.act_ind = ${1}
