@@ -121,7 +121,7 @@ const HorizontalScrollGallery = styled.div`
             display: none;
         }
     }
-    // This is the tooltip bubble
+    // This is the tooltip frame
     .tooltiptext {
             font-size: .9rem;
             visibility: hidden;
@@ -152,7 +152,9 @@ const HorizontalScrollGallery = styled.div`
     }
     .rp-button {
         min-height: 35px;
-        &:hover {
+        &:hover,
+        &:focus,
+        &:active {
             .tooltiptext {
                 visibility: visible;
                 transform: scale(1);

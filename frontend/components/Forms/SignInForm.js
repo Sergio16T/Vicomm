@@ -19,6 +19,7 @@ const SignInForm = () => {
     const [state, setState] = useState({
         email: '',
         password: '',
+        authError: '',
     });
 
     const handleInputChange = (e) => {
@@ -34,7 +35,10 @@ const SignInForm = () => {
             await signIn({ variables: { ...state } });
         } catch(err) {
             console.log(err)
-            setState({ ...state, signInError: err.message });
+            setState({
+                ...state,
+                authError: err.message,
+            });
         }
     }
     return (
@@ -42,9 +46,9 @@ const SignInForm = () => {
             <SignInMessage>
                 <h1>Hi, Welcome Back!</h1>
             </SignInMessage>
-            {state.signInError &&
+            {state.authError &&
                 <div className='error-message'>
-                    <p>{state.signInError}</p>
+                    <p>{state.authError}</p>
                 </div>
             }
             <Form onSubmit={submitForm} testid="sign-in-form">

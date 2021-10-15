@@ -42,8 +42,12 @@ function PageProvider({ children, pathname }) {
         }
     }, [previousPath, pathname]);
 
-    if (error) return <p>{error.message}</p>;
-    if (userLoading) return null;
+    if (error) {
+        return <p>{error.message}</p>;
+    }
+    if (userLoading) {
+        return null;
+    }
     if (!userData.user) {
         Router.push({
             pathname: "/login",

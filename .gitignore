@@ -5,3 +5,4 @@ clientConfig.js
 next.config.js
 connect.js
 .env.local
+schema-mysql.sql

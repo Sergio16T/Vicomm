@@ -71,11 +71,13 @@ const GoogleBtn = (props) => {
     }
 
     const handleLoginFailure = (response) => {
-        console.log(response.details);
+        console.log('response details', response);
+        if (response.error === 'popup_closed_by_user') { return; }
+
         props.setError({
             ...props.state,
-            signInError: `${response.details} To sign in with google, enable cookies in chrome > settings > cookies and other site data.`,
-        })
+            authError: `${response.details} To continue authentication with google, enable cookies in your browser.`,
+        });
     }
 
     const handleLogoutFailure =  (response) => {

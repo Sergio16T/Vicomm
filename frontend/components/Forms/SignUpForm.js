@@ -18,20 +18,30 @@ const SIGN_UP_MUTATION = gql`
 const SignUpForm = () => {
     const [signUp] = useMutation(SIGN_UP_MUTATION);
     const [state, setState] = useState({
+        authError: '',
+        confirmPassword: '',
+        email: '',
+        emailError: '',
         firstName: '',
         lastName: '',
-        email: '',
         password: '',
-        confirmPassword: '',
-        emailError: '',
+        passwordError: '',
+        passwordsMatch: false,
     });
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        const {
+            confirmPassword,
+            emailError,
+            passwordError,
+            password,
+        } = state;
         const emailRegEx = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+
         switch (name) {
             case "email":
-                if (state.emailError && emailRegEx.test(value)) {
+                if (emailError && emailRegEx.test(value)) {
                     setState({
                         ...state,
                         [name]: value,
@@ -45,7 +55,7 @@ const SignUpForm = () => {
                 }
                 break;
             case "confirmPassword":
-                if (state.passwordError && value === state.password) {
+                if (passwordError && value === password) {
                     setState({
                         ...state,
                         [name]: value,
@@ -59,7 +69,7 @@ const SignUpForm = () => {
                 }
                 break;
             case "password" :
-                if (state.passwordError && value === state.confirmPassword) {
+                if (passwordError && value === confirmPassword) {
                     setState({
                         ...state,
                         [name]: value,
@@ -82,7 +92,8 @@ const SignUpForm = () => {
 
     const submitForm = async (e) => {
         e.preventDefault();
-        if (!state.passwordsMatch) return;
+        if (!state.passwordsMatch) { return; }
+
         try {
             await signUp({ variables: { ...state } });
             Router.push({
@@ -91,25 +102,29 @@ const SignUpForm = () => {
         } catch (err) {
             setState({
                 ...state,
-                signUpError: err.message,
+                authError: err.message,
             });
         }
     }
 
     const confirmPasswordMatch = () => {
-        const { password, confirmPassword } = state;
-        const match = password === confirmPassword;
-        const passwordError = match ? '' : 'Passwords do not match'
+        const {
+            confirmPassword,
+            password,
+        } = state;
+        let passwordsMatch = password === confirmPassword;
+
         setState({
             ...state,
-            passwordsMatch: match,
-            passwordError,
+            passwordsMatch,
+            passwordError: passwordsMatch ? '' : 'Passwords do not match',
         });
     }
 
     const handleBlur = (e) => {
         const { name, value } = e.target;
         const emailRegEx = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+
         switch (name) {
             case 'email':
                 if (!emailRegEx.test(value.trim())) {
@@ -134,11 +149,21 @@ const SignUpForm = () => {
         }
     }
 
+    const {
+        authError,
+        confirmPassword,
+        email,
+        emailError,
+        firstName,
+        lastName,
+        password,
+        passwordError,
+    } = state;
     return (
         <SignUpFormWrapper>
-            {state.signUpError &&
-                <div className='error-message'>
-                    <p>{state.signUpError}</p>
+            {authError &&
+                <div className="error-message">
+                    <p>{authError}</p>
                 </div>
             }
             <Form onSubmit={submitForm}>
@@ -150,24 +175,24 @@ const SignUpForm = () => {
                         type="text"
                         name="firstName"
                         onChange={handleInputChange}
-                        value={state.firstName}
+                        value={firstName}
                         required
                     />
                 </div>
                 <div className="formRow">
-                    <label htmlFor="firstName">
+                    <label htmlFor="lastName">
                         Last Name
                     </label>
                     <input
                         type="text"
                         name="lastName"
                         onChange={handleInputChange}
-                        value={state.lastName}
+                        value={lastName}
                         required
                     />
                 </div>
                 <div className="formRow">
-                    <label htmlFor="firstName">
+                    <label htmlFor="email">
                         Email
                     </label>
                     <input
@@ -175,13 +200,13 @@ const SignUpForm = () => {
                         name="email"
                         onChange={handleInputChange}
                         onBlur={handleBlur}
-                        value={state.email}
+                        value={email}
                         required
                     />
-                    {state.emailError && <p className="error">{state.emailError}</p>}
+                    {emailError && <p className="error">{emailError}</p>}
                 </div>
                 <div className="formRow">
-                    <label htmlFor="firstName">
+                    <label htmlFor="password">
                         Password
                     </label>
                     <input
@@ -189,12 +214,12 @@ const SignUpForm = () => {
                         name="password"
                         onChange={handleInputChange}
                         onBlur={handleBlur}
-                        value={state.password}
+                        value={password}
                         required
                     />
                 </div>
                 <div className="formRow">
-                    <label htmlFor="firstName">
+                    <label htmlFor="confirmPassword">
                         Confirm Password
                     </label>
                     <input
@@ -202,10 +227,10 @@ const SignUpForm = () => {
                         name="confirmPassword"
                         onChange={handleInputChange}
                         onBlur={handleBlur}
-                        value={state.confirmPassword}
+                        value={confirmPassword}
                         required
                     />
-                    {state.passwordError && <p className="error">{state.passwordError}</p>}
+                    {passwordError && <p className="error">{passwordError}</p>}
                 </div>
                 <div className="form-button-row">
                     <button type="submit">Sign Up</button>
@@ -217,7 +242,9 @@ const SignUpForm = () => {
                 </div>
                 <GoogleLogin
                     buttonText="Sign Up with Google"
+                    setError={setState}
                     signUp
+                    state={state}
                 />
             </Form>
         </SignUpFormWrapper>

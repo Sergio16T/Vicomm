@@ -9,7 +9,7 @@ const context = {
     },
 };
 
-describe('USER QUERYS & MUTATIONS', function() {
+describe(`USER QUERY'S & MUTATION'S`, function() {
     describe('GET_USER', function() {
         it('should get user when context req.user.id is present', async () => {
             let server = initializeTestServer({
@@ -44,17 +44,20 @@ describe('USER QUERYS & MUTATIONS', function() {
                 dataSources: {
                     accountAPI: {
                         getAccountById: () => null,
-                        getAccountWithEmail: () => ({
-                            id: '1',
-                            fst_nm: 'Samantha',
-                            lst_nm: 'Jones',
-                            email: 'samantha.jones@gmail.com',
-                            password: 'jk;asldfkjd',
+                        getAccountWithEmail: () => new Promise((resolve) => {
+                            resolve({
+                                id: '1',
+                                fst_nm: 'Samantha',
+                                lst_nm: 'Jones',
+                                email: 'samantha.jones@gmail.com',
+                                password: 'jk;asldfkjd',
+                            });
                         }),
                     }
                 },
                 context
             });
+
             let res = await server.executeOperation({
                 query: `
                     mutation SIGN_UP_MUTATION ($email: String!, $firstName: String!, $lastName: String!, $password: String!) {
@@ -73,7 +76,6 @@ describe('USER QUERYS & MUTATIONS', function() {
                 }
             });
             expect(res.errors[0].message).to.equal('That email is taken!');
-
         });
     });
 });
