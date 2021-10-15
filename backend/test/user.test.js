@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const context = {
     req: {
         user: {
-            id: 1
+            id: 1,
         },
     },
 };
@@ -15,10 +15,10 @@ describe(`USER QUERY'S & MUTATION'S`, function() {
             let server = initializeTestServer({
                 dataSources: {
                     accountAPI: {
-                        getAccountById: () => ({ fst_nm: 'Appa', lst_nm: 'Airbender'}),
-                    }
+                        getAccountById: () => ({ fst_nm: 'Appa', lst_nm: 'Airbender' }),
+                    },
                 },
-                context
+                context,
             });
             let { data: { user } } = await server.executeOperation({ query: `query GET_USER_QUERY { user { fst_nm, lst_nm } }` });
 
@@ -29,7 +29,7 @@ describe(`USER QUERY'S & MUTATION'S`, function() {
         it('should return null when context.req.user is not defined', async function() {
             let server = initializeTestServer({
                 dataSources: {},
-                context: {}
+                context: {},
             });
             let res = await server.executeOperation({ query: `query GET_USER_QUERY { user { fst_nm, lst_nm } }` });
 
@@ -53,9 +53,9 @@ describe(`USER QUERY'S & MUTATION'S`, function() {
                                 password: 'jk;asldfkjd',
                             });
                         }),
-                    }
+                    },
                 },
-                context
+                context,
             });
 
             let res = await server.executeOperation({
@@ -73,7 +73,7 @@ describe(`USER QUERY'S & MUTATION'S`, function() {
                     firstName: 'Appa',
                     lastName: 'Airbender',
                     password: 'testPassword',
-                }
+                },
             });
             expect(res.errors[0].message).to.equal('That email is taken!');
         });

@@ -27,8 +27,8 @@ const server = new ApolloServer({
             return {
                 ...req,
                 // user: user, // @ToDo Update context to include user and update references to context.req.user.id
-                ...res
-             };
+                ...res,
+            };
         }
 
         return {
