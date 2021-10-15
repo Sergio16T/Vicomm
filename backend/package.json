@@ -9,7 +9,7 @@
     "client": "cd ../frontend && npm run dev",
     "start": "concurrently \"npm run dev\" \"npm run client\"",
     "production": "concurrently \"npm run prod\" \"cd ../frontend && npm run start\"",
-    "test": "mocha test/*.test.js"
+    "test": "mocha _tests_/*.test.js"
   },
   "author": "",
   "license": "ISC",
