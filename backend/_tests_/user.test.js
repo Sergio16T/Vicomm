@@ -21,16 +21,16 @@ describe(`USER QUERY'S & MUTATION'S`, function() {
         it('should get user when context req.user.id is present', async () => {
             let server = initializeTestServer({
                 dataSources: {
-                    accountAPI: {
-                        getAccountById: () => ({ fst_nm: 'Appa', lst_nm: 'Airbender' }),
-                    },
+                    accountAPI,
                 },
                 context,
             });
+            let stub = sinon.stub(accountAPI, 'getAccountById').resolves({ fst_nm: 'Appa', lst_nm: 'Airbender' });
             let { data: { user } } = await server.executeOperation({ query: `query GET_USER_QUERY { user { fst_nm, lst_nm } }` });
 
             expect(user.fst_nm).to.equal('Appa');
             expect(user.lst_nm).to.equal('Airbender');
+            stub.restore();
         });
 
         it('should return null when context.req.user is not defined', async function() {
@@ -62,21 +62,17 @@ describe(`USER QUERY'S & MUTATION'S`, function() {
         it('should throw error when email is unavailable', async function() {
             let server = initializeTestServer({
                 dataSources: {
-                    accountAPI: {
-                        getAccountWithEmail: () => new Promise((resolve) => {
-                            resolve({
-                                id: '1',
-                                fst_nm: 'Samantha',
-                                lst_nm: 'Jones',
-                                email: 'samantha.jones@gmail.com',
-                                password: '$gh$ILTWQLOm87!jdAsTZMm71AaMUX98',
-                            });
-                        }),
-                    },
+                    accountAPI,
                 },
                 context,
             });
-
+            let stub = sinon.stub(accountAPI, 'getAccountWithEmail').resolves({
+                id: '1',
+                fst_nm: 'Samantha',
+                lst_nm: 'Jones',
+                email: 'samantha.jones@gmail.com',
+                password: '$gh$ILTWQLOm87!jdAsTZMm71AaMUX98',
+            });
             let res = await server.executeOperation({
                 query: `
                     mutation SIGN_UP_MUTATION ($email: String!, $firstName: String!, $lastName: String!, $password: String!) {
@@ -97,6 +93,7 @@ describe(`USER QUERY'S & MUTATION'S`, function() {
 
             expect(hashStub.calledOnce).to.be.true;
             expect(res.errors[0].message).to.equal('That email is taken!');
+            stub.restore();
         });
 
         it('should successfully create new account', async function() {
