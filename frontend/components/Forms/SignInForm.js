@@ -33,7 +33,7 @@ const SignInForm = () => {
         e.preventDefault();
         try {
             await signIn({ variables: { ...state } });
-        } catch(err) {
+        } catch (err) {
             console.log(err)
             setState({
                 ...state,

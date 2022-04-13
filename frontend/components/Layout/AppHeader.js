@@ -14,11 +14,9 @@ const SIGN_OUT_MUTATION = gql`
 const AppHeader = (props) => {
     const {
         client,
-        renderData: {
-            render,
-            renderPosition,
-            text,
-        },
+        render,
+        btnPosition,
+        text,
         toggleSideBar,
     } = props;
     return (
@@ -30,10 +28,10 @@ const AppHeader = (props) => {
                     <div></div>
                 </div>
                 <span id="userName">{text}</span>
-                {renderPosition === "left" && render()}
+                {btnPosition === "left" && render()}
             </div>
             <div className="nav-right">
-                {renderPosition === "right" && render()}
+                {btnPosition === "right" && render()}
                 <VerticalDotMenu>
                     <LogoutButton
                         client={client}

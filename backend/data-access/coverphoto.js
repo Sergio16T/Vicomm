@@ -15,7 +15,7 @@ module.exports = {
             AND cover_photo.act_ind =${1}
         `;
 
-        const [coverPhoto] = await db.query(query).catch(err => { throw err; });
+        const [coverPhoto] = await db.query(query);
 
         return coverPhoto;
     },
@@ -30,7 +30,7 @@ module.exports = {
             AND act_ind = ${1};
         `;
 
-        const [photo] = await db.query(query).catch(err => { throw err; });
+        const [photo] = await db.query(query);
 
         return photo;
     },
@@ -52,7 +52,7 @@ module.exports = {
             act_ind = ${1};
         `;
 
-        const result = await db.query(query).catch(err => { throw err; });
+        const result = await db.query(query);
 
         return result;
     },
@@ -74,7 +74,7 @@ module.exports = {
                 acct_key = ${accountKey};
             `;
 
-        const result = await db.query(query).catch(err => { throw err; });
+        const result = await db.query(query);
 
         return result;
     },
@@ -87,7 +87,7 @@ module.exports = {
             AND act_ind = ${1};
         `;
 
-        const result = await db.query(query).catch(err => { throw err; });
+        const result = await db.query(query);
 
         return result;
     },

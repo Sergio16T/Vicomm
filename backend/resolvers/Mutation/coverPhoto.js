@@ -5,6 +5,12 @@ const {
     updateCoverPhoto,
 } = require('../../data-access/coverphoto');
 
+/*
+@TODO
+1. Error Handling w/ Apollo Error Class
+2. Logging with winston
+3. use MYSQL Begin Transaction Commit and Rollback
+*/
 module.exports = {
     async updateCoverPhoto(parent, args, context, info) {
         const photo = await getCoverPhotoId(context.req.user.id);

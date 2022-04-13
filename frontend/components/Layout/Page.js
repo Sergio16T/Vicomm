@@ -1,9 +1,8 @@
 import React, { useRef, useEffect, useContext } from 'react';
-import AppHeader from './AppHeader';
 import { BackDrop, StyledPage } from '../Styles/PageStyles';
 import { Context } from './PageProvider';
 
-const Page = ({ children, renderData }) => {
+const Page = ({ children, render }) => {
     const { isOpen, setIsOpen, client } = useContext(Context);
     const backDrop = useRef(null);
 
@@ -27,11 +26,7 @@ const Page = ({ children, renderData }) => {
     return (
         <StyledPage>
             <BackDrop isOpen={isOpen} ref={backDrop}/>
-            <AppHeader
-                toggleSideBar={toggleSideBar}
-                client={client}
-                renderData={renderData.appBar}
-            />
+            {render({ toggleSideBar, client })}
             {children}
         </StyledPage>
     );

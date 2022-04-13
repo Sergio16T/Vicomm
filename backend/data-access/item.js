@@ -29,10 +29,10 @@ module.exports = {
         `;
 
         if (!connection) {
-            const result = await db.query(query).catch(err => { throw err; });
+            const result = await db.query(query);
             return result;
         } else {
-            const result = await connection.query(query).catch(err => { throw err; });
+            const result = await connection.query(query);
             return result;
         }
     },
@@ -104,10 +104,10 @@ module.exports = {
         `;
 
         if (!connection) {
-            let result = await db.query(query).catch(err => { throw err; });
+            let result = await db.query(query);
             return result;
         } else {
-            let result = await connection.query(query).catch(err => { throw err; });
+            let result = await connection.query(query);
             return result;
         }
     },
@@ -122,7 +122,7 @@ module.exports = {
                 AND act_ind = ${1}
         `;
 
-        let [result] = await db.query(query).catch(err => { throw err; });
+        let [result] = await db.query(query);
         result.crte_tm = result.crte_tm.toISOString();
 
         return result;
@@ -144,7 +144,7 @@ module.exports = {
                 AND productItem.act_ind = ${1}
         `;
 
-        let [data] = await db.query(countQuery).catch(err => { throw err; });
+        let [data] = await db.query(countQuery);
 
         const { count } = data;
 
@@ -171,7 +171,7 @@ module.exports = {
                 mediaXref.display_count
         `;
 
-        let result = await db.query(query).catch(err => { throw err; });
+        let result = await db.query(query);
 
         return result;
     },
@@ -186,7 +186,7 @@ module.exports = {
                 AND mediaXref.act_ind = ${1}
         `;
 
-        let [data] = await db.query(countQuery).catch(err => { throw err; });
+        let [data] = await db.query(countQuery);
 
         const { count } = data;
 
@@ -210,7 +210,7 @@ module.exports = {
                 mediaXref.display_count
         `;
 
-        let result = await db.query(query).catch(err => { throw err; });
+        let result = await db.query(query);
 
         return result;
     },
@@ -241,7 +241,7 @@ module.exports = {
                 AND act_ind = ${1}
         `;
 
-        const result = await db.query(query).catch(err => { throw err; });
+        const result = await db.query(query);
 
         return result;
     },

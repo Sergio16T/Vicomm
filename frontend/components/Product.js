@@ -6,6 +6,7 @@ import Page from './Layout/Page';
 import { ProductPageContent, Body } from './Styles/ProductStyles';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import AppHeader from './Layout/AppHeader';
 
 const UPDATE_ITEM_MUTATION = gql`
     mutation UPDATE_ITEM_MUTATION(
@@ -110,50 +111,52 @@ const Product = ({ data: { getItem: item } }) => {
 
     const submitForm = async (e) => {
         const { id } = e.target;
-        // Update $ to cents
-        const data = {
-            id: item.id,
-            name,
-            price: parseFloat(price) * 100,
-            salePrice: parseFloat(salePrice) * 100,
-            weight: parseFloat(weight),
-            description: description ? description : null,
-            productImages: productImages.map((image, index) => ({
-                id: image.id,
-                multimediaUrl: image.mltmd_url,
-                displayCount: index + 1,
-                multimediaXrefId: image.multimedia_xref_id ? image.multimedia_xref_id : null,
-            })),
-        }
-        await updateItem({ variables: data }).catch(err => {
-            console.log(err.message);
-            // TO DO: Error handle
-        });
+        try {
+            // Update $ to cents
+            const data = {
+                id: item.id,
+                name,
+                price: parseFloat(price) * 100,
+                salePrice: parseFloat(salePrice) * 100,
+                weight: parseFloat(weight),
+                description: description ? description : null,
+                productImages: productImages.map((image, index) => ({
+                    id: image.id,
+                    multimediaUrl: image.mltmd_url,
+                    displayCount: index + 1,
+                    multimediaXrefId: image.multimedia_xref_id ? image.multimedia_xref_id : null,
+                })),
+            }
+            await updateItem({ variables: data });
 
-        switch (id) {
-            case "save-return-to-list": {
-                // update to return to page with the product
-                router.push({
-                    pathname: "/products",
-                    query: { page: 1 },
-                });
-                break;
+            switch (id) {
+                case "save-return-to-list": {
+                    // @Todo update to return to page with the product
+                    router.push({
+                        pathname: "/products",
+                        query: { page: 1 },
+                    });
+                    break;
+                }
+                case "save-create-new": {
+                    router.push({
+                        pathname: "/product/add",
+                    });
+                    // @Todo toggle successAlert true state value to display success alert with option to view new product
+                    break;
+                }
+                default: {
+                    // Force getServerSideProps to refresh
+                    router.replace(router.asPath);
+                    setState({
+                        ...state,
+                        edit: false,
+                    });
+                }
             }
-            case "save-create-new": {
-                router.push({
-                    pathname: "/product/add",
-                });
-                // toggle successAlert true state value to display success alert with option to view new product
-                break;
-            }
-            default: {
-                // Force getServerSideProps to refresh
-                router.replace(router.asPath);
-                setState({
-                    ...state,
-                    edit: false,
-                });
-            }
+        } catch (err) {
+            console.log(err.message);
+            // @Todo: Error handle
         }
     }
 
@@ -189,12 +192,8 @@ const Product = ({ data: { getItem: item } }) => {
     }
     return (
         <Page
-            renderData = {{
-                appBar: {
-                    render: renderButton,
-                    renderPosition: "left",
-                    text: !edit ? "Update Product" : "",
-                },
+            render={({ toggleSideBar, client }) => {
+                return ( <AppHeader client={client} text={!edit ? "Update Product" : ""} toggleSideBar={toggleSideBar} btnPosition="left" render={renderButton}/>);
             }}
         >
             <ProductPageContent>

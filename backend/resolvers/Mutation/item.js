@@ -4,6 +4,13 @@ const { createItem, getItem, updateItem, getItemMultimediaById } = require('../.
 const { createMultimediaXref, updateMultimediaXrefDisplayCount, deleteMultimediaXref } = require('../../data-access/multimedia');
 const { startTransaction, rollBack, commitChanges } = require('../../data-access/utilities');
 
+/*
+@TODO
+1. Error Handling w/ Apollo Error Class
+2. Logging with winston
+3. use MYSQL Begin Transaction Commit and Rollback --> updateItem
+*/
+
 module.exports = {
     createItem: async (parent, args, context, info) => {
         let item;

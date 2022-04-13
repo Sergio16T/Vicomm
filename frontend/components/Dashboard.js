@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { Context } from './Layout/PageProvider';
 import ToggleImageGalleryBtn from './Buttons/ToggleImageGalleryBtn';
 import useModal from '../lib/Hooks/useModal';
+import AppHeader from './Layout/AppHeader';
 
 const GET_COVER_PHOTO_QUERY = gql`
     query GET_COVER_PHOTO_QUERY {
@@ -76,12 +77,8 @@ const DashboardPage = () => {
 
     return (
         <Page
-            renderData = {{
-                appBar: {
-                    render,
-                    renderPosition: "right",
-                    text: `${userData.user.fst_nm}'s Store`,
-                },
+            render={({ toggleSideBar, client }) => {
+                return ( <AppHeader client={client} text={`${userData.user.fst_nm}'s Dashboard`} toggleSideBar={toggleSideBar} btnPosition="right" render={render}/>);
             }}
         >
             <Dashboard

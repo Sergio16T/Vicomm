@@ -3,7 +3,12 @@ const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-
+/*
+@TODO
+1. Error Handling w/ Apollo Error Class
+2. Logging with winston
+3. use MYSQL Begin Transaction Commit and Rollback
+*/
 module.exports = {
     async signUp(parent, args, context, info) {
         const {

@@ -73,7 +73,7 @@ const ProductForm = (props) => {
             dropInput.current.value= "";
             setImages([image]);
             setLoading(false);
-        } catch(err) {
+        } catch (err) {
             console.log(err);
             setLoading(false);
         }

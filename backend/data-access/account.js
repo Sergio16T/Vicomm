@@ -10,9 +10,7 @@ module.exports = {
                 acct
         `;
 
-        const result = await db.query(query).catch(err => {
-            throw err;
-        });
+        const result = await db.query(query);
 
         return result;
     },
@@ -27,9 +25,7 @@ module.exports = {
             AND act_ind = ${1}
         `;
 
-        const [account] = await db.query(query).catch(err => {
-            throw err;
-        });
+        const [account] = await db.query(query);
 
         return account;
     },
@@ -45,9 +41,7 @@ module.exports = {
             AND act_ind = ${1}
         `;
 
-        const [user] = await db.query(query).catch(err => {
-            throw err;
-        });
+        const [user] = await db.query(query);
 
         return user;
     },
@@ -85,9 +79,7 @@ module.exports = {
         )
         `;
 
-        const result = await db.query(query).catch(err => {
-            throw err;
-        });
+        const result = await db.query(query);
 
         return result;
     },
@@ -123,9 +115,7 @@ module.exports = {
             )
         `;
 
-        const result = await db.query(query).catch(err => {
-            throw err;
-        });
+        const result = await db.query(query);
 
         return result;
     },

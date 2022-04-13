@@ -6,6 +6,7 @@ import AddProductButton from './Buttons/AddProductButton';
 import ProductTable from './Table/ProductTable';
 import ErrorMessage from './Modal/Error';
 import { useRouter } from 'next/router';
+import AppHeader from './Layout/AppHeader';
 
 const GET_PRODUCT_ITEMS_QUERY = gql`
     query GET_PRODUCT_ITEMS_QUERY($page: Int!) {
@@ -44,12 +45,8 @@ const Products = ({ query: { page } }) => {
 
     return (
         <Page
-            renderData = {{
-                appBar: {
-                    render,
-                    renderPosition: "right",
-                    text: "Products",
-                },
+            render={({ toggleSideBar, client }) => {
+                return ( <AppHeader client={client} text="Products" toggleSideBar={toggleSideBar} btnPosition="right" render={render}/>);
             }}
         >
             <ProductPageContent>

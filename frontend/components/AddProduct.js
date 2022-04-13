@@ -7,6 +7,7 @@ import Page from './Layout/Page';
 import { ProductPageContent, Body } from './Styles/ProductStyles';
 import ErrorMessage from './Modal/Error';
 import { GET_PRODUCT_ITEMS_QUERY } from './Products';
+import AppHeader from './Layout/AppHeader';
 
 const PRODUCT_ITEMS_AGGREGATE_QUERY = gql`
     query PRODUCT_ITEMS_AGGREGATE_QUERY{
@@ -102,7 +103,7 @@ const AddProduct = () => {
                 }
                 case "save-create-new": {
                     resetForm();
-                    // toggle successAlert true state value to display success alert with option to view new product
+                    // @Todo toggle successAlert true state value to display success alert with option to view new product
                     break;
                 }
                 default: {
@@ -161,12 +162,8 @@ const AddProduct = () => {
 
     return (
         <Page
-            renderData = {{
-                appBar: {
-                    render: renderButton,
-                    renderPosition: "left",
-                    text: !edit ? "Add A Product" : "",
-                },
+            render={({ toggleSideBar, client }) => {
+                return ( <AppHeader client={client} text={!edit ? "Add A Product" : ""} toggleSideBar={toggleSideBar} btnPosition="left" render={renderButton}/>);
             }}
         >
             <ProductPageContent>

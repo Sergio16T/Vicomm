@@ -4,6 +4,13 @@ const {
     getMultimediaById,
 } = require('../../data-access/multimedia');
 
+/*
+@TODO
+1. Error Handling w/ Apollo Error Class
+2. Logging with winston
+3. use MYSQL Begin Transaction Commit and Rollback
+*/
+
 module.exports = {
     async uploadImageToGallery(parent, args, context, info) {
         const newMediaParams = {

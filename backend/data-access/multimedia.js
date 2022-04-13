@@ -12,7 +12,7 @@ module.exports = {
             id = ${id};
         `;
 
-        const [multimedia] = await db.query(query).catch(err => { throw err; });
+        const [multimedia] = await db.query(query);
 
         return multimedia;
     },
@@ -34,7 +34,7 @@ module.exports = {
             crte_by_acct_key = ${id},
             act_ind = ${act_ind}`;
 
-        const result = await db.query(query).catch(err => { throw err; });
+        const result = await db.query(query);
 
         return result;
     },
@@ -46,7 +46,7 @@ module.exports = {
                 id = ${key}
         `;
 
-        const result = await db.query(query).catch(err => { throw err });
+        const result = await db.query(query);
 
         return result;
     },
@@ -65,7 +65,7 @@ module.exports = {
                 # 0, 30
         `;
 
-        const mediaGallery = await db.query(query).catch(err => { throw err; });
+        const mediaGallery = await db.query(query);
 
         return mediaGallery;
     },
@@ -92,10 +92,10 @@ module.exports = {
         `;
 
         if (!connection) {
-            const result = await db.query(query).catch(err => { throw err; });
+            const result = await db.query(query);
             return result;
         } else {
-            const result = await connection.query(query).catch(err => { throw err; });
+            const result = await connection.query(query);
             return result;
         }
     },
@@ -118,7 +118,7 @@ module.exports = {
             AND act_ind = ${1}
         `;
 
-        const result = await db.query(query).catch(err => { throw err; });
+        const result = await db.query(query);
 
         return result;
     },
@@ -131,7 +131,7 @@ module.exports = {
                 id = ${id};
         `;
 
-        const result = await db.query(query).catch(err => { throw err; });
+        const result = await db.query(query);
 
         return result;
     },
