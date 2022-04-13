@@ -14,7 +14,7 @@ module.exports = {
 
         return result;
     },
-    getAccountWithEmail: async (email) => {
+    getAccountWithEmail: async (email, connection) => {
         let query = SQL`
         SELECT
             *
@@ -25,12 +25,14 @@ module.exports = {
             AND act_ind = ${1}
         `;
 
-        const [account] = await db.query(query);
+        let mysql = connection ? connection : db;
+
+        let [account] = await mysql.query(query);
 
         return account;
     },
 
-    getAccountById: async (id) => {
+    getAccountById: async (id, connection) => {
         let query = SQL`
         SELECT
             *
@@ -41,12 +43,14 @@ module.exports = {
             AND act_ind = ${1}
         `;
 
-        const [user] = await db.query(query);
+        let mysql = connection ? connection : db;
+
+        let [user] = await mysql.query(query);
 
         return user;
     },
 
-    createNewAccount: async (params) => {
+    createNewAccount: async (params, connection) => {
         const {
             firstName,
             lastName,
@@ -79,44 +83,9 @@ module.exports = {
         )
         `;
 
-        const result = await db.query(query);
+        let mysql = connection ? connection : db;
 
-        return result;
-    },
-    // TO DO ~ createNewAccountWithGoogleAuth: can be deleted
-    createNewAccountWithGoogleAuth: async (params) => {
-        const {
-            accessToken,
-            email,
-            firstName,
-            lastName,
-        } = params;
-
-        let query = SQL`
-            INSERT INTO
-                acct
-            (
-                fst_nm,
-                lst_nm,
-                email,
-                google_auth_tkn,
-                crte_tm,
-                crte_by_acct_key,
-                act_ind
-            )
-            VALUES (
-                ${firstName},
-                ${lastName},
-                ${email},
-                ${accessToken},
-                NOW(),
-                ${1},
-                ${1}
-            )
-        `;
-
-        const result = await db.query(query);
-
+        let result = await mysql.query(query);
         return result;
     },
 };

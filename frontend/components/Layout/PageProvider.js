@@ -44,17 +44,14 @@ function PageProvider({ children, pathname }) {
 
     if (error) {
         return <p>{error.message}</p>;
-    }
-    if (userLoading) {
+    } else if (userLoading) {
         return null;
-    }
-    if (!userData.user) {
+    } else if (!userData.user) {
         Router.push({
             pathname: "/login",
         });
         return null;
-    }
-    return (
+    } else return (
         <ThemeProvider theme={theme}>
             <GlobalStyle/>
             <Meta/>

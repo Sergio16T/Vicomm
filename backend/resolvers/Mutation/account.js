@@ -2,13 +2,15 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const {
+    startTransaction,
+    commitChanges,
+    rollBack,
+} = require('../../data-access/utilities');
+const { INTERNAL_SERVER_ERROR } = require('../../lib/ApolloError');
+const logger = require('../../lib/logger');
 
-/*
-@TODO
-1. Error Handling w/ Apollo Error Class
-2. Logging with winston
-3. use MYSQL Begin Transaction Commit and Rollback
-*/
+
 module.exports = {
     async signUp(parent, args, context, info) {
         const {
@@ -29,7 +31,8 @@ module.exports = {
         const emailUnavailable = account ? true : false;
 
         if (emailUnavailable) {
-            throw new Error('That email is taken!');
+            logger.error(`SIGN_UP: Requested Email ${email} is Unavailable`);
+            throw new INTERNAL_SERVER_ERROR('That email is taken!');
         }
 
         const newAccountParams = {
@@ -40,18 +43,35 @@ module.exports = {
             crte_by_acct_key: 1,
             act_ind: 1,
         };
+        let connection;
 
-        const { insertId } = await createNewAccount(newAccountParams);
+        try {
+            // Get MYSQL connection and start transaction
+            connection = await startTransaction();
 
-        const user = await getAccountById(insertId);
+            const { insertId } = await createNewAccount(newAccountParams, connection);
 
-        const token = jwt.sign({ id: user.id }, process.env.jwtsecret);
-        res.cookie("token", token, {
-            httpOnly: true,
-            maxAge:  1000 * 60 * 60 * 24 * 365,
-        });
+            const user = await getAccountById(insertId, connection);
 
-        return user;
+            // commit DB changes
+            await commitChanges(connection);
+
+            const token = jwt.sign({ id: user.id }, process.env.jwtsecret);
+            res.cookie("token", token, {
+                httpOnly: true,
+                maxAge:  1000 * 60 * 60 * 24 * 365, // 1 Year
+                sameSite: 'Strict',
+                secure: process.env.NODE_ENV === 'production' ? true : false, //  Marks the cookie to be used with HTTPS only.
+            });
+
+            return user;
+        } catch (err) {
+            await rollBack(connection);
+            logger.error(`SIGN_UP: ${err.message}`);
+            throw new INTERNAL_SERVER_ERROR(err.message);
+        } finally {
+            connection.release();
+        }
     },
     async signIn(parent, args, context, info) {
         const {
@@ -66,24 +86,28 @@ module.exports = {
         const email = args.email.toLowerCase();
         const user = await getAccountWithEmail(email);
         if (!user) {
-            throw new Error(`No user found for email: ${email}`);
+            logger.error(`SIGN_IN: No user found for email: ${email}`);
+            throw new INTERNAL_SERVER_ERROR(`No user found for email: ${email}`);
         }
 
         const validPassword = await bcrypt.compare(args.password, user.password_nm);
         if (!validPassword) {
-            throw new Error('Invalid password');
+            logger.error(`SIGN_IN: Invalid password for account ID ${user.id}`);
+            throw new INTERNAL_SERVER_ERROR('Invalid password');
         }
 
         const token = jwt.sign({ id: user.id }, process.env.jwtsecret);
 
         res.cookie("token", token, {
             httpOnly: true,
-            maxAge: 1000 * 60 * 60 * 24 * 365,
+            maxAge: 1000 * 60 * 60 * 24 * 365, // 1 Year
+            sameSite: 'Strict',
+            secure: process.env.NODE_ENV === 'production' ? true : false, //  Marks the cookie to be used with HTTPS only.
         });
 
-        console.log('logging in');
         return user;
     },
+    // @TODO update googleSignIn to use Transactions and Logger.js
     async googleSignIn(parent, args, context, info) {
         const {
             dataSources: {
@@ -134,12 +158,11 @@ module.exports = {
             httpOnly: true,
             maxAge: 1000 * 60 * 60 * 24 * 365,
         });
-        console.log('googleLogIn');
 
         return user;
     },
     signOut(parent, args, context, info) {
-        console.log('signout');
+        logger.debug('signout');
         context.res.clearCookie("token");
         return { message: "GoodBye!" }
     },

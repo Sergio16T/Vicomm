@@ -46,7 +46,7 @@ const Form = styled.form.attrs((props) => ({
             width: 100%;
             outline: none;
             padding: 1.25rem 1rem;
-            background-color: #3BD2A2;
+            background-color: #4285f4;
             border: none;
             color: white;
             text-transform: uppercase;
