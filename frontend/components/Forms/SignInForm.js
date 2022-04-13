@@ -34,7 +34,7 @@ const SignInForm = () => {
         try {
             await signIn({ variables: { ...state } });
         } catch (err) {
-            console.log(err)
+            console.log(err);
             setState({
                 ...state,
                 authError: err.message,

@@ -8,6 +8,7 @@ import SideBar  from './AppSidebar';
 import { theme, GlobalStyle } from '../Styles/PageStyles';
 import usePrevious from '../../lib/Hooks/usePrevious';
 import smoothscroll from 'smoothscroll-polyfill';
+import Error from '../Modal/Error';
 
 const GET_USER_QUERY = gql`
     query GET_USER_QUERY {
@@ -21,7 +22,9 @@ const GET_USER_QUERY = gql`
 const Context = React.createContext();
 
 function PageProvider({ children, pathname }) {
-    const { client, loading: userLoading, error, data: userData } = useQuery(GET_USER_QUERY);
+    const { client, loading: userLoading, error, data: userData } = useQuery(GET_USER_QUERY, {
+        errorPolicy: 'all', // `all` - Both data and error.graphQLErrors are populated, enabling you to render both partial results and error information.
+    });
     const [isOpen, setIsOpen ] = useState(false);
     const previousPath = usePrevious(pathname);
     const context = {
@@ -42,22 +45,32 @@ function PageProvider({ children, pathname }) {
         }
     }, [previousPath, pathname]);
 
-    if (error) {
-        return <p>{error.message}</p>;
-    } else if (userLoading) {
+    if (userLoading) {
         return null;
-    } else if (!userData.user) {
+    }
+    if (error) {
+        return (
+            <Error
+                error={error}
+                reset={() => Router.push({ pathname: '/login' })}
+                text="Back to login"
+            />
+        );
+
+    }
+    if (!userData.user) {
         Router.push({
             pathname: "/login",
         });
         return null;
-    } else return (
+    }
+    return (
         <ThemeProvider theme={theme}>
             <GlobalStyle/>
             <Meta/>
             <SideBar
                 isOpen={isOpen}
-                user={userData.user ? userData.user : ''}
+                user={userData && userData.user ? userData.user : ''}
             />
             <Context.Provider value = {context}>
                 {children}

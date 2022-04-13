@@ -7,14 +7,14 @@ import SignInForm from './Forms/SignInForm';
 import Router from 'next/router';
 
 const SignIn = () => {
-    const { loading, data } = useQuery(GET_USER_QUERY);
+    const { loading, data, error } = useQuery(GET_USER_QUERY);
 
     useEffect(() => {
         Router.prefetch("/dashboard");
     }, []);
 
     if (loading) return null;
-    if (data.user) {
+    if (!error && data.user) {
         Router.push({
             pathname: "/dashboard",
         });
