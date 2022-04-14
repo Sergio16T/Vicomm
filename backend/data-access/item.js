@@ -47,10 +47,7 @@ module.exports = {
             AND productItem.act_ind = ${1}
         `;
 
-        const [data] = await db.query(countQuery).catch(err => {
-            console.log(err);
-            throw err;
-        });
+        const [data] = await db.query(countQuery);
 
         return data;
     },
@@ -85,10 +82,7 @@ module.exports = {
             LIMIT ${skip}, ${numPerPage};
         `;
 
-        const result = await db.query(query).catch(err => {
-            console.log(err);
-            throw err;
-        });
+        const result = await db.query(query);
 
         return result;
     },

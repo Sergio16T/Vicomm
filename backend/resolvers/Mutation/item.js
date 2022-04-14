@@ -3,6 +3,8 @@ const { promisify } = require('util');
 const { createItem, getItem, updateItem, getItemMultimediaById } = require('../../data-access/item');
 const { createMultimediaXref, updateMultimediaXrefDisplayCount, deleteMultimediaXref } = require('../../data-access/multimedia');
 const { startTransaction, rollBack, commitChanges } = require('../../data-access/utilities');
+const { INTERNAL_SERVER_ERROR } = require('../../lib/ApolloError');
+const logger = require('../../lib/logger');
 
 /*
 @TODO
@@ -56,9 +58,9 @@ module.exports = {
                 multimedia: productImages,
             };
         } catch (err) {
-            console.log(err);
+            logger.error(err.message);
             await rollBack(connection);
-            throw err;
+            throw new INTERNAL_SERVER_ERROR(err.message);
         } finally {
             await connection.release();
         }
@@ -82,7 +84,7 @@ module.exports = {
 
         const deletedImages = previousMultimedia.filter(multimedia =>  !incomingXrefIds.includes(multimedia.multimedia_xref_id));
 
-        console.log('deleted', deletedImages);
+        logger.debug('deleted', deletedImages);
         // 3) Delete the multimedia xref records from the deletedImages list
         for (let k = 0; k < deletedImages.length; k++) {
             const image = deletedImages[k];
