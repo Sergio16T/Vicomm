@@ -14,7 +14,7 @@ const SignIn = () => {
     }, []);
 
     if (loading) return null;
-    if (!error && data.user) {
+    if (data && data.user) {
         Router.push({
             pathname: "/dashboard",
         });
@@ -25,7 +25,7 @@ const SignIn = () => {
             <Link href="/">
                 <img id="logo" src="https://res.cloudinary.com/dddnhychw/image/upload/v1595569683/Full%20Stack%20App/Logo_W__Title_4_evli4d.svg"/>
             </Link>
-            <SignInForm/>
+            <SignInForm error={error}/>
         </SignInPage>
     );
 }

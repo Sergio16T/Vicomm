@@ -16,9 +16,7 @@ const StyledError = styled.div`
     box-sizing: border-box;
     height: 40vh;
     margin: 0 auto;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-    border: ${props => props.error ? "1px solid red" : ""};
+    border-radius: 6px;
     z-index: 122;
     display: flex;
     flex-direction: column;
@@ -30,7 +28,8 @@ const StyledError = styled.div`
     }
     .error-message-container {
         margin: 2rem 4rem 0 2rem;
-        background-color: rgba(230, 54, 54, 1);
+        background-color: white;
+        border: 1px solid rgba(230, 54, 54, 1);
         border-radius: 6px;
         min-width: 200px;
         min-height: 100px;
@@ -47,7 +46,7 @@ const StyledError = styled.div`
     }
     h2 {
         font-size: 1.3rem;
-        color: white;
+        color: rgba(230, 54, 54, 1);
     }
     .error-footer {
         background: white;
@@ -65,7 +64,7 @@ const StyledError = styled.div`
             border: 1px solid #4285f4;
             cursor: pointer;
             padding: 1rem;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: white;
             border-radius: 6px;
         }

@@ -3,6 +3,7 @@ import { useMutation, gql } from '@apollo/client';
 import { Form } from '../Styles/FormStyles';
 import GoogleLogin from '../GoogleLogin';
 import { SignInFormWrapper, SignInMessage } from '../Styles/SignInStyles';
+import { ErrorAlert } from './Alerts';
 
 const SIGN_IN_MUTATION = gql`
     mutation SIGN_IN_MUTATION($email: String! $password: String!) {
@@ -14,8 +15,8 @@ const SIGN_IN_MUTATION = gql`
     }
 `;
 
-const SignInForm = () => {
-    const [signIn] = useMutation(SIGN_IN_MUTATION, { refetchQueries: ["GET_USER_QUERY"] });
+const SignInForm = ({ error: getUserError }) => {
+    const [signIn, { error }] = useMutation(SIGN_IN_MUTATION, { refetchQueries: ["GET_USER_QUERY"], errorPolicy: 'all' });
     const [state, setState] = useState({
         email: '',
         password: '',
@@ -31,25 +32,22 @@ const SignInForm = () => {
     }
     const submitForm = async (e) => {
         e.preventDefault();
-        try {
-            await signIn({ variables: { ...state } });
-        } catch (err) {
-            console.log(err);
-            setState({
-                ...state,
-                authError: err.message,
-            });
-        }
+        await signIn({ variables: { ...state } });
     }
+
     return (
         <SignInFormWrapper>
             <SignInMessage>
                 <h1>Hi, Welcome Back!</h1>
             </SignInMessage>
+            {getUserError &&
+                <ErrorAlert message={getUserError.message}/>
+            }
+            {error &&
+                <ErrorAlert message={error.message}/>
+            }
             {state.authError &&
-                <div className='error-message'>
-                    <p>{state.authError}</p>
-                </div>
+                <ErrorAlert message={state.authError}/>
             }
             <Form onSubmit={submitForm} testid="sign-in-form">
                 <div className="formRow">

@@ -18,7 +18,7 @@ const context = {
 
 describe(`USER QUERY'S & MUTATION'S`, function() {
     describe('GET_USER', function() {
-        it('should get user when context req.user.id is present', async () => {
+        it('should get user when context userId is present', async () => {
             let server = initializeTestServer({
                 dataSources: {
                     accountAPI,
@@ -33,7 +33,7 @@ describe(`USER QUERY'S & MUTATION'S`, function() {
             stub.restore();
         });
 
-        it('should return null when context.req.user is not defined', async function() {
+        it('should return null when context.userId is not defined', async function() {
             let server = initializeTestServer({
                 dataSources: {},
                 context: {},

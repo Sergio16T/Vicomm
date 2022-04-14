@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { GoogleLogin } from 'react-google-login';
 import { googleID } from '../clientConfig';
 import Router from 'next/router';
 import styled from 'styled-components';
+import { InfoAlert } from './Forms/Alerts';
 
 
 const GOOGLE_LOGIN_MUTATION = gql`
@@ -38,6 +39,7 @@ const GoogleBtn = (props) => {
         isLoggedIn: false,
         accessToken: '',
         email: '',
+        infoAlert: '',
     });
 
 
@@ -61,51 +63,37 @@ const GoogleBtn = (props) => {
         }
     }
 
-    const logout = (response) => {
-        console.log(response);
-        setState({
-            ...state,
-            isLoggedIn: false,
-            accessToken: '',
-        });
-    }
-
     const handleLoginFailure = (response) => {
         console.log('response details', response);
-        if (response.error === 'popup_closed_by_user') { return; }
+        if (response.error === 'popup_closed_by_user') {
+            setState({
+                ...state,
+                infoAlert: response.error,
+            });
+            return;
+        }
 
         props.setError({
             ...props.state,
-            authError: `${response.details} To continue authentication with google, enable cookies in your browser.`,
+            authError: response.details === 'R' ? ` Google sign in is unavailable: To continue authentication with google, enable third-party cookies in your browser. Otherwise sign in with your username and password.`: response.error,
         });
     }
 
-    const handleLogoutFailure =  (response) => {
-        console.log(response);
-    }
     return (
         <div>
-            {state.isLoggedIn ?
-                <GoogleContainer>
-                    <GoogleLogout
-                        clientId={CLIENT_ID}
-                        buttonText='Logout'
-                        onLogoutSuccess={logout}
-                        onFailure={handleLogoutFailure}
-                    />
-                </GoogleContainer>
-                :
-                <GoogleContainer>
-                    <GoogleLogin
-                        clientId={CLIENT_ID}
-                        buttonText={props.buttonText}
-                        onSuccess={login}
-                        onFailure={handleLoginFailure}
-                        cookiePolicy={'single_host_origin'}
-                        responseType='code,token'
-                    />
-                </GoogleContainer>
+            {state.infoAlert &&
+                <InfoAlert message="Google Pop Up Closed"/>
             }
+            <GoogleContainer>
+                <GoogleLogin
+                    clientId={CLIENT_ID}
+                    buttonText={props.buttonText}
+                    onSuccess={login}
+                    onFailure={handleLoginFailure}
+                    cookiePolicy={'single_host_origin'}
+                    responseType='code,token'
+                />
+            </GoogleContainer>
         </div>
     );
 }

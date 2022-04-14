@@ -13,11 +13,11 @@ module.exports = {
             dataSources: {
                 accountAPI,
             },
-            req,
+            userId,
         } = context;
-        if (!req.user) return null;
+        if (!userId) { return null; }
 
-        const user = await accountAPI.getAccountById(req.user.id);
+        const user = await accountAPI.getAccountById(userId);
         return user;
     },
 };

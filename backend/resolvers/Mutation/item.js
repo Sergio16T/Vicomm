@@ -27,7 +27,7 @@ module.exports = {
             const { insertId } = await createItem({
                 ...args,
                 uniqueId: uid,
-                createByAccountKey: context.req.user.id,
+                createByAccountKey: context.userId,
             }, connection);
             // 2) create multimedia xref records to point images to product item
             for (let i = 0; i < productImages.length; i++) {
@@ -37,7 +37,7 @@ module.exports = {
                 // }
 
                 await createMultimediaXref({
-                    createByAccountKey: context.req.user.id,
+                    createByAccountKey: context.userId,
                     displayCount: productImages[i].displayCount,
                     multimediaKey: productImages[i].id,
                     sourceTableKey: insertId,
@@ -70,7 +70,7 @@ module.exports = {
         // 1) update item details
         await updateItem({
             ...args,
-            lastUpdateByAccountKey: context.req.user.id,
+            lastUpdateByAccountKey: context.userId,
         });
 
         // 2) determine if there are any deleted images
@@ -100,11 +100,11 @@ module.exports = {
                 await updateMultimediaXrefDisplayCount({
                     multimediaXrefId,
                     displayCount,
-                    lastUpdateByAccountKey: context.req.user.id,
+                    lastUpdateByAccountKey: context.userId,
                 });
             } else {
                 await createMultimediaXref({
-                    createByAccountKey: context.req.user.id,
+                    createByAccountKey: context.userId,
                     displayCount: displayCount,
                     multimediaKey: id,
                     sourceTableKey: args.id,

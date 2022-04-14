@@ -18,16 +18,14 @@ const server = new ApolloServer({
     }),
     context: async ({ req, res }) => {
         const { token } = req.cookies;
-        const { getAccountById } = accountAPI;
 
         if (token) {
             const { id } = jwt.verify(token, process.env.jwtsecret);
-            const user = await getAccountById(id).catch(err => { throw err; });
-            req.user = user;
+
             return {
                 ...req,
-                // user: user, // @ToDo Update context to include user and update references to context.req.user.id
                 ...res,
+                userId: id,
             };
         }
 

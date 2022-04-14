@@ -15,7 +15,7 @@ module.exports = {
     async uploadImageToGallery(parent, args, context, info) {
         const newMediaParams = {
             act_ind: 1,
-            id: context.req.user.id,
+            id: context.userId,
             image: args.image,
             largeImage: args.largeImage,
         };

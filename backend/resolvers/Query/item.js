@@ -11,7 +11,7 @@ module.exports = {
     },
     getProductItems: async (parent, args, context, info) => {
         const numPerPage = 10;
-        const { count } = await getProductItemsCount(context.req.user.id);
+        const { count } = await getProductItemsCount(context.userId);
         if (!count) {
             return {
                 result: [],
@@ -19,7 +19,7 @@ module.exports = {
             };
         }
         const productItems = await getProductItems({
-            accountKey: context.req.user.id,
+            accountKey: context.userId,
             skip: args.page * numPerPage - numPerPage,
             numPerPage,
         });
@@ -30,7 +30,7 @@ module.exports = {
         };
     },
     productItemsAggregate: async (parent, args, context, info) => {
-        const data = await getProductItemsCount(context.req.user.id);
+        const data = await getProductItemsCount(context.userId);
         return data;
     },
 }

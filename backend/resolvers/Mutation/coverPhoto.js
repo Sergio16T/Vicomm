@@ -13,28 +13,28 @@ const {
 */
 module.exports = {
     async updateCoverPhoto(parent, args, context, info) {
-        const photo = await getCoverPhotoId(context.req.user.id);
+        const photo = await getCoverPhotoId(context.userId);
 
         if (photo) {
             const updatePhotoParams = {
-                accountKey: context.req.user.id,
+                accountKey: context.userId,
                 multimediaKey: args.key,
-                lastUpdateByAccountKey: context.req.user.id,
+                lastUpdateByAccountKey: context.userId,
             }
             await updateCoverPhoto(updatePhotoParams);
             return { id: photo.id };
         } else {
             const newPhotoParams = {
-                accountKey: context.req.user.id,
+                accountKey: context.userId,
                 multimediaKey: args.key,
-                createByAccountKey: context.req.user.id,
+                createByAccountKey: context.userId,
             };
             const { insertId } = await createNewCoverPhoto(newPhotoParams);
             return { id: insertId };
         }
     },
     async removeCoverPhoto(parent, args, context, info) {
-        await deleteCoverPhoto(context.req.user.id);
+        await deleteCoverPhoto(context.userId);
         return { message: "Successfully Deleted Cover Photo" };
     },
 };
