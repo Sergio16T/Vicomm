@@ -15,7 +15,7 @@ app.use(cors(corsOptions));
 // express middleware to handle cookies
 app.use(cookieParser());
 
-server.applyMiddleware({ app, cors: false }); // Apollo has it's own cors implementation. To prevent Apollo from overriding custom cors settings provided on line 22 set cors to false.
+server.applyMiddleware({ app, cors: false }); // Apollo has it's own cors implementation. To prevent Apollo from overriding custom cors settings provided on line 13 set cors to false.
 
 app.listen({ port: 4000 }, () =>
     console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`),
