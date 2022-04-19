@@ -5,13 +5,6 @@ const app = express();
 const cors = require('cors');
 require('dotenv').config();
 
-
-// express middleware to sets appropriate response headers
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
-});
-
 const corsOptions = {
     origin: process.env.FRONTEND_URL, // client URL
     credentials: true,
@@ -35,15 +28,12 @@ Moved this logic to Apollo Server's Context
 
 app.use(async (req, res, next) => {
     const { token } = req.cookies;
-    // console.log('token', token)
+
     if (!token) {
         next();
-    }
-    if (token) {
+    } else {
         const { id } = jwt.verify(token, process.env.jwtsecret);
-        const user = await getAccountById(id).catch(err => { throw err; });
-        req.user = user;
-        // console.log('user set', req.user)
+        req.userId = id;
         next();
     }
 });
