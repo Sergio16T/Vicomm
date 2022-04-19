@@ -19,7 +19,7 @@ const server = new ApolloServer({
         accountAPI,
         itemAPI,
         multimediaAPI,
-        coverphotoAPI, // @ToDo updating coverphoto table to use existing multimedia_xref table instead of multimedia column in coverphoto table
+        coverphotoAPI, // @ToDo update coverphoto table to use existing multimedia_xref table instead of multimedia column in coverphoto table
     }),
     context: async ({ req, res }) => {
         const { token } = req.cookies;
