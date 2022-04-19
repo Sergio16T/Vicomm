@@ -1,20 +1,27 @@
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
-const { createItem, getItem, updateItem, getItemMultimediaById } = require('../../data-access/item');
-const { createMultimediaXref, updateMultimediaXrefDisplayCount, deleteMultimediaXref } = require('../../data-access/multimedia');
-const { startTransaction, rollBack, commitChanges } = require('../../data-access/utilities');
+
+const {
+    startTransaction,
+    rollBack,
+    commitChanges,
+} = require('../../data-access/utilities');
 const { INTERNAL_SERVER_ERROR } = require('../../lib/ApolloError');
 const logger = require('../../lib/logger');
 
-/*
-@TODO
-1. Error Handling w/ Apollo Error Class
-2. Logging with winston
-3. use MYSQL Begin Transaction Commit and Rollback --> updateItem
-*/
-
 module.exports = {
     createItem: async (parent, args, context, info) => {
+        const {
+            dataSources: {
+                itemAPI: {
+                    createItem,
+                    getItem,
+                },
+                multimediaAPI: {
+                    createMultimediaXref,
+                },
+            },
+        } = context;
         let item;
         let connection;
         const { productImages } = args;
@@ -65,7 +72,27 @@ module.exports = {
             await connection.release();
         }
     },
+    /*
+    @TODO
+    1. Error Handling w/ Apollo Error Class
+    2. Error Logging with winston
+    3. use MYSQL Begin Transaction Commit and Rollback --> updateItem
+    */
     updateItem: async (parent, args, context, info) => {
+        const {
+            dataSources: {
+                itemAPI: {
+                    getItem,
+                    updateItem,
+                    getItemMultimediaById,
+                },
+                multimediaAPI: {
+                    createMultimediaXref,
+                    updateMultimediaXrefDisplayCount,
+                    deleteMultimediaXref,
+                },
+            },
+        } = context;
         const { productImages } = args;
         const incomingXrefIds = [];
 

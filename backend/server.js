@@ -4,6 +4,9 @@ const typeDefs = require('./schema.js');
 const Query = require('./resolvers/Query/index');
 const Mutation = require('./resolvers/Mutation/index');
 const accountAPI = require('./data-access/account');
+const itemAPI = require('./data-access/item');
+const multimediaAPI = require('./data-access/multimedia');
+const coverphotoAPI = require('./data-access/coverphoto');
 require('dotenv').config();
 
 const server = new ApolloServer({
@@ -14,7 +17,9 @@ const server = new ApolloServer({
     },
     dataSources: () => ({
         accountAPI,
-        // @ToDo add other API dataSources and update references
+        itemAPI,
+        multimediaAPI,
+        coverphotoAPI, // @ToDo updating coverphoto table to use existing multimedia_xref table instead of multimedia column in coverphoto table
     }),
     context: async ({ req, res }) => {
         const { token } = req.cookies;

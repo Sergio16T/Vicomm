@@ -1,9 +1,3 @@
-const {
-    createNewMultimedia,
-    deleteMultimedia,
-    getMultimediaById,
-} = require('../../data-access/multimedia');
-
 /*
 @TODO
 1. Error Handling w/ Apollo Error Class
@@ -13,6 +7,12 @@ const {
 
 module.exports = {
     async uploadImageToGallery(parent, args, context, info) {
+        const {
+            dataSources: {
+                createNewMultimedia,
+                getMultimediaById,
+            },
+        } = context;
         const newMediaParams = {
             act_ind: 1,
             id: context.userId,
@@ -27,6 +27,12 @@ module.exports = {
         return multimedia;
     },
     async deleteImages(parent, args, context, info) {
+        const {
+            dataSources: {
+                deleteMultimedia,
+            },
+        } = context;
+
         for (let i = 0; i < args.keys.length; i++) {
             let key = parseInt(args.keys[i]);
 

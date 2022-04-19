@@ -1,10 +1,3 @@
-const {
-    getCoverPhotoId,
-    createNewCoverPhoto,
-    deleteCoverPhoto,
-    updateCoverPhoto,
-} = require('../../data-access/coverphoto');
-
 /*
 @TODO
 1. Error Handling w/ Apollo Error Class
@@ -13,6 +6,15 @@ const {
 */
 module.exports = {
     async updateCoverPhoto(parent, args, context, info) {
+        const {
+            dataSources: {
+                coverphotoAPI: {
+                    getCoverPhotoId,
+                    createNewCoverPhoto,
+                    updateCoverPhoto,
+                },
+            },
+        } = context;
         const photo = await getCoverPhotoId(context.userId);
 
         if (photo) {
@@ -34,6 +36,13 @@ module.exports = {
         }
     },
     async removeCoverPhoto(parent, args, context, info) {
+        const {
+            dataSources: {
+                coverphotoAPI: {
+                    deleteCoverPhoto,
+                },
+            },
+        } = context;
         await deleteCoverPhoto(context.userId);
         return { message: "Successfully Deleted Cover Photo" };
     },
