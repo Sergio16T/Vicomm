@@ -24,7 +24,7 @@ const StyledBanner = styled.div`
         h1 {
             font-size: 4.4rem;
             font-weight: 800;
-            margin: 6rem 0 .5rem 0;
+            margin: 12rem 0 .5rem 0;
         }
         p {
             font-size: 2rem;

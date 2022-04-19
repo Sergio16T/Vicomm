@@ -10,7 +10,6 @@ const StyledNav = styled.ul`
         padding: 0rem;
         margin: 0 1rem;
         font-size: 1.4rem;
-        font-weight: 600;
         font-family: 'Lato';
         list-style: none;
         color: rgba(0, 0, 0, .6);
