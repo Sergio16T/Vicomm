@@ -9,10 +9,13 @@ module.exports = {
     async uploadImageToGallery(parent, args, context, info) {
         const {
             dataSources: {
-                createNewMultimedia,
-                getMultimediaById,
+                multimediaAPI: {
+                    createNewMultimedia,
+                    getMultimediaById,
+                },
             },
         } = context;
+
         const newMediaParams = {
             act_ind: 1,
             id: context.userId,
@@ -29,7 +32,9 @@ module.exports = {
     async deleteImages(parent, args, context, info) {
         const {
             dataSources: {
-                deleteMultimedia,
+                multimediaAPI: {
+                    deleteMultimedia,
+                },
             },
         } = context;
 

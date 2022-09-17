@@ -106,14 +106,23 @@ const UploadImageModal = (props) => {
             console.log(err);
             uploadInput.current.value= "";
             setSpinner(false);
+        } finally {
+            // @Todo scroll to top of modal
         }
     }
     const deleteMultimedia = async () => {
         setSpinner(true);
         setTimeout( async () => {
-            await deleteImages({ variables: { keys: Object.keys(selected) } });
-            setSelected({});
-            setSpinner(false);
+            try {
+                await deleteImages({ variables: { keys: Object.keys(selected) } });
+                setSelected({});
+                setSpinner(false);
+            } catch (error) {
+                console.log(error);
+                // @Todo Display Error
+                setSpinner(false);
+                setSelected({});
+            }
         }, 500);
 
     }
